@@ -49,7 +49,7 @@
                     Lihat website
                 </a>
             </div>
-            <form action="{{ route('admin.logout') }}" method="POST" class="mt-3 border-t border-white/10 pt-3">
+            <form action="{{ route('admin.logout') }}" method="POST" class="js-logout-form mt-3 border-t border-white/10 pt-3">
                 @csrf
                 <button type="submit" class="flex min-h-12 w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-white/75 transition hover:bg-white/8 hover:text-white">
                     <span class="grid size-8 shrink-0 place-items-center rounded-lg bg-white/7"><i class="fa-solid fa-arrow-right-from-bracket text-xs"></i></span>
@@ -58,7 +58,7 @@
             </form>
         </nav>
 
-        <form action="{{ route('admin.logout') }}" method="POST" class="shrink-0 border-t border-white/10 p-4">
+        <form action="{{ route('admin.logout') }}" method="POST" class="js-logout-form shrink-0 border-t border-white/10 p-4">
             @csrf
             <button type="submit" class="flex min-h-12 w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-white/75 transition hover:bg-white/8 hover:text-white">
                 <span class="grid size-8 shrink-0 place-items-center rounded-lg bg-white/7"><i class="fa-solid fa-arrow-right-from-bracket text-xs"></i></span>
@@ -132,7 +132,7 @@
             <span class="grid size-8 place-items-center rounded-lg bg-white/7"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></span>
             Lihat website
         </a>
-        <form action="{{ route('admin.logout') }}" method="POST">
+        <form action="{{ route('admin.logout') }}" method="POST" class="js-logout-form">
             @csrf
             <button type="submit" class="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm text-white/65 transition hover:bg-white/8 hover:text-white">
                 <span class="grid size-8 place-items-center rounded-lg bg-white/7"><i class="fa-solid fa-arrow-right-from-bracket text-xs"></i></span>
@@ -151,3 +151,28 @@
         </div>
     </div>
 </aside>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.querySelectorAll('.js-logout-form').forEach((form) => {
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const result = await Swal.fire({
+                title: 'Keluar dari dashboard?',
+                text: 'Sesi admin Anda akan diakhiri.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, keluar',
+                cancelButtonText: 'Batal',
+                confirmButtonColor: '#582308',
+                cancelButtonColor: '#a8a29e',
+                reverseButtons: true,
+            });
+
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    });
+</script>

@@ -88,6 +88,15 @@ class InvitationController extends Controller
         return redirect()->route('admin.invitations.index')->with('success', 'Undangan dan seluruh data tamunya berhasil dihapus.');
     }
 
+    public function regenerateCustomerAccessCode(Invitation $invitation): RedirectResponse
+    {
+        $invitation->update([
+            'customer_access_code' => Invitation::generateUniqueCustomerAccessCode(),
+        ]);
+
+        return redirect()->route('admin.invitations.show', $invitation)->with('success', 'Kode akses customer berhasil dibuat ulang. Kode lama sudah tidak berlaku.');
+    }
+
     /** @return Collection<int, Template> */
     private function publishedTemplates(?int $currentTemplateId = null): Collection
     {

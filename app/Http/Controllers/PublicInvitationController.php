@@ -26,6 +26,12 @@ class PublicInvitationController extends Controller
             ? null
             : $invitation->guests()->where('slug', $guestSlug)->firstOrFail();
 
+        if ($guest !== null) {
+            $guest->increment('open_count', 1, [
+                'opened_at' => $guest->opened_at ?? now(),
+            ]);
+        }
+
         try {
             $html = $renderer->render($invitation, $guest);
         } catch (RuntimeException) {

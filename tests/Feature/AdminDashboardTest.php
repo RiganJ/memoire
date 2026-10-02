@@ -38,7 +38,10 @@ class AdminDashboardTest extends TestCase
             ->assertSee('aria-label="Navigasi admin mobile"', false)
             ->assertSee(route('admin.orders.index'), false)
             ->assertSee(route('admin.settings.edit'), false)
-            ->assertSee(route('admin.logout'), false);
+            ->assertSee(route('admin.logout'), false)
+            ->assertSee('sweetalert2@11', false)
+            ->assertSee('js-logout-form', false)
+            ->assertSee('Keluar dari dashboard?');
     }
 
     public function test_login_page_does_not_render_an_inactive_password_reset_link(): void

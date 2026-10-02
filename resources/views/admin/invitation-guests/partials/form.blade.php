@@ -12,6 +12,15 @@
             <input class="{{ $input }}" type="tel" inputmode="tel" name="phone" value="{{ old('phone', $guest?->phone) }}" maxlength="25" placeholder="08123456789" required>
             @error('phone')<span class="mt-1 block text-xs font-normal text-red-600">{{ $message }}</span>@enderror
         </label>
+        <label class="block text-xs font-semibold text-[#582308]">
+            Status RSVP
+            <select class="{{ $input }}" name="rsvp_status">
+                <option value="pending" @selected(old('rsvp_status', $guest?->rsvp_status ?? 'pending') === 'pending')>Belum menjawab</option>
+                <option value="attending" @selected(old('rsvp_status', $guest?->rsvp_status) === 'attending')>Hadir</option>
+                <option value="declined" @selected(old('rsvp_status', $guest?->rsvp_status) === 'declined')>Tidak hadir</option>
+            </select>
+            @error('rsvp_status')<span class="mt-1 block text-xs font-normal text-red-600">{{ $message }}</span>@enderror
+        </label>
         <p class="rounded-xl bg-[#faf7f0] px-4 py-3 text-[11px] leading-5 text-[#32170b]/50">Link undangan personal dibuat otomatis dari nama tamu setelah data disimpan.</p>
     </div>
 </div>

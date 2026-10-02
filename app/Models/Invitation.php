@@ -14,6 +14,7 @@ class Invitation extends Model
         'api',
         'assets',
         'build',
+        'customer',
         'dashboard',
         'favicon-ico',
         'fonts',
@@ -43,7 +44,24 @@ class Invitation extends Model
         'groom_name',
         'bride_name',
         'status',
+        'customer_access_code',
     ];
+
+    protected static function booted(): void
+    {
+        static::creating(function (Invitation $invitation): void {
+            $invitation->customer_access_code ??= self::generateUniqueCustomerAccessCode();
+        });
+    }
+
+    public static function generateUniqueCustomerAccessCode(): string
+    {
+        do {
+            $accessCode = 'MEMOIRE-'.Str::upper(Str::random(8));
+        } while (self::query()->where('customer_access_code', $accessCode)->exists());
+
+        return $accessCode;
+    }
 
     public function template(): BelongsTo
     {

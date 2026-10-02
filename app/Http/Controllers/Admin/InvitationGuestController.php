@@ -25,6 +25,7 @@ class InvitationGuestController extends Controller
             ...$validated,
             'slug' => $invitation->uniqueGuestSlug($validated['name']),
             'token' => (string) Str::uuid(),
+            'rsvp_responded_at' => isset($validated['rsvp_status']) && $validated['rsvp_status'] !== InvitationGuest::RSVP_PENDING ? now() : null,
         ]);
 
         return redirect()->route('admin.invitations.show', $invitation)->with('success', 'Tamu berhasil ditambahkan.');
@@ -38,11 +39,16 @@ class InvitationGuestController extends Controller
     public function update(InvitationGuestRequest $request, Invitation $invitation, InvitationGuest $guest): RedirectResponse
     {
         $validated = $request->validated();
-
-        $guest->update([
+        $updates = [
             ...$validated,
             'slug' => $invitation->uniqueGuestSlug($validated['name'], $guest),
-        ]);
+        ];
+
+        if (isset($validated['rsvp_status'])) {
+            $updates['rsvp_responded_at'] = $validated['rsvp_status'] === InvitationGuest::RSVP_PENDING ? null : now();
+        }
+
+        $guest->update($updates);
 
         return redirect()->route('admin.invitations.show', $invitation)->with('success', 'Data tamu berhasil diperbarui.');
     }

@@ -8,9 +8,14 @@ use App\Http\Controllers\Admin\InvitationController;
 use App\Http\Controllers\Admin\InvitationGuestController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\OrderFormTemplateController;
+use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\ServicePackageController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TemplateController;
+use App\Http\Controllers\Customer\AuthController as CustomerAuthController;
+use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
+use App\Http\Controllers\Customer\InvitationGuestController as CustomerInvitationGuestController;
 use App\Http\Controllers\GuestChatController;
 use App\Http\Controllers\PublicInvitationAssetController;
 use App\Http\Controllers\PublicInvitationController;
@@ -34,6 +39,21 @@ Route::get('/pemesanan/katalog', [PublicOrderController::class, 'catalogs'])->na
 Route::get('/pemesanan/katalog/{catalog}/form', [PublicOrderController::class, 'form'])->name('public.orders.form');
 Route::post('/pemesanan', [PublicOrderController::class, 'store'])->middleware('throttle:8,1')->name('public.orders.store');
 Route::get('/paket-harga', [PublicPackageController::class, 'index'])->name('public.packages.index');
+
+Route::prefix('customer')->name('customer.')->group(function (): void {
+    Route::get('/login', [CustomerAuthController::class, 'create'])->name('login');
+    Route::post('/login', [CustomerAuthController::class, 'store'])->middleware('throttle:5,1')->name('login.store');
+
+    Route::middleware('customer.invitation')->group(function (): void {
+        Route::get('/dashboard', CustomerDashboardController::class)->name('dashboard');
+        Route::post('/logout', [CustomerAuthController::class, 'destroy'])->name('logout');
+        Route::get('/tamu/create', [CustomerInvitationGuestController::class, 'create'])->name('guests.create');
+        Route::post('/tamu', [CustomerInvitationGuestController::class, 'store'])->name('guests.store');
+        Route::get('/tamu/{guest}/edit', [CustomerInvitationGuestController::class, 'edit'])->name('guests.edit');
+        Route::put('/tamu/{guest}', [CustomerInvitationGuestController::class, 'update'])->name('guests.update');
+        Route::delete('/tamu/{guest}', [CustomerInvitationGuestController::class, 'destroy'])->name('guests.destroy');
+    });
+});
 
 Route::get('/invitation-assets/{templateSlug}/{path}', [PublicInvitationAssetController::class, 'show'])
     ->where([
@@ -77,6 +97,7 @@ Route::middleware('auth')->group(function (): void {
     Route::resource('/admin/undangan', InvitationController::class)
         ->parameters(['undangan' => 'invitation'])
         ->names('admin.invitations');
+    Route::post('/admin/undangan/{invitation}/regenerate-kode-customer', [InvitationController::class, 'regenerateCustomerAccessCode'])->name('admin.invitations.regenerate-customer-code');
     Route::scopeBindings()->group(function (): void {
         Route::get('/admin/undangan/{invitation}/tamu/create', [InvitationGuestController::class, 'create'])->name('admin.invitation-guests.create');
         Route::post('/admin/undangan/{invitation}/tamu', [InvitationGuestController::class, 'store'])->name('admin.invitation-guests.store');
@@ -84,7 +105,13 @@ Route::middleware('auth')->group(function (): void {
         Route::put('/admin/undangan/{invitation}/tamu/{guest}', [InvitationGuestController::class, 'update'])->name('admin.invitation-guests.update');
         Route::delete('/admin/undangan/{invitation}/tamu/{guest}', [InvitationGuestController::class, 'destroy'])->name('admin.invitation-guests.destroy');
     });
-    Route::view('/admin/pembayaran', 'admin.payments')->name('admin.payments.index');
+    Route::get('/admin/pembayaran/export', [PaymentController::class, 'export'])->name('admin.payments.export');
+    Route::resource('/admin/pembayaran', PaymentController::class)
+        ->parameters(['pembayaran' => 'payment'])
+        ->names('admin.payments');
+    Route::resource('/admin/metode-pembayaran', PaymentMethodController::class)
+        ->parameters(['metode-pembayaran' => 'paymentMethod'])
+        ->names('admin.payment-methods');
     Route::get('/admin/live-chat', [ChatController::class, 'index'])->name('admin.chats.index');
     Route::get('/admin/live-chat/{conversation}', [ChatController::class, 'show'])->name('admin.chats.show');
     Route::post('/admin/live-chat/{conversation}/reply', [ChatController::class, 'reply'])->name('admin.chats.reply');

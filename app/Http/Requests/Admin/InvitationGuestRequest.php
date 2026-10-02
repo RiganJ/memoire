@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\InvitationGuest;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class InvitationGuestRequest extends FormRequest
 {
@@ -24,6 +26,11 @@ class InvitationGuestRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:180'],
             'phone' => ['required', 'string', 'max:25', 'regex:/\A[0-9+() .-]+\z/'],
+            'rsvp_status' => ['sometimes', Rule::in([
+                InvitationGuest::RSVP_PENDING,
+                InvitationGuest::RSVP_ATTENDING,
+                InvitationGuest::RSVP_DECLINED,
+            ])],
         ];
     }
 }

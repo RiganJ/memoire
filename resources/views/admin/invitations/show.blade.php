@@ -10,6 +10,11 @@
                     @if(session('success'))<div role="status" class="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">{{ session('success') }}</div>@endif
                     <nav class="flex gap-1 overflow-x-auto rounded-2xl border border-[#582308]/8 bg-white p-1.5 text-xs font-semibold"><a href="#informasi" class="shrink-0 rounded-xl bg-[#582308] px-4 py-2.5 text-white">Informasi</a><a href="#template" class="shrink-0 rounded-xl px-4 py-2.5 text-[#582308] hover:bg-[#f7f0e5]">Template</a><a href="#data-tamu" class="shrink-0 rounded-xl px-4 py-2.5 text-[#582308] hover:bg-[#f7f0e5]">Data Tamu</a><a href="{{ route('public.invitations.show', ['invitationSlug' => $invitation->slug]) }}" target="_blank" rel="noopener" class="shrink-0 rounded-xl px-4 py-2.5 text-[#582308] hover:bg-[#f7f0e5]">Preview <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a></nav>
 
+                    <section class="flex flex-col gap-5 rounded-3xl border border-[#bd9150]/25 bg-[#fffaf0] p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+                        <div><p class="text-[9px] font-bold uppercase tracking-[.18em] text-[#bd9150]">Login customer</p><h2 class="mt-2 font-display text-2xl text-[#582308]">Kode akses portal</h2><p class="mt-2 text-xs text-[#32170b]/45">Customer login melalui <a class="font-semibold text-[#582308] underline" href="{{ route('customer.login') }}" target="_blank" rel="noopener">{{ route('customer.login') }}</a></p></div>
+                        <div class="flex flex-col gap-3 sm:items-end"><div class="flex items-center gap-2"><code class="rounded-xl border border-[#582308]/10 bg-white px-4 py-3 font-mono text-sm font-bold tracking-[.12em] text-[#582308]">{{ $invitation->customer_access_code }}</code><button type="button" class="copy-customer-code grid size-11 place-items-center rounded-xl border border-[#582308]/10 bg-white text-[#582308] transition hover:border-[#bd9150] hover:bg-[#ead5ac]/25" data-code="{{ $invitation->customer_access_code }}" title="Salin kode" aria-label="Salin kode akses customer"><i class="fa-regular fa-copy"></i></button></div><form method="POST" action="{{ route('admin.invitations.regenerate-customer-code', $invitation) }}" onsubmit="return confirm('Buat kode akses baru? Customer akan langsung keluar dan kode lama tidak dapat digunakan lagi.')" class="flex flex-col gap-1 sm:items-end">@csrf<button class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-4 text-xs font-semibold text-red-700 transition hover:border-red-300 hover:bg-red-50"><i class="fa-solid fa-arrows-rotate text-[10px]"></i>Buat ulang kode</button><span class="text-[9px] text-[#32170b]/35">Kode lama langsung tidak berlaku.</span></form></div>
+                    </section>
+
                     <div class="grid gap-6 xl:grid-cols-[1fr_20rem]">
                         <section id="informasi" class="rounded-3xl border border-[#582308]/8 bg-white p-6 shadow-sm sm:p-7"><p class="text-[9px] font-bold uppercase tracking-[.18em] text-[#bd9150]">Informasi</p><dl class="mt-5 grid gap-5 sm:grid-cols-2">@foreach([['Nama undangan',$invitation->name],['Pengantin pria',$invitation->groom_name],['Pengantin wanita',$invitation->bride_name],['Status',ucfirst($invitation->status)]] as [$label,$value])<div class="rounded-2xl bg-[#faf7f0] p-4"><dt class="text-[9px] uppercase tracking-[.12em] text-[#32170b]/35">{{ $label }}</dt><dd class="mt-2 text-sm font-semibold text-[#582308]">{{ $value }}</dd></div>@endforeach</dl></section>
                         <aside id="template" class="rounded-3xl bg-[#582308] p-6 text-white shadow-sm"><p class="text-[9px] font-bold uppercase tracking-[.18em] text-[#ead5ac]/65">Template</p><h2 class="mt-3 font-display text-2xl text-[#ead5ac]">{{ $invitation->template->name }}</h2><p class="mt-2 font-mono text-[10px] text-white/40">invitations/{{ $invitation->template->folder_name }}</p><p class="mt-5 border-t border-white/10 pt-4 text-xs leading-6 text-white/55">Template ini digunakan bersama. Perubahan file akan berlaku ke semua undangan yang memakainya.</p><a href="{{ route('admin.templates.edit', $invitation->template) }}" class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-[#ead5ac]">Kelola template <i class="fa-solid fa-arrow-right"></i></a></aside>
@@ -31,16 +36,54 @@
             </main>
         </div>
         <script>
+            const copyTextDirectly = async (text) => {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(text);
+
+                    return;
+                }
+
+                const temporaryInput = document.createElement('textarea');
+                temporaryInput.value = text;
+                temporaryInput.setAttribute('readonly', '');
+                temporaryInput.style.position = 'fixed';
+                temporaryInput.style.top = '0';
+                temporaryInput.style.left = '0';
+                temporaryInput.style.opacity = '0';
+                document.body.appendChild(temporaryInput);
+                temporaryInput.focus();
+                temporaryInput.select();
+                temporaryInput.setSelectionRange(0, temporaryInput.value.length);
+
+                const copied = document.execCommand('copy');
+                temporaryInput.remove();
+
+                if (!copied) {
+                    throw new Error('Browser tidak mengizinkan penyalinan.');
+                }
+            };
+
             document.querySelectorAll('.copy-invitation-link').forEach((button) => button.addEventListener('click', async () => {
                 try {
-                    await navigator.clipboard.writeText(button.dataset.link);
+                    await copyTextDirectly(button.dataset.link);
                     const icon = button.querySelector('i');
                     icon.className = 'fa-solid fa-check';
                     setTimeout(() => { icon.className = 'fa-regular fa-copy'; }, 1500);
                 } catch {
-                    window.prompt('Salin link undangan:', button.dataset.link);
+                    button.querySelector('i').className = 'fa-solid fa-triangle-exclamation';
                 }
             }));
+
+            document.querySelector('.copy-customer-code')?.addEventListener('click', async (event) => {
+                const button = event.currentTarget;
+                try {
+                    await copyTextDirectly(button.dataset.code);
+                    button.querySelector('i').className = 'fa-solid fa-check';
+                    setTimeout(() => { button.querySelector('i').className = 'fa-regular fa-copy'; }, 1500);
+                } catch {
+                    button.querySelector('i').className = 'fa-solid fa-triangle-exclamation';
+                }
+            });
 
             const guestCheckboxes = [...document.querySelectorAll('.guest-whatsapp-checkbox')];
             const selectAllGuests = document.getElementById('select-all-guests');
