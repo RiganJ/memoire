@@ -1,27 +1,69 @@
-*.log
-.DS_Store
+# Environment and credentials
 .env
-.env.backup
-.env.production
-.phpactor.json
-.phpunit.result.cache
-/.codex
-/.cursor/
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
+.env.*
+!.env.example
 /auth.json
-/node_modules
-/public/build
-/public/fonts-manifest.dev.json
+*.key
+*.pem
+*.p12
+*.pfx
+
+# PHP and JavaScript dependencies
+/vendor/
+/node_modules/
+
+# Generated frontend assets
+/public/build/
 /public/hot
 /public/storage
+/public/fonts-manifest*.json
+
+# Laravel runtime files
+/bootstrap/cache/*.php
+/database/*.sqlite
+/database/*.sqlite-*
 /storage/*.key
-/storage/pail
-/vendor
-_ide_helper.php
+/storage/pail/
+*.log
+
+# Tests, coverage, and analysis caches
+/.phpunit.cache/
+/.phpunit.result.cache
+/coverage/
+/.phpactor.json
+/.phpstan.cache
+/.pint.cache
+/.eslintcache
+
+# IDE and editor settings
+/.idea/
+/.nova/
+/.vscode/
+/.zed/
+/.fleet/
+*.swp
+*.swo
+*~
+
+# Local AI assistant configuration
+/.agents/
+/.claude/
+/.codex/
+/.cursor/
+/.mcp.json
+/AGENTS.md
+/CLAUDE.md
+
+# Operating-system metadata
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Local development files
 Homestead.json
 Homestead.yaml
-Thumbs.db
+/.vite/
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
