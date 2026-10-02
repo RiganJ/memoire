@@ -1,0 +1,24 @@
+@php
+    $input = 'mt-2 h-11 w-full rounded-xl border border-[#582308]/10 bg-[#faf7f0] px-4 text-sm text-[#32170b] outline-none transition focus:border-[#bd9150] focus:ring-2 focus:ring-[#bd9150]/15';
+    $label = 'text-[10px] font-bold uppercase tracking-[.16em] text-[#32170b]/55';
+@endphp
+
+@if ($errors->any())
+    <div class="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-800"><p class="font-semibold">Periksa kembali data berikut:</p><ul class="mt-2 list-inside list-disc space-y-1 text-xs">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>
+@endif
+
+<div class="grid gap-5 sm:grid-cols-2">
+    <label class="block"><span class="{{ $label }}">Nomor pesanan</span><input class="{{ $input }}" name="order_number" value="{{ old('order_number', $order?->order_number) }}" placeholder="Otomatis jika dikosongkan">@error('order_number')<span class="mt-1 block text-xs text-red-600">{{ $message }}</span>@enderror</label>
+    <label class="block"><span class="{{ $label }}">Nama pelanggan <b class="text-red-600">*</b></span><input class="{{ $input }}" name="customer_name" value="{{ old('customer_name', $order?->customer_name) }}" required maxlength="120">@error('customer_name')<span class="mt-1 block text-xs text-red-600">{{ $message }}</span>@enderror</label>
+    <label class="block"><span class="{{ $label }}">Email <b class="text-red-600">*</b></span><input class="{{ $input }}" type="email" name="email" value="{{ old('email', $order?->email) }}" required>@error('email')<span class="mt-1 block text-xs text-red-600">{{ $message }}</span>@enderror</label>
+    <label class="block"><span class="{{ $label }}">Nomor WhatsApp</span><input class="{{ $input }}" name="phone" value="{{ old('phone', $order?->phone) }}" placeholder="+62 812 3456 7890">@error('phone')<span class="mt-1 block text-xs text-red-600">{{ $message }}</span>@enderror</label>
+    <label class="block"><span class="{{ $label }}">Paket <b class="text-red-600">*</b></span><select class="{{ $input }}" name="package" required><option value="">Pilih paket</option>@foreach (['Essential', 'Signature', 'Bespoke'] as $package)<option value="{{ $package }}" @selected(old('package', $order?->package) === $package)>{{ $package }}</option>@endforeach</select></label>
+    <label class="block"><span class="{{ $label }}">Jenis acara <b class="text-red-600">*</b></span><input class="{{ $input }}" name="event_type" value="{{ old('event_type', $order?->event_type) }}" placeholder="Pernikahan, ulang tahun, corporate..." required></label>
+    <label class="block"><span class="{{ $label }}">Total pembayaran <b class="text-red-600">*</b></span><div class="relative"><span class="absolute inset-y-2 left-4 flex items-center text-sm text-[#32170b]/40">Rp</span><input class="{{ $input }} pl-11" type="number" name="total" value="{{ old('total', $order?->total) }}" min="0" step="1000" required></div></label>
+    <label class="block"><span class="{{ $label }}">Tanggal acara</span><input class="{{ $input }}" type="date" name="event_date" value="{{ old('event_date', $order?->event_date?->format('Y-m-d')) }}"></label>
+    <label class="block"><span class="{{ $label }}">Status pesanan <b class="text-red-600">*</b></span><select class="{{ $input }}" name="status" required>@foreach (['waiting' => 'Menunggu data', 'process' => 'Dalam proses', 'revision' => 'Revisi', 'ready' => 'Siap dikirim', 'done' => 'Selesai', 'cancelled' => 'Dibatalkan'] as $value => $text)<option value="{{ $value }}" @selected(old('status', $order?->status ?? 'waiting') === $value)>{{ $text }}</option>@endforeach</select></label>
+    <label class="block"><span class="{{ $label }}">Status pembayaran <b class="text-red-600">*</b></span><select class="{{ $input }}" name="payment_status" required>@foreach (['unpaid' => 'Belum lunas', 'paid' => 'Lunas', 'refunded' => 'Dikembalikan'] as $value => $text)<option value="{{ $value }}" @selected(old('payment_status', $order?->payment_status ?? 'unpaid') === $value)>{{ $text }}</option>@endforeach</select></label>
+    <label class="block sm:col-span-2"><span class="{{ $label }}">Catatan</span><textarea class="mt-2 min-h-28 w-full rounded-xl border border-[#582308]/10 bg-[#faf7f0] px-4 py-3 text-sm outline-none focus:border-[#bd9150] focus:ring-2 focus:ring-[#bd9150]/15" name="notes" maxlength="2000" placeholder="Catatan kebutuhan atau detail tambahan...">{{ old('notes', $order?->notes) }}</textarea></label>
+</div>
+
+<div class="mt-8 flex flex-col-reverse gap-3 border-t border-[#582308]/8 pt-6 sm:flex-row sm:justify-end"><a href="{{ $order ? route('admin.orders.show', $order) : route('admin.orders.index') }}" class="grid h-11 place-items-center rounded-xl border border-[#582308]/12 px-5 text-sm font-semibold text-[#582308]">Batal</a><button class="h-11 rounded-xl bg-[#582308] px-6 text-sm font-semibold text-white"><i class="fa-solid fa-floppy-disk mr-2"></i>{{ $submitLabel }}</button></div>

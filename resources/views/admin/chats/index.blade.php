@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Live Chat — Memoire Admin</title>@vite('resources/css/app.css')</head>
+    <body class="bg-[#f4efe7] text-[#32170b] antialiased">
+        @php($statusLabels = ['waiting' => 'Menunggu', 'active' => 'Aktif', 'closed' => 'Ditutup'])
+        <div class="min-h-screen lg:grid lg:grid-cols-[17rem_1fr]">
+            @include('admin.partials.sidebar')
+            <main class="min-w-0">
+                <header class="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-[#582308]/10 bg-[#f4efe7]/90 px-5 backdrop-blur-xl sm:px-8 lg:h-24 lg:px-10">
+                    <div><p class="text-xs text-[#32170b]/45">Pusat percakapan</p><h1 class="mt-1 font-display text-2xl text-[#582308] sm:text-3xl">Live Chat</h1></div>
+                    <div class="hidden items-center gap-2 rounded-full border border-[#582308]/10 bg-white px-4 py-2 text-xs text-[#32170b]/60 sm:flex"><span class="size-2 animate-pulse rounded-full bg-emerald-500"></span>Guest chat aktif</div>
+                </header>
+                <div class="space-y-6 p-5 sm:p-8 lg:p-10">
+                    @if (session('success'))<div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-800"><i class="fa-solid fa-circle-check mr-2"></i>{{ session('success') }}</div>@endif
+                    <section class="grid grid-cols-3 gap-3" aria-label="Ringkasan antrian chat">
+                        @foreach ([[$counts['active'], 'Antrian aktif', 'fa-comments', 'text-[#582308]'], [$counts['waiting'], 'Menunggu balasan', 'fa-clock', 'text-amber-700'], [$counts['unread'], 'Pesan belum dibaca', 'fa-envelope', 'text-emerald-700']] as [$count, $label, $icon, $color])
+                            <article class="rounded-2xl border border-[#582308]/8 bg-white p-4 shadow-[0_8px_25px_rgba(88,35,8,.035)] sm:p-5"><div class="flex items-center justify-between"><span class="grid size-10 place-items-center rounded-xl bg-[#ead5ac]/45 text-[#582308]"><i class="fa-solid {{ $icon }} text-sm"></i></span><span class="text-[9px] uppercase tracking-[.15em] text-[#32170b]/35">Live</span></div><p class="mt-5 font-display text-3xl {{ $color }}">{{ $count }}</p><p class="mt-1 text-[10px] text-[#32170b]/45 sm:text-xs">{{ $label }}</p></article>
+                        @endforeach
+                    </section>
+                    <section class="overflow-hidden rounded-3xl border border-[#582308]/8 bg-white shadow-[0_10px_35px_rgba(88,35,8,.04)]">
+                        <div class="flex flex-col gap-4 border-b border-[#582308]/8 p-5 sm:p-6 xl:flex-row xl:items-center xl:justify-between"><div><h2 class="font-display text-xl text-[#582308]">Tiket percakapan</h2><p class="mt-1 text-xs text-[#32170b]/40">{{ $conversations->total() }} percakapan ditemukan</p></div><form method="GET" class="flex flex-col gap-2 sm:flex-row"><input name="search" value="{{ request('search') }}" placeholder="Nama atau nomor tiket..." class="h-10 rounded-xl border border-[#582308]/10 bg-[#faf7f0] px-4 text-xs outline-none focus:border-[#bd9150]"><select name="status" class="h-10 rounded-xl border border-[#582308]/10 bg-[#faf7f0] px-3 text-xs outline-none"><option value="">Semua status</option>@foreach ($statusLabels as $value => $label)<option value="{{ $value }}" @selected(request('status') === $value)>{{ $label }}</option>@endforeach</select><button class="h-10 rounded-xl bg-[#582308] px-4 text-xs font-semibold text-white">Filter</button></form></div>
+                        <div class="divide-y divide-[#582308]/7">@forelse ($conversations as $conversation)<a href="{{ route('admin.chats.show', $conversation) }}" class="flex items-center gap-4 px-5 py-4 transition hover:bg-[#faf7f0] sm:px-6"><span class="grid size-11 shrink-0 place-items-center rounded-full bg-[#ead5ac]/55 font-display text-sm font-bold text-[#582308]">{{ collect(explode(' ', $conversation->guest_name))->map(fn ($word) => mb_substr($word, 0, 1))->take(2)->implode('') }}</span><div class="min-w-0 flex-1"><div class="flex items-center gap-2"><p class="truncate text-sm font-semibold text-[#32170b]">{{ $conversation->guest_name }}</p><span class="rounded-full bg-[#ead5ac]/40 px-2 py-0.5 text-[9px] font-bold text-[#582308]">{{ $conversation->ticket_number }}</span></div><p class="mt-1 truncate text-xs text-[#32170b]/45">{{ $conversation->guest_phone ?: 'Tanpa nomor WhatsApp' }}</p></div><div class="hidden text-right sm:block"><p class="text-[10px] text-[#32170b]/40">{{ $conversation->last_message_at?->diffForHumans() }}</p><span class="mt-1 inline-flex rounded-full px-2 py-1 text-[9px] font-semibold {{ $conversation->status === 'waiting' ? 'bg-amber-50 text-amber-700' : ($conversation->status === 'active' ? 'bg-emerald-50 text-emerald-700' : 'bg-stone-100 text-stone-600') }}">{{ $statusLabels[$conversation->status] }}</span></div>@if ($conversation->unread_count)<span class="grid size-6 place-items-center rounded-full bg-[#582308] text-[10px] font-bold text-white">{{ $conversation->unread_count }}</span>@endif<i class="fa-solid fa-chevron-right text-xs text-[#32170b]/25"></i></a>@empty<div class="px-6 py-20 text-center"><span class="mx-auto grid size-14 place-items-center rounded-full bg-[#ead5ac]/35 text-[#582308]"><i class="fa-regular fa-comments text-xl"></i></span><p class="mt-4 font-display text-xl text-[#582308]">Belum ada tiket chat</p><p class="mt-1 text-xs text-[#32170b]/40">Pesan dari pengunjung akan muncul di sini.</p></div>@endforelse</div>
+                        @if ($conversations->hasPages())<div class="border-t border-[#582308]/8 px-6 py-4">{{ $conversations->links() }}</div>@endif
+                    </section>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
