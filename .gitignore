@@ -9,7 +9,6 @@
 *.pfx
 
 # PHP and JavaScript dependencies
-/vendor/
 /node_modules/
 
 # Generated frontend assets
