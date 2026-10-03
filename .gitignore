@@ -13,9 +13,8 @@
 /node_modules/
 
 # Generated frontend assets
-/public/build/
+
 /public/hot
-/public/storage
 /public/fonts-manifest*.json
 
 # Laravel runtime files
