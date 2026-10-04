@@ -16,7 +16,7 @@
 }
 
 @layer base {
-    html { scroll-behavior: smooth; }
+    html { overflow-x: clip; scroll-behavior: smooth; }
     body { overflow-x: hidden; }
     ::selection { background: #582308; color: #fffaf0; }
     a, button { outline-offset: 4px; }
@@ -245,3 +245,26 @@
 @media (max-width: 639px) { .memoire-footer { padding-block: 2.5rem; } .footer-brand,.footer-copyright,.footer-links { justify-self: center; } .footer-links { flex-wrap: wrap; justify-content: center; } }
 @media (max-width: 639px) { .guest-chat { right: .9rem; bottom: .9rem; }.guest-chat-bubble { width: 3.75rem; justify-content: center; padding: 0; }.guest-chat-bubble > span:last-child { display: none; }.guest-chat-panel { width: calc(100vw - 1.8rem); max-height: calc(100vh - 1.8rem); }.guest-chat-messages { max-height: 19rem; } }
 .order-catalog-list .fa-magnifying-glass { top: 50%; bottom: auto; display: grid; width: 1rem; height: 1rem; transform: translateY(-50%); place-items: center; line-height: 1; }
+@media (max-width: 767px) {
+    .order-layout,
+    .order-catalog-list,
+    .order-form-wrap {
+        min-width: 0;
+    }
+
+    .order-catalog-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .order-catalog {
+        min-width: 0;
+    }
+
+    .order-catalog > span:nth-child(2) {
+        min-width: 0;
+    }
+
+    .order-catalog strong {
+        overflow-wrap: anywhere;
+    }
+}
