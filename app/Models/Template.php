@@ -11,7 +11,7 @@ class Template extends Model
         'admin', 'api', 'assets', 'build', 'dashboard', 'favicon-ico', 'fonts',
         'form-pesanan', 'images', 'katalog', 'live-chat', 'login', 'logout',
         'paket-harga', 'pelanggan', 'pembayaran', 'pengaturan', 'pemesanan',
-        'pesanan', 'preview-template', 'robots-txt', 'storage', 'templates', 'up',
+        'pesanan', 'preview-customer', 'preview-template', 'robots-txt', 'storage', 'templates', 'up',
     ];
 
     protected $fillable = [

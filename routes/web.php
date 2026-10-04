@@ -54,6 +54,9 @@ Route::get('/invoice/{invoice}', [PublicInvoiceController::class, 'show'])->name
 Route::get('/preview-template/{template:slug}', PublicTemplatePreviewController::class)
     ->middleware('throttle:60,1')
     ->name('public.templates.preview');
+Route::get('/preview-customer/{template:slug}', PublicTemplatePreviewController::class)
+    ->middleware('throttle:60,1')
+    ->name('customer.templates.preview');
 Route::post('/v1.0/debit/notify', DanaWebhookController::class)->middleware('throttle:120,1')->name('dana.webhook');
 
 Route::prefix('customer')->name('customer.')->group(function (): void {

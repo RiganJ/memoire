@@ -10,9 +10,9 @@
                     <div class="flex shrink-0 items-center gap-2">
                         <a href="{{ route('admin.templates.preview', $template) }}" target="_blank" rel="noopener" class="flex h-10 items-center gap-2 rounded-full border border-[#582308]/12 bg-white px-4 text-xs font-semibold text-[#582308] transition hover:bg-[#f7f0e5]" title="Preview internal, hanya dapat dibuka admin"><i class="fa-solid fa-user-shield"></i><span class="hidden sm:inline">Preview Admin</span></a>
                         @if ($template->status === 'published')
-                            <a href="{{ route('public.templates.preview', $template) }}" target="_blank" rel="noopener" class="flex h-10 items-center gap-2 rounded-full bg-[#582308] px-4 text-xs font-semibold text-white transition hover:bg-[#713719]" title="Preview yang dapat dibuka tanpa login"><i class="fa-solid fa-globe"></i><span class="hidden sm:inline">Preview Publik</span></a>
+                            <a href="{{ route('customer.templates.preview', $template) }}" target="_blank" rel="noopener" class="flex h-10 items-center gap-2 rounded-full bg-[#582308] px-4 text-xs font-semibold text-white transition hover:bg-[#713719]" title="Preview yang dapat dibuka customer tanpa login"><i class="fa-solid fa-users-viewfinder"></i><span class="hidden sm:inline">Preview Customer</span></a>
                         @else
-                            <span class="flex h-10 cursor-not-allowed items-center gap-2 rounded-full bg-[#582308]/10 px-4 text-xs font-semibold text-[#582308]/40" title="Publikasikan template untuk mengaktifkan preview publik"><i class="fa-solid fa-globe"></i><span class="hidden sm:inline">Preview Publik</span></span>
+                            <span class="flex h-10 cursor-not-allowed items-center gap-2 rounded-full bg-[#582308]/10 px-4 text-xs font-semibold text-[#582308]/40" title="Publikasikan template untuk mengaktifkan preview customer"><i class="fa-solid fa-users-viewfinder"></i><span class="hidden sm:inline">Preview Customer</span></span>
                         @endif
                     </div>
                 </header>

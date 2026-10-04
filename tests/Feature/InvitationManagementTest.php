@@ -353,7 +353,7 @@ class InvitationManagementTest extends TestCase
             ->assertRedirect(route('admin.login'));
     }
 
-    public function test_published_template_has_separate_admin_and_public_preview_links(): void
+    public function test_published_template_has_separate_admin_and_customer_preview_links(): void
     {
         Storage::fake('public');
         $user = User::factory()->create();
@@ -370,11 +370,11 @@ class InvitationManagementTest extends TestCase
             ->get(route('admin.templates.edit', $template))
             ->assertOk()
             ->assertSee('Preview Admin')
-            ->assertSee('Preview Publik')
+            ->assertSee('Preview Customer')
             ->assertSee(route('admin.templates.preview', $template), false)
-            ->assertSee(route('public.templates.preview', $template), false);
+            ->assertSee(route('customer.templates.preview', $template), false);
 
-        $this->get(route('public.templates.preview', $template))
+        $this->get(route('customer.templates.preview', $template))
             ->assertOk()
             ->assertSee('Preview Publik Memoire')
             ->assertSee('<base href="/invitation-assets/midnight-blossom/">', false);
@@ -395,7 +395,7 @@ class InvitationManagementTest extends TestCase
         Storage::disk('public')->put('invitations/draft-template/index.html', '<h1>Draft Preview</h1><link rel="stylesheet" href="css/style.css">');
         Storage::disk('public')->put('invitations/draft-template/css/style.css', 'body { color: brown; }');
 
-        $this->get(route('public.templates.preview', $template))->assertNotFound();
+        $this->get(route('customer.templates.preview', $template))->assertNotFound();
         $this->get('/invitation-assets/draft-template/index.html')->assertNotFound();
         $this->get('/invitation-assets/draft-template/css/style.css')->assertNotFound();
 

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Catalog;
 use App\Models\OrderFormTemplate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -13,12 +15,12 @@ class OrderFormTemplateController extends Controller
 {
     public function index(): View
     {
-        return view('admin.order-forms.index', ['templates' => OrderFormTemplate::query()->latest()->get()]);
+        return view('admin.order-forms.index', ['templates' => OrderFormTemplate::query()->with('catalog')->latest()->get()]);
     }
 
     public function create(): View
     {
-        return view('admin.order-forms.create');
+        return view('admin.order-forms.create', ['catalogs' => $this->availableCatalogs()]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -30,7 +32,10 @@ class OrderFormTemplateController extends Controller
 
     public function edit(OrderFormTemplate $orderForm): View
     {
-        return view('admin.order-forms.edit', compact('orderForm'));
+        return view('admin.order-forms.edit', [
+            'orderForm' => $orderForm,
+            'catalogs' => $this->availableCatalogs($orderForm),
+        ]);
     }
 
     public function update(Request $request, OrderFormTemplate $orderForm): RedirectResponse
@@ -51,7 +56,7 @@ class OrderFormTemplateController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:100'],
-            'category' => ['required', 'string', 'max:100', Rule::unique('order_form_templates', 'category')->ignore($template)],
+            'catalog_id' => ['required', 'integer', 'exists:catalogs,id', Rule::unique('order_form_templates', 'catalog_id')->ignore($template)],
             'description' => ['nullable', 'string', 'max:500'],
             'fields_definition' => ['required', 'string', 'max:10000'],
         ]);
@@ -75,6 +80,18 @@ class OrderFormTemplateController extends Controller
             abort(422, 'Tambahkan minimal satu field.');
         }
 
-        return [...$data, 'fields' => $fields];
+        $catalog = Catalog::query()->findOrFail($data['catalog_id']);
+
+        return [...$data, 'category' => $catalog->category, 'fields' => $fields];
+    }
+
+    /** @return Collection<int, Catalog> */
+    private function availableCatalogs(?OrderFormTemplate $template = null): Collection
+    {
+        return Catalog::query()
+            ->whereDoesntHave('orderFormTemplate')
+            ->when($template?->catalog_id, fn ($query, int $catalogId) => $query->orWhereKey($catalogId))
+            ->orderBy('name')
+            ->get();
     }
 }

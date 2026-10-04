@@ -49,7 +49,7 @@
                                     <div class="relative text-center text-[#ead5ac]"><i class="fa-regular fa-envelope-open text-3xl opacity-70"></i><p class="mt-3 font-display text-2xl">{{ $template->name }}</p><p class="mt-2 text-[8px] uppercase tracking-[.28em] text-white/40">A home for moments</p></div>
                                     <div class="absolute inset-0 flex items-center justify-center gap-2 bg-[#32170b]/65 opacity-0 transition group-hover:opacity-100 group-focus-within:opacity-100">
                                         <a href="{{ route('admin.templates.preview', $template) }}" target="_blank" rel="noopener" class="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-bold text-[#582308]" aria-label="Preview admin {{ $template->name }}"><i class="fa-solid fa-user-shield"></i>Admin</a>
-                                        @if ($template->status === 'published')<a href="{{ route('public.templates.preview', $template) }}" target="_blank" rel="noopener" class="flex items-center gap-2 rounded-full bg-[#ead5ac] px-4 py-2 text-xs font-bold text-[#582308]" aria-label="Preview publik {{ $template->name }}"><i class="fa-solid fa-globe"></i>Publik</a>@endif
+                                        @if ($template->status === 'published')<a href="{{ route('customer.templates.preview', $template) }}" target="_blank" rel="noopener" class="flex items-center gap-2 rounded-full bg-[#ead5ac] px-4 py-2 text-xs font-bold text-[#582308]" aria-label="Preview customer {{ $template->name }}"><i class="fa-solid fa-users-viewfinder"></i>Customer</a>@endif
                                     </div>
                                 </div>
                                 <div class="p-5">

@@ -41,7 +41,7 @@ class PublicOrderController extends Controller
     public function form(Catalog $catalog): JsonResponse
     {
         abort_unless($catalog->status === 'active', 404);
-        $template = OrderFormTemplate::query()->where('category', $catalog->category)->first();
+        $template = $this->orderFormFor($catalog);
 
         return response()->json(['template' => $template ? [
             'id' => $template->id,
@@ -112,9 +112,18 @@ class PublicOrderController extends Controller
             throw ValidationException::withMessages(['package_id' => 'Paket tidak sesuai dengan desain yang dipilih.']);
         }
 
-        $template = OrderFormTemplate::query()->where('category', $catalog->category)->firstOrFail();
+        $template = $this->orderFormFor($catalog);
+        abort_if($template === null, 404);
 
         return [$catalog, $package, $template];
+    }
+
+    private function orderFormFor(Catalog $catalog): ?OrderFormTemplate
+    {
+        return OrderFormTemplate::query()
+            ->where('catalog_id', $catalog->id)
+            ->first()
+            ?? OrderFormTemplate::query()->whereNull('catalog_id')->where('category', $catalog->category)->first();
     }
 
     /** @param array<string, mixed> $answers */
