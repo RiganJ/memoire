@@ -65,8 +65,8 @@ class InvitationGuestController extends Controller
 
     private function invitation(Request $request): Invitation
     {
-        /** @var Invitation $invitation */
         $invitation = $request->attributes->get('customerInvitation');
+        abort_unless($invitation instanceof Invitation, 403);
 
         return $invitation;
     }

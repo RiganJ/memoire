@@ -47,6 +47,20 @@ class DanaPaymentTest extends TestCase
         $this->assertDatabaseHas('payments', ['order_id' => $order->id, 'amount' => 249000, 'qr_content' => '000201QRIS']);
     }
 
+    public function test_generate_qris_is_unavailable_when_dana_method_is_inactive(): void
+    {
+        [$order, $payment] = $this->paymentRecords();
+        $payment->delete();
+        PaymentMethod::query()->where('code', 'dana')->update(['is_active' => false]);
+        $this->mock(DanaQrisGateway::class, fn (MockInterface $mock) => $mock->shouldNotReceive('generate'));
+
+        $this->post(route('public.payments.dana.store'), ['order_uuid' => $order->uuid])
+            ->assertServiceUnavailable()
+            ->assertSee('Pembayaran QRIS sedang dinonaktifkan');
+
+        $this->assertDatabaseCount('payments', 0);
+    }
+
     public function test_invalid_webhook_does_not_change_payment(): void
     {
         [, $payment] = $this->paymentRecords();
@@ -82,6 +96,7 @@ class DanaPaymentTest extends TestCase
 
         $this->assertDatabaseHas('payments', ['id' => $payment->id, 'status' => 'paid', 'dana_reference_no' => 'DANA-REF']);
         $this->assertDatabaseHas('orders', ['id' => $order->id, 'payment_status' => 'paid']);
+        $this->assertMatchesRegularExpression('/\AMEMOIRE-[A-Z0-9]{8}\z/', $order->fresh()->customer_access_code);
         $this->assertDatabaseCount('invoices', 1);
         Queue::assertPushed(SendInvoiceEmailJob::class, 1);
     }
@@ -156,10 +171,34 @@ class DanaPaymentTest extends TestCase
             ->assertSee('DANA-INVOICE-001');
     }
 
-    /** @return array{Order, Payment} */
-    private function paymentRecords(): array
+    public function test_intimate_package_receives_access_code_only_after_successful_payment(): void
     {
-        $package = ServicePackage::create(['name' => 'Timeless', 'price' => 249000, 'is_active' => true]);
+        [$order, $payment] = $this->paymentRecords('Intimate');
+
+        $this->assertNull($order->customer_access_code);
+        $payment->update(['status' => 'paid', 'paid_at' => now()]);
+        Payment::syncOrderStatus($order);
+
+        $order->refresh();
+        $this->assertSame('paid', $order->payment_status);
+        $this->assertMatchesRegularExpression('/\AMEMOIRE-[A-Z0-9]{8}\z/', $order->customer_access_code);
+    }
+
+    public function test_simple_package_never_receives_customer_dashboard_access_code(): void
+    {
+        [$order, $payment] = $this->paymentRecords('Simple');
+        $payment->update(['status' => 'paid', 'paid_at' => now()]);
+
+        Payment::syncOrderStatus($order);
+
+        $this->assertSame('paid', $order->fresh()->payment_status);
+        $this->assertNull($order->customer_access_code);
+    }
+
+    /** @return array{Order, Payment} */
+    private function paymentRecords(string $packageName = 'Timeless'): array
+    {
+        $package = ServicePackage::create(['name' => $packageName, 'price' => 249000, 'is_active' => true]);
         $method = PaymentMethod::query()->where('code', 'dana')->firstOrFail();
         $order = Order::factory()->create(['uuid' => (string) Str::uuid(), 'service_package_id' => $package->id, 'package' => $package->name, 'total' => 249000]);
         $payment = Payment::factory()->create([

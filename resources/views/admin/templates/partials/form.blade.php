@@ -17,7 +17,10 @@
                 <label class="block"><span class="{{ $label }}">Slug URL <b class="text-red-600">*</b></span><div class="mt-2 flex h-12 items-center rounded-xl border border-[#582308]/10 bg-[#faf7f0] pl-4 transition focus-within:border-[#bd9150] focus-within:ring-4 focus-within:ring-[#bd9150]/10"><span class="shrink-0 text-sm text-[#32170b]/35">/</span><input class="h-full min-w-0 flex-1 bg-transparent px-2 text-sm outline-none" name="slug" value="{{ old('slug', $template?->slug) }}" maxlength="100" placeholder="midnight-blossom" required></div>@error('slug')<span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span>@enderror</label>
                 <label class="block"><span class="{{ $label }}">Status publikasi</span><select class="{{ $input }}" name="status"><option value="draft" @selected(old('status', $template?->status ?? 'draft') === 'draft')>Draft — hanya admin</option><option value="published" @selected(old('status', $template?->status) === 'published')>Published — dapat diakses publik</option></select>@error('status')<span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span>@enderror</label>
             </div>
-            <div class="mt-5 flex items-center gap-3 rounded-xl bg-[#faf7f0] px-4 py-3 text-[11px] text-[#32170b]/50"><i class="fa-solid fa-link text-[#bd9150]"></i><span class="min-w-0 truncate">{{ url('/') }}/<b class="font-medium text-[#582308]" data-slug-preview>{{ old('slug', $template?->slug ?? 'nama-undangan') }}</b></span></div>
+            <div class="mt-5 space-y-2 rounded-xl bg-[#faf7f0] p-4 text-[11px]">
+                <div class="flex items-center gap-3 text-[#32170b]/55"><i class="fa-solid fa-user-shield w-4 text-center text-[#bd9150]"></i><span class="w-24 shrink-0 font-semibold">Preview admin</span>@if ($template)<a href="{{ route('admin.templates.preview', $template) }}" target="_blank" rel="noopener" class="min-w-0 truncate text-[#582308] underline decoration-[#bd9150]/40 underline-offset-2">{{ route('admin.templates.preview', $template) }}</a>@else<span class="text-[#32170b]/35">Tersedia setelah template disimpan</span>@endif</div>
+                <div class="flex items-center gap-3 text-[#32170b]/55"><i class="fa-solid fa-globe w-4 text-center text-[#bd9150]"></i><span class="w-24 shrink-0 font-semibold">Preview publik</span>@if ($template && $template->status === 'published')<a href="{{ route('public.templates.preview', $template) }}" target="_blank" rel="noopener" class="min-w-0 truncate text-[#582308] underline decoration-[#bd9150]/40 underline-offset-2" data-public-preview-link>{{ route('public.templates.preview', $template) }}</a>@else<span class="min-w-0 truncate text-[#32170b]/35" data-public-preview-url>{{ url('/preview-template') }}/<b data-slug-preview>{{ old('slug', $template?->slug ?? 'nama-template') }}</b>{{ $template ? ' · aktif setelah Published' : ' · aktif setelah disimpan sebagai Published' }}</span>@endif</div>
+            </div>
         </section>
 
         <section class="rounded-3xl border border-[#582308]/8 bg-white p-5 shadow-[0_10px_35px_rgba(88,35,8,.04)] sm:p-7">
@@ -42,14 +45,15 @@
 @once
     <script>
         const invitationSlugInput = document.querySelector('input[name="slug"]');
-        const invitationSlugPreview = document.querySelector('[data-slug-preview]');
+        const invitationSlugPreviews = document.querySelectorAll('[data-slug-preview]');
         const invitationAssetInput = document.querySelector('[data-asset-folder]');
         const invitationAssetPaths = document.querySelector('[data-asset-paths]');
         const invitationAssetFeedback = document.querySelector('[data-asset-feedback]');
         const invitationSubmit = document.querySelector('[data-invitation-submit]');
         const allowedAssetExtensions = new Set(['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg', 'mp3', 'wav', 'ogg', 'mp4', 'webm', 'woff', 'woff2', 'ttf', 'json']);
         invitationSlugInput?.addEventListener('input', () => {
-            invitationSlugPreview.textContent = invitationSlugInput.value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            const slug = invitationSlugInput.value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            invitationSlugPreviews.forEach((preview) => { preview.textContent = slug; });
         });
         invitationAssetInput?.addEventListener('change', () => {
             const uploads = new DataTransfer();

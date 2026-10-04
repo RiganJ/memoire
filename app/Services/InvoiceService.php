@@ -20,7 +20,7 @@ class InvoiceService
                 'customer_email' => $payment->order->email,
                 'package_name' => $payment->servicePackage?->name ?? $payment->order->package,
                 'amount' => $payment->amount,
-                'currency' => $payment->currency,
+                'currency' => $payment->currency ?: 'IDR',
                 'paid_at' => $payment->paid_at,
                 'email_status' => 'pending',
             ],

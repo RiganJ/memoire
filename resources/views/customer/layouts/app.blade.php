@@ -16,7 +16,8 @@
                     <span><b class="block font-display text-xl leading-none text-[#582308]">Memoire</b><small class="text-[9px] uppercase tracking-[.18em] text-[#32170b]/40">Customer Portal</small></span>
                 </a>
                 <div class="flex items-center gap-3">
-                    <div class="hidden text-right sm:block"><p class="text-xs font-semibold text-[#582308]">{{ $invitation->name }}</p><p class="mt-0.5 text-[10px] text-[#32170b]/40">Kode {{ $invitation->customer_access_code }}</p></div>
+                    @php($portalOwner = $invitation ?? $order)
+                    <div class="hidden text-right sm:block"><p class="text-xs font-semibold text-[#582308]">{{ $invitation->name ?? $order->customer_name }}</p><p class="mt-0.5 text-[10px] text-[#32170b]/40">Kode {{ $portalOwner->customer_access_code }}</p></div>
                     <form method="POST" action="{{ route('customer.logout') }}" class="js-logout-form">@csrf<button class="grid size-10 place-items-center rounded-xl border border-[#582308]/10 bg-white text-[#582308] transition hover:bg-[#582308] hover:text-white" aria-label="Keluar" title="Keluar"><i class="fa-solid fa-arrow-right-from-bracket"></i></button></form>
                 </div>
             </div>

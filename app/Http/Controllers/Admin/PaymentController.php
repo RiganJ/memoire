@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\PaymentRequest;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
+use App\Services\InvoiceService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -49,19 +50,20 @@ class PaymentController extends Controller
         return view('admin.payments.create', $this->formData());
     }
 
-    public function store(PaymentRequest $request): RedirectResponse
+    public function store(PaymentRequest $request, InvoiceService $invoices): RedirectResponse
     {
         $data = $request->validated();
-        $data['transaction_number'] = $data['transaction_number'] ?: $this->nextTransactionNumber();
+        $data['transaction_number'] = ($data['transaction_number'] ?? null) ?: $this->nextTransactionNumber();
         $payment = Payment::create($data);
         Payment::syncOrderStatus($payment->order);
+        $this->createInvoiceForSuccessfulPayment($payment, $invoices);
 
         return redirect()->route('admin.payments.show', $payment)->with('success', 'Pembayaran berhasil ditambahkan.');
     }
 
     public function show(Payment $payment): View
     {
-        return view('admin.payments.show', ['payment' => $payment->load(['order', 'paymentMethod'])]);
+        return view('admin.payments.show', ['payment' => $payment->load(['order', 'paymentMethod', 'invoice'])]);
     }
 
     public function edit(Payment $payment): View
@@ -69,14 +71,15 @@ class PaymentController extends Controller
         return view('admin.payments.edit', [...$this->formData(), 'payment' => $payment]);
     }
 
-    public function update(PaymentRequest $request, Payment $payment): RedirectResponse
+    public function update(PaymentRequest $request, Payment $payment, InvoiceService $invoices): RedirectResponse
     {
         $previousOrder = $payment->order;
         $data = $request->validated();
-        $data['transaction_number'] = $data['transaction_number'] ?: $payment->transaction_number;
+        $data['transaction_number'] = ($data['transaction_number'] ?? null) ?: $payment->transaction_number;
         $payment->update($data);
         Payment::syncOrderStatus($previousOrder);
         Payment::syncOrderStatus($payment->fresh()->order);
+        $this->createInvoiceForSuccessfulPayment($payment->fresh(), $invoices);
 
         return redirect()->route('admin.payments.show', $payment)->with('success', 'Pembayaran berhasil diperbarui.');
     }
@@ -160,5 +163,14 @@ class PaymentController extends Controller
         } while (Payment::where('transaction_number', $number)->exists());
 
         return $number;
+    }
+
+    private function createInvoiceForSuccessfulPayment(Payment $payment, InvoiceService $invoices): void
+    {
+        if (! in_array($payment->status, ['success', 'paid'], true)) {
+            return;
+        }
+
+        $invoices->createForPayment($payment->load('order.servicePackage', 'servicePackage'));
     }
 }

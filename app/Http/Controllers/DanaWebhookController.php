@@ -71,6 +71,7 @@ class DanaWebhookController extends Controller
                     'paid_at' => $notification->finishedAt ?? now(),
                 ]);
                 $payment->order()->update(['status' => 'paid', 'payment_status' => 'paid']);
+                $payment->order->refresh()->loadMissing('servicePackage')->grantCustomerPortalAccess();
                 $payment->order->customer?->increment('total_spent', (float) $payment->amount);
 
                 $invoice = $invoices->createForPayment($payment->load('order', 'servicePackage'));

@@ -7,6 +7,8 @@ use App\Models\Conversation;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderFormTemplate;
+use App\Models\Payment;
+use App\Models\PaymentMethod;
 use App\Models\ServicePackage;
 use App\Models\Setting;
 use App\Models\User;
@@ -42,6 +44,61 @@ class AdminDashboardTest extends TestCase
             ->assertSee('sweetalert2@11', false)
             ->assertSee('js-logout-form', false)
             ->assertSee('Keluar dari dashboard?');
+    }
+
+    public function test_admin_dashboard_uses_current_database_data_instead_of_dummy_values(): void
+    {
+        $this->travelTo('2026-10-04 12:00:00');
+        $user = User::factory()->create();
+        $customer = Customer::create([
+            'name' => 'Pelanggan Database',
+            'email' => 'database@example.com',
+            'phone' => '628123456789',
+        ]);
+        $activeOrder = Order::factory()->create([
+            'customer_id' => $customer->id,
+            'order_number' => 'MEM-DB-001',
+            'customer_name' => 'Pelanggan Database',
+            'package' => 'Timeless',
+            'event_type' => 'Pernikahan',
+            'status' => 'process',
+            'payment_status' => 'paid',
+        ]);
+        Order::factory()->create([
+            'order_number' => 'MEM-DB-002',
+            'customer_name' => 'Pesanan Selesai Database',
+            'status' => 'done',
+        ]);
+        Payment::factory()->create([
+            'order_id' => $activeOrder->id,
+            'payment_method_id' => PaymentMethod::query()->where('code', 'dana')->value('id'),
+            'transaction_number' => 'PAY-DATABASE-001',
+            'amount' => 321000,
+            'status' => 'paid',
+            'paid_at' => now(),
+        ]);
+        Conversation::create([
+            'guest_token' => (string) Str::uuid(),
+            'ticket_number' => 'CHAT-DATABASE-001',
+            'guest_name' => 'Tamu Database',
+            'status' => 'waiting',
+            'last_message_at' => now(),
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('admin.dashboard'))
+            ->assertOk()
+            ->assertSee('Minggu, 04 Oktober 2026')
+            ->assertSee('Pelanggan Database')
+            ->assertSee('MEM-DB-001')
+            ->assertSee('Rp 321.000')
+            ->assertSee('PAY-DATABASE-001')
+            ->assertSee('CHAT-DATABASE-001')
+            ->assertSee(route('admin.orders.create'), false)
+            ->assertSee(route('admin.chats.index'), false)
+            ->assertDontSee('INV-0241')
+            ->assertDontSee('Rp 8,4 jt')
+            ->assertDontSee('18 dari 25 pesanan');
     }
 
     public function test_login_page_does_not_render_an_inactive_password_reset_link(): void

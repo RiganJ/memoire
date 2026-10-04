@@ -31,6 +31,7 @@ class Invitation extends Model
         'pengaturan',
         'pemesanan',
         'pesanan',
+        'preview-template',
         'robots-txt',
         'storage',
         'template-undangan',

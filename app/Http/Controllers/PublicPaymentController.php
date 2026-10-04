@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -17,9 +18,16 @@ use Throwable;
 
 class PublicPaymentController extends Controller
 {
-    public function store(GenerateDanaQrisRequest $request, DanaQrisGateway $gateway): View
+    public function store(GenerateDanaQrisRequest $request, DanaQrisGateway $gateway): View|Response
     {
-        $payment = DB::transaction(function () use ($request): Payment {
+        $method = PaymentMethod::query()->where('code', 'dana')->where('is_active', true)->first();
+        if ($method === null) {
+            return response()->view('payments.error', [
+                'message' => 'Pembayaran QRIS sedang dinonaktifkan. Silakan pilih metode pembayaran lain atau hubungi admin.',
+            ], 503);
+        }
+
+        $payment = DB::transaction(function () use ($request, $method): Payment {
             $order = Order::query()->where('uuid', $request->validated('order_uuid'))->lockForUpdate()->firstOrFail();
             abort_if($order->payment_status === 'paid', 409, 'Pesanan ini sudah dibayar.');
 
@@ -32,8 +40,6 @@ class PublicPaymentController extends Controller
             if ($existing !== null) {
                 return $existing;
             }
-
-            $method = PaymentMethod::query()->where('code', 'dana')->firstOrFail();
 
             return Payment::create([
                 'uuid' => (string) Str::uuid(),

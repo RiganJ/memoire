@@ -58,5 +58,9 @@ class Payment extends Model
         };
 
         $order->update(['payment_status' => $paymentStatus]);
+
+        if ($paymentStatus === 'paid') {
+            $order->refresh()->loadMissing('servicePackage')->grantCustomerPortalAccess();
+        }
     }
 }

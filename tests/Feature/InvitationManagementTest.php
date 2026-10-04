@@ -353,6 +353,56 @@ class InvitationManagementTest extends TestCase
             ->assertRedirect(route('admin.login'));
     }
 
+    public function test_published_template_has_separate_admin_and_public_preview_links(): void
+    {
+        Storage::fake('public');
+        $user = User::factory()->create();
+        $template = Template::create([
+            'name' => 'Midnight Blossom',
+            'slug' => 'midnight-blossom',
+            'folder_name' => 'midnight-blossom',
+            'status' => 'published',
+        ]);
+        Storage::disk('public')->put('invitations/midnight-blossom/index.html', '<h1>Preview Publik Memoire</h1><link rel="stylesheet" href="css/style.css">');
+        Storage::disk('public')->put('invitations/midnight-blossom/css/style.css', 'body { color: brown; }');
+
+        $this->actingAs($user)
+            ->get(route('admin.templates.edit', $template))
+            ->assertOk()
+            ->assertSee('Preview Admin')
+            ->assertSee('Preview Publik')
+            ->assertSee(route('admin.templates.preview', $template), false)
+            ->assertSee(route('public.templates.preview', $template), false);
+
+        $this->get(route('public.templates.preview', $template))
+            ->assertOk()
+            ->assertSee('Preview Publik Memoire')
+            ->assertSee('<base href="/invitation-assets/midnight-blossom/">', false);
+
+        $this->get('/invitation-assets/midnight-blossom/css/style.css')->assertOk();
+    }
+
+    public function test_draft_template_public_preview_and_assets_are_not_publicly_accessible(): void
+    {
+        Storage::fake('public');
+        $user = User::factory()->create();
+        $template = Template::create([
+            'name' => 'Draft Template',
+            'slug' => 'draft-template',
+            'folder_name' => 'draft-template',
+            'status' => 'draft',
+        ]);
+        Storage::disk('public')->put('invitations/draft-template/index.html', '<h1>Draft Preview</h1><link rel="stylesheet" href="css/style.css">');
+        Storage::disk('public')->put('invitations/draft-template/css/style.css', 'body { color: brown; }');
+
+        $this->get(route('public.templates.preview', $template))->assertNotFound();
+        $this->get('/invitation-assets/draft-template/index.html')->assertNotFound();
+        $this->get('/invitation-assets/draft-template/css/style.css')->assertNotFound();
+
+        $this->actingAs($user)->get(route('admin.templates.preview', $template))->assertOk();
+        $this->actingAs($user)->get('/invitation-assets/draft-template/css/style.css')->assertOk();
+    }
+
     public function test_existing_system_routes_are_not_captured_by_the_invitation_wildcard(): void
     {
         Storage::fake('public');

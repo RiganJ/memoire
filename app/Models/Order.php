@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Order extends Model
 {
@@ -28,6 +29,7 @@ class Order extends Model
         'event_date',
         'status',
         'payment_status',
+        'customer_access_code',
         'notes',
     ];
 
@@ -58,5 +60,26 @@ class Order extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function includesCustomerPortal(): bool
+    {
+        return ServicePackage::includesCustomerPortal($this->servicePackage?->name ?? $this->package);
+    }
+
+    public function grantCustomerPortalAccess(): void
+    {
+        if ($this->payment_status !== 'paid' || ! $this->includesCustomerPortal() || $this->customer_access_code !== null) {
+            return;
+        }
+
+        do {
+            $accessCode = 'MEMOIRE-'.Str::upper(Str::random(8));
+        } while (
+            self::query()->where('customer_access_code', $accessCode)->exists()
+            || Invitation::query()->where('customer_access_code', $accessCode)->exists()
+        );
+
+        $this->update(['customer_access_code' => $accessCode]);
     }
 }

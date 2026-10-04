@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Models\Invitation;
 use App\Models\InvitationGuest;
+use App\Models\Order;
+use App\Models\ServicePackage;
 use App\Models\Template;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -44,6 +46,51 @@ class CustomerInvitationPortalTest extends TestCase
             ->assertSee('sweetalert2@11', false)
             ->assertSee('js-logout-form', false)
             ->assertSee('Keluar dari portal?');
+    }
+
+    public function test_paid_eligible_order_code_can_login_to_customer_order_dashboard(): void
+    {
+        $package = ServicePackage::create(['name' => 'Timeless', 'price' => 249000, 'is_active' => true]);
+        $order = Order::factory()->create([
+            'service_package_id' => $package->id,
+            'package' => 'Timeless',
+            'customer_name' => 'Nadia Memoire',
+            'payment_status' => 'paid',
+            'customer_access_code' => 'MEMOIRE-PAID1234',
+        ]);
+
+        $this->post(route('customer.login.store'), ['access_code' => 'memoire-paid1234'])
+            ->assertRedirect(route('customer.dashboard'))
+            ->assertSessionHas('customer_order_id', $order->id);
+
+        $this->get(route('customer.dashboard'))
+            ->assertOk()
+            ->assertSee('Nadia Memoire')
+            ->assertSee('Timeless')
+            ->assertSee('MEMOIRE-PAID1234');
+    }
+
+    public function test_unpaid_or_simple_order_code_cannot_login_to_customer_dashboard(): void
+    {
+        $simple = ServicePackage::create(['name' => 'Simple', 'price' => 99000, 'is_active' => true]);
+        Order::factory()->create([
+            'service_package_id' => $simple->id,
+            'package' => 'Simple',
+            'payment_status' => 'paid',
+            'customer_access_code' => 'MEMOIRE-SIMPLE01',
+        ]);
+        $timeless = ServicePackage::create(['name' => 'Timeless', 'price' => 249000, 'is_active' => true]);
+        Order::factory()->create([
+            'service_package_id' => $timeless->id,
+            'package' => 'Timeless',
+            'payment_status' => 'unpaid',
+            'customer_access_code' => 'MEMOIRE-UNPAID01',
+        ]);
+
+        $this->post(route('customer.login.store'), ['access_code' => 'MEMOIRE-SIMPLE01'])
+            ->assertSessionHasErrors('access_code');
+        $this->post(route('customer.login.store'), ['access_code' => 'MEMOIRE-UNPAID01'])
+            ->assertSessionHasErrors('access_code');
     }
 
     public function test_dashboard_statistics_and_guest_list_only_contain_logged_in_customer_data(): void

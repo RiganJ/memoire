@@ -4,11 +4,13 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CatalogController;
 use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InvitationController;
 use App\Http\Controllers\Admin\InvitationGuestController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\OrderFormTemplateController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\PaymentInvoiceEmailController;
 use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\ServicePackageController;
 use App\Http\Controllers\Admin\SettingController;
@@ -24,6 +26,7 @@ use App\Http\Controllers\PublicInvoiceController;
 use App\Http\Controllers\PublicOrderController;
 use App\Http\Controllers\PublicPackageController;
 use App\Http\Controllers\PublicPaymentController;
+use App\Http\Controllers\PublicTemplatePreviewController;
 use App\Models\Invitation;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +51,9 @@ Route::post('/payment/dana/generate', [PublicPaymentController::class, 'store'])
 Route::get('/payment/{payment:uuid}', [PublicPaymentController::class, 'show'])->name('public.payments.show');
 Route::get('/payment/{payment:uuid}/status', [PublicPaymentController::class, 'status'])->middleware('throttle:30,1')->name('public.payments.status');
 Route::get('/invoice/{invoice}', [PublicInvoiceController::class, 'show'])->name('public.invoices.show');
+Route::get('/preview-template/{template:slug}', PublicTemplatePreviewController::class)
+    ->middleware('throttle:60,1')
+    ->name('public.templates.preview');
 Route::post('/v1.0/debit/notify', DanaWebhookController::class)->middleware('throttle:120,1')->name('dana.webhook');
 
 Route::prefix('customer')->name('customer.')->group(function (): void {
@@ -78,7 +84,7 @@ Route::middleware('guest')->group(function (): void {
 });
 
 Route::middleware('auth')->group(function (): void {
-    Route::view('/admin', 'admin.dashboard')->name('admin.dashboard');
+    Route::get('/admin', DashboardController::class)->name('admin.dashboard');
     Route::resource('/admin/pesanan', OrderController::class)
         ->parameters(['pesanan' => 'order'])
         ->names('admin.orders');
@@ -116,6 +122,7 @@ Route::middleware('auth')->group(function (): void {
         Route::delete('/admin/undangan/{invitation}/tamu/{guest}', [InvitationGuestController::class, 'destroy'])->name('admin.invitation-guests.destroy');
     });
     Route::get('/admin/pembayaran/export', [PaymentController::class, 'export'])->name('admin.payments.export');
+    Route::post('/admin/pembayaran/{payment}/kirim-invoice', PaymentInvoiceEmailController::class)->name('admin.payments.send-invoice');
     Route::resource('/admin/pembayaran', PaymentController::class)
         ->parameters(['pembayaran' => 'payment'])
         ->names('admin.payments');

@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Jobs\SendInvoiceEmailJob;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class AdminPaymentTest extends TestCase
@@ -137,5 +139,50 @@ class AdminPaymentTest extends TestCase
         ])->assertRedirect(route('admin.payments.create'))->assertSessionHasErrors('paid_at');
 
         $this->assertDatabaseCount('payments', 0);
+    }
+
+    public function test_non_qris_invoice_waits_for_admin_before_email_is_queued(): void
+    {
+        Queue::fake([SendInvoiceEmailJob::class]);
+        $user = User::factory()->create();
+        $order = Order::factory()->create();
+        $bca = PaymentMethod::query()->where('code', 'bca')->firstOrFail();
+
+        $this->actingAs($user)->post(route('admin.payments.store'), [
+            'order_id' => $order->id,
+            'payment_method_id' => $bca->id,
+            'amount' => 179000,
+            'status' => 'paid',
+            'paid_at' => now()->format('Y-m-d H:i:s'),
+        ])->assertRedirect();
+
+        $payment = Payment::query()->with('invoice')->firstOrFail();
+        $this->assertNotNull($payment->invoice);
+        $this->assertSame('pending', $payment->invoice->email_status);
+        Queue::assertNotPushed(SendInvoiceEmailJob::class);
+
+        $this->actingAs($user)->get(route('admin.payments.show', $payment))
+            ->assertOk()
+            ->assertSee('Kirim Invoice ke Email');
+
+        $this->actingAs($user)->post(route('admin.payments.send-invoice', $payment))
+            ->assertRedirect();
+        Queue::assertPushed(SendInvoiceEmailJob::class, fn (SendInvoiceEmailJob $job): bool => $job->invoiceId === $payment->invoice->id);
+    }
+
+    public function test_pending_payment_cannot_send_invoice_manually(): void
+    {
+        Queue::fake([SendInvoiceEmailJob::class]);
+        $user = User::factory()->create();
+        $payment = Payment::factory()->create(['status' => 'pending', 'paid_at' => null]);
+
+        $this->actingAs($user)
+            ->from(route('admin.payments.show', $payment))
+            ->post(route('admin.payments.send-invoice', $payment))
+            ->assertRedirect(route('admin.payments.show', $payment))
+            ->assertSessionHasErrors('invoice');
+
+        Queue::assertNotPushed(SendInvoiceEmailJob::class);
+        $this->assertDatabaseMissing('invoices', ['payment_id' => $payment->id]);
     }
 }

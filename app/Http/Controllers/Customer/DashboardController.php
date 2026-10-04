@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\Invitation;
 use App\Models\InvitationGuest;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,6 +14,14 @@ class DashboardController extends Controller
 {
     public function __invoke(Request $request): View
     {
+        /** @var Order|null $order */
+        $order = $request->attributes->get('customerOrder');
+        if ($order !== null) {
+            return view('customer.orders.dashboard', [
+                'order' => $order->load('catalog', 'servicePackage', 'payments.invoice'),
+            ]);
+        }
+
         /** @var Invitation $invitation */
         $invitation = $request->attributes->get('customerInvitation');
         $filters = $request->validate([

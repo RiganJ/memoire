@@ -7,7 +7,14 @@
             <main class="min-w-0">
                 <header class="sticky top-0 z-30 flex h-20 items-center justify-between gap-4 border-b border-[#582308]/10 bg-[#f4efe7]/90 px-5 backdrop-blur-xl sm:px-8 lg:h-24 lg:px-10">
                     <div class="min-w-0"><a href="{{ route('admin.templates.index') }}" class="text-xs text-[#582308]/50 transition hover:text-[#582308]"><i class="fa-solid fa-arrow-left mr-2"></i>Template Undangan</a><h1 class="mt-1 truncate font-display text-2xl text-[#582308] sm:text-3xl">{{ $template->name }}</h1></div>
-                    <a href="{{ route('admin.templates.preview', $template) }}" target="_blank" rel="noopener" class="flex h-10 shrink-0 items-center gap-2 rounded-full border border-[#582308]/12 bg-white px-4 text-xs font-semibold text-[#582308] transition hover:bg-[#f7f0e5]"><i class="fa-regular fa-eye"></i><span class="hidden sm:inline">Buka Preview</span></a>
+                    <div class="flex shrink-0 items-center gap-2">
+                        <a href="{{ route('admin.templates.preview', $template) }}" target="_blank" rel="noopener" class="flex h-10 items-center gap-2 rounded-full border border-[#582308]/12 bg-white px-4 text-xs font-semibold text-[#582308] transition hover:bg-[#f7f0e5]" title="Preview internal, hanya dapat dibuka admin"><i class="fa-solid fa-user-shield"></i><span class="hidden sm:inline">Preview Admin</span></a>
+                        @if ($template->status === 'published')
+                            <a href="{{ route('public.templates.preview', $template) }}" target="_blank" rel="noopener" class="flex h-10 items-center gap-2 rounded-full bg-[#582308] px-4 text-xs font-semibold text-white transition hover:bg-[#713719]" title="Preview yang dapat dibuka tanpa login"><i class="fa-solid fa-globe"></i><span class="hidden sm:inline">Preview Publik</span></a>
+                        @else
+                            <span class="flex h-10 cursor-not-allowed items-center gap-2 rounded-full bg-[#582308]/10 px-4 text-xs font-semibold text-[#582308]/40" title="Publikasikan template untuk mengaktifkan preview publik"><i class="fa-solid fa-globe"></i><span class="hidden sm:inline">Preview Publik</span></span>
+                        @endif
+                    </div>
                 </header>
 
                 <div class="mx-auto max-w-6xl space-y-6 p-5 sm:p-8 lg:p-10">
