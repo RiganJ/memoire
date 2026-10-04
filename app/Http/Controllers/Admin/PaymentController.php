@@ -12,7 +12,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PaymentController extends Controller
@@ -64,6 +66,41 @@ class PaymentController extends Controller
     public function show(Payment $payment): View
     {
         return view('admin.payments.show', ['payment' => $payment->load(['order', 'paymentMethod', 'invoice'])]);
+    }
+
+    public function proof(Payment $payment): BinaryFileResponse
+    {
+        abort_unless($payment->proof_path && Storage::disk('local')->exists($payment->proof_path), 404);
+
+        return response()->file(Storage::disk('local')->path($payment->proof_path));
+    }
+
+    public function verify(Request $request, Payment $payment, InvoiceService $invoices): RedirectResponse
+    {
+        abort_unless($payment->proof_path, 404);
+
+        $data = $request->validate([
+            'status' => ['required', 'in:paid,failed'],
+            'notes' => ['nullable', 'string', 'max:2000'],
+        ]);
+
+        $payment->update([
+            'status' => $data['status'],
+            'paid_at' => $data['status'] === 'paid' ? now() : null,
+            'failed_at' => $data['status'] === 'failed' ? now() : null,
+            'notes' => $data['notes'] ?? $payment->notes,
+        ]);
+        Payment::syncOrderStatus($payment->fresh()->order);
+
+        if ($data['status'] === 'paid') {
+            $this->createInvoiceForSuccessfulPayment($payment->fresh(), $invoices);
+        }
+
+        return redirect()
+            ->route('admin.payments.show', $payment)
+            ->with('success', $data['status'] === 'paid'
+                ? 'Pembayaran dikonfirmasi lunas.'
+                : 'Bukti pembayaran ditolak. Pesanan masih menunggu pembayaran.');
     }
 
     public function edit(Payment $payment): View

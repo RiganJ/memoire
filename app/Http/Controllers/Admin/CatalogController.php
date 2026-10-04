@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CatalogRequest;
 use App\Models\Catalog;
-use App\Models\OrderFormTemplate;
 use App\Models\ServicePackage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
@@ -67,13 +66,7 @@ class CatalogController extends Controller
             $data['image_path'] = $request->file('image')->store('catalogs', 'public');
         }
 
-        $catalog = Catalog::create($data);
-        $catalog->orderFormTemplate()->create([
-            'name' => 'Form Pesanan '.$catalog->name,
-            'category' => $catalog->category,
-            'description' => 'Lengkapi detail dasar untuk desain '.$catalog->name.'.',
-            'fields' => OrderFormTemplate::BASIC_FIELDS,
-        ]);
+        Catalog::create($data);
 
         return redirect()->route('admin.catalog.index')->with('success', 'Desain berhasil ditambahkan.');
     }
@@ -105,7 +98,6 @@ class CatalogController extends Controller
         }
 
         $catalog->update($data);
-        $catalog->orderFormTemplate?->update(['category' => $catalog->category]);
 
         return redirect()->route('admin.catalog.index')->with('success', 'Desain berhasil diperbarui.');
     }
@@ -133,7 +125,6 @@ class CatalogController extends Controller
             ->select('category')
             ->distinct()
             ->pluck('category')
-            ->merge(OrderFormTemplate::query()->select('category')->distinct()->pluck('category'))
             ->when($catalog, fn ($categories) => $categories->push($catalog->category))
             ->filter()
             ->unique()

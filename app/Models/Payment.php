@@ -16,7 +16,7 @@ class Payment extends Model
     protected $fillable = [
         'uuid', 'order_id', 'payment_method_id', 'service_package_id', 'transaction_number',
         'partner_reference_no', 'dana_reference_no', 'amount', 'currency', 'qr_content',
-        'qr_url', 'qr_image', 'status', 'expires_at', 'paid_at', 'failed_at', 'notes',
+        'qr_url', 'qr_image', 'proof_path', 'proof_submitted_at', 'status', 'expires_at', 'paid_at', 'failed_at', 'notes',
     ];
 
     protected function casts(): array
@@ -26,6 +26,7 @@ class Payment extends Model
             'expires_at' => 'datetime',
             'paid_at' => 'datetime',
             'failed_at' => 'datetime',
+            'proof_submitted_at' => 'datetime',
         ];
     }
 

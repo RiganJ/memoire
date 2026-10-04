@@ -42,9 +42,11 @@ Route::prefix('live-chat')->name('guest.chat.')->group(function (): void {
 });
 
 Route::get('/pemesanan/katalog', [PublicOrderController::class, 'catalogs'])->name('public.orders.catalogs');
+Route::get('/pemesanan/metode-pembayaran', [PublicOrderController::class, 'paymentMethods'])->name('public.orders.payment-methods');
 Route::get('/pemesanan/katalog/{catalog}/form', [PublicOrderController::class, 'form'])->name('public.orders.form');
 Route::post('/pemesanan', [PublicOrderController::class, 'store'])->middleware('throttle:8,1')->name('public.orders.store');
 Route::patch('/pemesanan/{order:uuid}', [PublicOrderController::class, 'update'])->middleware('throttle:8,1')->name('public.orders.update');
+Route::post('/pemesanan/{order:uuid}/bukti-pembayaran', [PublicPaymentController::class, 'submitProof'])->middleware('throttle:5,1')->name('public.payments.proof.store');
 Route::get('/paket-harga', [PublicPackageController::class, 'index'])->name('public.packages.index');
 
 Route::post('/payment/dana/generate', [PublicPaymentController::class, 'store'])->middleware('throttle:5,1')->name('public.payments.dana.store');
@@ -98,10 +100,11 @@ Route::middleware('auth')->group(function (): void {
     Route::resource('/admin/pelanggan', CustomerController::class)
         ->parameters(['pelanggan' => 'customer'])
         ->names('admin.customers');
+    Route::patch('/admin/form-pesanan/{orderForm}/activate', [OrderFormTemplateController::class, 'activate'])->name('admin.order-forms.activate');
     Route::resource('/admin/form-pesanan', OrderFormTemplateController::class)
         ->parameters(['form-pesanan' => 'orderForm'])
         ->names('admin.order-forms')
-        ->except('show');
+        ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
     Route::resource('/admin/paket-harga', ServicePackageController::class)
         ->parameters(['paket-harga' => 'package'])
         ->names('admin.packages')
@@ -126,6 +129,8 @@ Route::middleware('auth')->group(function (): void {
     });
     Route::get('/admin/pembayaran/export', [PaymentController::class, 'export'])->name('admin.payments.export');
     Route::post('/admin/pembayaran/{payment}/kirim-invoice', PaymentInvoiceEmailController::class)->name('admin.payments.send-invoice');
+    Route::get('/admin/pembayaran/{payment}/bukti', [PaymentController::class, 'proof'])->name('admin.payments.proof');
+    Route::patch('/admin/pembayaran/{payment}/verifikasi', [PaymentController::class, 'verify'])->name('admin.payments.verify');
     Route::resource('/admin/pembayaran', PaymentController::class)
         ->parameters(['pembayaran' => 'payment'])
         ->names('admin.payments');

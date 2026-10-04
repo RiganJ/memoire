@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Catalog extends Model
 {
@@ -16,9 +15,4 @@ class Catalog extends Model
         'image_path',
         'status',
     ];
-
-    public function orderFormTemplate(): HasOne
-    {
-        return $this->hasOne(OrderFormTemplate::class);
-    }
 }

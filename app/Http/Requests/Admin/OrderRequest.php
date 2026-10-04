@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\ServicePackage;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -26,7 +27,12 @@ class OrderRequest extends FormRequest
             'customer_name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email:rfc', 'max:255'],
             'phone' => ['nullable', 'string', 'max:25', 'regex:/^[0-9+()\-\s]+$/'],
-            'package' => ['required', Rule::in(['Essential', 'Signature', 'Bespoke'])],
+            'package' => ['required', Rule::in([
+                ...ServicePackage::query()->pluck('name')->all(),
+                'Essential',
+                'Signature',
+                'Bespoke',
+            ])],
             'event_type' => ['required', 'string', 'max:80'],
             'total' => ['required', 'numeric', 'min:0', 'max:9999999999.99'],
             'event_date' => ['nullable', 'date'],
@@ -41,7 +47,6 @@ class OrderRequest extends FormRequest
         return [
             'order_number.regex' => 'Nomor pesanan hanya boleh berisi huruf, angka, dan tanda hubung.',
             'phone.regex' => 'Format nomor telepon tidak valid.',
-            'package.in' => 'Paket yang dipilih tidak valid.',
             'status.in' => 'Status pesanan tidak valid.',
             'payment_status.in' => 'Status pembayaran tidak valid.',
         ];

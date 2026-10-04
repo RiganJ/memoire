@@ -8,6 +8,7 @@ use App\Models\Catalog;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderFormTemplate;
+use App\Models\PaymentMethod;
 use App\Models\ServicePackage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,24 @@ use Illuminate\Validation\ValidationException;
 
 class PublicOrderController extends Controller
 {
+    public function paymentMethods(): JsonResponse
+    {
+        return response()->json(PaymentMethod::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get()
+            ->map(fn (PaymentMethod $method): array => [
+                'id' => $method->id,
+                'code' => $method->code,
+                'name' => $method->name,
+                'account_name' => $method->account_name,
+                'account_number' => $method->account_number,
+                'instructions' => $method->instructions,
+                'is_qris' => $method->code === 'dana',
+            ]));
+    }
+
     public function catalogs(): JsonResponse
     {
         $packages = ServicePackage::query()->where('is_active', true)->get()->keyBy('name');
@@ -41,7 +60,7 @@ class PublicOrderController extends Controller
     public function form(Catalog $catalog): JsonResponse
     {
         abort_unless($catalog->status === 'active', 404);
-        $template = $this->orderFormFor($catalog);
+        $template = OrderFormTemplate::active();
 
         return response()->json(['template' => $template ? [
             'id' => $template->id,
@@ -112,18 +131,9 @@ class PublicOrderController extends Controller
             throw ValidationException::withMessages(['package_id' => 'Paket tidak sesuai dengan desain yang dipilih.']);
         }
 
-        $template = $this->orderFormFor($catalog);
-        abort_if($template === null, 404);
+        $template = OrderFormTemplate::active();
 
         return [$catalog, $package, $template];
-    }
-
-    private function orderFormFor(Catalog $catalog): ?OrderFormTemplate
-    {
-        return OrderFormTemplate::query()
-            ->where('catalog_id', $catalog->id)
-            ->first()
-            ?? OrderFormTemplate::query()->whereNull('catalog_id')->where('category', $catalog->category)->first();
     }
 
     /** @param array<string, mixed> $answers */
@@ -154,7 +164,7 @@ class PublicOrderController extends Controller
             'phone' => $customer->phone,
             'package' => $package->name,
             'event_type' => $catalog->category,
-            'form_category' => $template->category,
+            'form_category' => $catalog->category,
             'form_data' => $data['answers'],
             'total' => $package->price,
         ];

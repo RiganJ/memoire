@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\OrderRequest;
 use App\Models\Order;
+use App\Models\ServicePackage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -43,7 +44,7 @@ class OrderController extends Controller
 
     public function create(): View
     {
-        return view('admin.orders.create');
+        return view('admin.orders.create', ['packageOptions' => $this->packageOptions()]);
     }
 
     public function store(OrderRequest $request): RedirectResponse
@@ -57,12 +58,17 @@ class OrderController extends Controller
 
     public function show(Order $order): View
     {
+        $order->load(['servicePackage', 'payments.paymentMethod']);
+
         return view('admin.orders.show', compact('order'));
     }
 
     public function edit(Order $order): View
     {
-        return view('admin.orders.edit', compact('order'));
+        return view('admin.orders.edit', [
+            'order' => $order,
+            'packageOptions' => $this->packageOptions($order),
+        ]);
     }
 
     public function update(OrderRequest $request, Order $order): RedirectResponse
@@ -90,5 +96,19 @@ class OrderController extends Controller
         } while (Order::where('order_number', $number)->exists());
 
         return $number;
+    }
+
+    /** @return array<int, string> */
+    private function packageOptions(?Order $order = null): array
+    {
+        return ServicePackage::query()
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->pluck('name')
+            ->merge(['Essential', 'Signature', 'Bespoke', $order?->package])
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
     }
 }

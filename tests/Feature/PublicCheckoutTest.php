@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Catalog;
 use App\Models\OrderFormTemplate;
+use App\Models\PaymentMethod;
 use App\Models\ServicePackage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -11,6 +12,18 @@ use Tests\TestCase;
 class PublicCheckoutTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_lists_only_active_payment_methods_for_checkout(): void
+    {
+        PaymentMethod::query()->where('code', 'gopay')->update(['is_active' => false]);
+
+        $this->getJson(route('public.orders.payment-methods'))
+            ->assertOk()
+            ->assertJsonCount(2)
+            ->assertJsonPath('0.code', 'bca')
+            ->assertJsonPath('1.code', 'dana')
+            ->assertJsonMissing(['code' => 'gopay']);
+    }
 
     public function test_rejects_checkout_when_required_customer_fields_are_missing(): void
     {
@@ -57,7 +70,7 @@ class PublicCheckoutTest extends TestCase
     {
         $package = ServicePackage::create(['name' => 'Timeless', 'price' => 249000, 'is_active' => true]);
         $catalog = Catalog::create(['name' => 'Arunika', 'category' => 'Wedding', 'package' => 'Timeless', 'color' => '#582308', 'status' => 'active']);
-        OrderFormTemplate::create(['name' => 'Data Pernikahan', 'category' => 'Wedding', 'fields' => [['key' => 'event_name', 'label' => 'Nama Acara', 'type' => 'text', 'required' => true]]]);
+        OrderFormTemplate::active()->update(['fields' => [['key' => 'event_name', 'label' => 'Nama Acara', 'type' => 'text', 'required' => true, 'options' => []]]]);
 
         return [$catalog, $package];
     }

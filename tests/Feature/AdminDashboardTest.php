@@ -409,10 +409,12 @@ class AdminDashboardTest extends TestCase
     {
         $user = User::factory()->create();
         ServicePackage::create(['name' => 'Timeless', 'price' => 249000, 'sort_order' => 1, 'is_active' => true]);
-        OrderFormTemplate::create([
-            'name' => 'Data Pernikahan',
+        Catalog::create([
+            'name' => 'Katalog Pernikahan',
             'category' => 'Pernikahan',
-            'fields' => [],
+            'package' => 'Timeless',
+            'color' => '#582308',
+            'status' => 'draft',
         ]);
 
         $this->actingAs($user)
@@ -581,9 +583,7 @@ class AdminDashboardTest extends TestCase
             'sort_order' => 1,
             'is_active' => true,
         ]);
-        OrderFormTemplate::create([
-            'name' => 'Form Pernikahan',
-            'category' => 'Pernikahan',
+        OrderFormTemplate::active()->update([
             'fields' => [
                 ['key' => 'nama_acara', 'label' => 'Nama acara', 'type' => 'text', 'required' => true, 'options' => []],
             ],
@@ -595,7 +595,7 @@ class AdminDashboardTest extends TestCase
 
         $this->get(route('public.orders.form', $catalog))
             ->assertOk()
-            ->assertJsonPath('template.name', 'Form Pernikahan');
+            ->assertJsonPath('template.name', 'Form Pesanan Utama');
 
         $this->postJson(route('public.orders.store'), [
             'catalog_id' => $catalog->id,

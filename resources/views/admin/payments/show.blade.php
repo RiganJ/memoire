@@ -13,6 +13,7 @@
         <div class="mx-auto max-w-5xl p-5 sm:p-8 lg:p-10">
             @if(session('success'))<div class="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-800">{{ session('success') }}</div>@endif
             @if($errors->has('invoice'))<div class="mb-5 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-800">{{ $errors->first('invoice') }}</div>@endif
+            @if($errors->any() && !$errors->has('invoice'))<div class="mb-5 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-800">{{ $errors->first() }}</div>@endif
             <div class="grid gap-6 lg:grid-cols-[1fr_.65fr]">
                 <section class="rounded-3xl border border-[#582308]/8 bg-white p-6 sm:p-8">
                     <p class="text-[10px] font-bold uppercase tracking-[.2em] text-[#32170b]/40">Informasi transaksi</p>
@@ -35,6 +36,25 @@
                             <p class="mt-4 text-xs leading-5 text-[#32170b]/45">Invoice tersedia setelah pembayaran ditandai berhasil atau lunas.</p>
                         @endif
                     </section>
+                    @if($payment->proof_path)
+                        <section class="rounded-3xl border border-[#582308]/8 bg-white p-6">
+                            <p class="text-[9px] font-bold uppercase tracking-[.18em] text-[#bd9150]">Bukti transfer</p>
+                            <h2 class="mt-2 font-display text-xl text-[#582308]">Tinjau pembayaran customer</h2>
+                            <p class="mt-2 text-xs text-[#32170b]/50">Dikirim {{ $payment->proof_submitted_at?->translatedFormat('d F Y, H.i') ?? '—' }}</p>
+                            <a href="{{ route('admin.payments.proof', $payment) }}" target="_blank" rel="noopener" class="mt-4 flex h-11 items-center justify-center gap-2 rounded-xl border border-[#582308]/12 text-xs font-semibold text-[#582308]"><i class="fa-regular fa-image"></i>Lihat bukti pembayaran</a>
+                            @if($payment->status === 'pending')
+                                <form method="POST" action="{{ route('admin.payments.verify', $payment) }}" class="mt-5 space-y-3">
+                                    @csrf
+                                    @method('PATCH')
+                                    <label class="block text-xs font-semibold text-[#582308]">Catatan verifikasi<textarea name="notes" rows="2" maxlength="2000" class="mt-2 block w-full rounded-xl border border-[#582308]/12 bg-[#faf7f0] px-3 py-2 text-sm" placeholder="Opsional">{{ old('notes', $payment->notes) }}</textarea></label>
+                                    <button name="status" value="paid" class="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 text-xs font-bold text-white"><i class="fa-solid fa-circle-check"></i>Konfirmasi lunas</button>
+                                    <button name="status" value="failed" class="flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-red-200 text-xs font-bold text-red-700 hover:bg-red-50"><i class="fa-solid fa-circle-xmark"></i>Tolak bukti</button>
+                                </form>
+                            @else
+                                <p class="mt-4 rounded-xl bg-[#faf7f0] p-3 text-xs text-[#32170b]/55">Status bukti: <strong>{{ $statusLabels[$payment->status] ?? ucfirst($payment->status) }}</strong></p>
+                            @endif
+                        </section>
+                    @endif
                 </aside>
             </div>
         </div>

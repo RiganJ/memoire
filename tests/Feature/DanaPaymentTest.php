@@ -47,6 +47,18 @@ class DanaPaymentTest extends TestCase
         $this->assertDatabaseHas('payments', ['order_id' => $order->id, 'amount' => 249000, 'qr_content' => '000201QRIS']);
     }
 
+    public function test_generate_qris_does_not_reuse_pending_payment_from_another_method(): void
+    {
+        [$order, $payment] = $this->paymentRecords();
+        $payment->update(['payment_method_id' => PaymentMethod::query()->where('code', 'bca')->value('id')]);
+        $this->mock(DanaQrisGateway::class, fn (MockInterface $mock) => $mock->shouldReceive('generate')->once()->andReturn(new DanaQrisResult('DANA-REF', '000201QRIS', null, null)));
+
+        $this->post(route('public.payments.dana.store'), ['order_uuid' => $order->uuid])->assertOk();
+
+        $this->assertDatabaseCount('payments', 2);
+        $this->assertDatabaseHas('payments', ['order_id' => $order->id, 'payment_method_id' => PaymentMethod::query()->where('code', 'dana')->value('id'), 'qr_content' => '000201QRIS']);
+    }
+
     public function test_generate_qris_is_unavailable_when_dana_method_is_inactive(): void
     {
         [$order, $payment] = $this->paymentRecords();
