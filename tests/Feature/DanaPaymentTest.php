@@ -6,6 +6,7 @@ use App\Contracts\DanaQrisGateway;
 use App\Data\DanaQrisResult;
 use App\Data\DanaWebhookData;
 use App\Jobs\SendInvoiceEmailJob;
+use App\Mail\PaymentInvoiceMail;
 use App\Models\Catalog;
 use App\Models\Invoice;
 use App\Models\Order;
@@ -14,6 +15,7 @@ use App\Models\PaymentMethod;
 use App\Models\ServicePackage;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Str;
 use Mockery\MockInterface;
@@ -181,6 +183,16 @@ class DanaPaymentTest extends TestCase
             ->assertSee('Jakarta')
             ->assertSee('Gunakan nuansa hangat.')
             ->assertSee('DANA-INVOICE-001');
+
+        config(['app.url' => 'https://memoire.test']);
+        Mail::mailer('array')->to($invoice->customer_email)->send(new PaymentInvoiceMail($invoice));
+
+        $sentMessage = Mail::mailer('array')->getSymfonyTransport()->messages()->first()->getOriginalMessage();
+        $html = $sentMessage->getHtmlBody();
+
+        $this->assertStringContainsString('cid:logo-memoire@memoire', $html);
+        $this->assertStringContainsString(route('public.invoices.show', $invoice), $html);
+        $this->assertSame('logo-memoire@memoire', $sentMessage->getAttachments()[0]->getContentId());
     }
 
     public function test_intimate_package_receives_access_code_only_after_successful_payment(): void

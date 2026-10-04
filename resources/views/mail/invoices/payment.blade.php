@@ -1,6 +1,6 @@
 <x-mail::message>
 <div style="text-align: center; margin-bottom: 24px;">
-<img src="{{ asset('images/logo-memoire.png') }}" width="96" height="96" alt="Memoire" style="display: inline-block; object-fit: contain;">
+<img src="cid:logo-memoire@memoire" width="96" height="96" alt="Memoire" style="display: inline-block; object-fit: contain;">
 </div>
 
 # Pembayaran Berhasil
