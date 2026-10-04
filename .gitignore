@@ -7,7 +7,9 @@
 *.pem
 *.p12
 *.pfx
-
+/storage/app/google/memoire-510518-1efeda17bf49.json
+# DANA credentials
+/storage/app/keys/*.pem
 # PHP and JavaScript dependencies
 /node_modules/
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
-    <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Login Customer — Memoire</title>@vite('resources/css/app.css')</head>
+    <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Login Customer — Memoire</title>@include('partials.favicon')@vite('resources/css/app.css')</head>
     <body class="min-h-screen bg-[#32170b] text-[#fffaf3] antialiased">
         <main class="relative grid min-h-screen place-items-center overflow-hidden p-5">
             <div class="pointer-events-none absolute -left-24 -top-24 size-96 rounded-full border border-[#ead5ac]/10"></div><div class="pointer-events-none absolute -bottom-44 -right-32 size-[34rem] rounded-full border border-[#ead5ac]/10"></div>

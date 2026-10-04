@@ -259,6 +259,8 @@ class AdminDashboardTest extends TestCase
     public function test_admin_can_create_update_and_delete_a_catalog_design(): void
     {
         $user = User::factory()->create();
+        ServicePackage::create(['name' => 'Signature', 'price' => 179000, 'sort_order' => 1, 'is_active' => true]);
+        ServicePackage::create(['name' => 'Bespoke', 'price' => 399000, 'sort_order' => 2, 'is_active' => true]);
 
         $this->actingAs($user)
             ->get(route('admin.catalog.create'))
@@ -329,6 +331,7 @@ class AdminDashboardTest extends TestCase
     {
         Storage::fake('public');
         $user = User::factory()->create();
+        ServicePackage::create(['name' => 'Signature', 'price' => 179000, 'sort_order' => 1, 'is_active' => true]);
 
         $this->actingAs($user)->post(route('admin.catalog.store'), [
             'name' => 'Arunika Upload',
@@ -343,6 +346,25 @@ class AdminDashboardTest extends TestCase
 
         $this->assertNotNull($catalog->image_path);
         Storage::disk('public')->assertExists($catalog->image_path);
+    }
+
+    public function test_catalog_form_uses_category_and_package_dropdowns_from_managed_data(): void
+    {
+        $user = User::factory()->create();
+        ServicePackage::create(['name' => 'Timeless', 'price' => 249000, 'sort_order' => 1, 'is_active' => true]);
+        OrderFormTemplate::create([
+            'name' => 'Data Pernikahan',
+            'category' => 'Pernikahan',
+            'fields' => [],
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('admin.catalog.create'))
+            ->assertOk()
+            ->assertSee('name="category"', false)
+            ->assertSee('<option value="Pernikahan"', false)
+            ->assertSee('name="package"', false)
+            ->assertSee('<option value="Timeless"', false);
     }
 
     public function test_authenticated_user_can_view_customers_page(): void
@@ -496,7 +518,7 @@ class AdminDashboardTest extends TestCase
             'link' => 'https://memoire.test/desain/arunika',
             'status' => 'active',
         ]);
-        ServicePackage::create([
+        $package = ServicePackage::create([
             'name' => 'Signature',
             'price' => 179000,
             'sort_order' => 1,
@@ -512,8 +534,7 @@ class AdminDashboardTest extends TestCase
 
         $catalogResponse = $this->getJson(route('public.orders.catalogs'))
             ->assertOk()
-            ->assertJsonFragment(['id' => $catalog->id, 'link' => 'https://memoire.test/desain/arunika']);
-        $this->assertArrayNotHasKey('price', $catalogResponse->json('0'));
+            ->assertJsonFragment(['id' => $catalog->id, 'package_id' => $package->id, 'price' => 179000, 'link' => 'https://memoire.test/desain/arunika']);
 
         $this->get(route('public.orders.form', $catalog))
             ->assertOk()
@@ -521,11 +542,12 @@ class AdminDashboardTest extends TestCase
 
         $this->postJson(route('public.orders.store'), [
             'catalog_id' => $catalog->id,
+            'package_id' => $package->id,
             'name' => 'Diana Righan',
             'email' => 'diana@example.com',
             'phone' => '08123456789',
             'answers' => ['nama_acara' => 'Diana & Rigan'],
-        ])->assertCreated()->assertJsonPath('message', 'Pesanan Anda sudah kami terima.');
+        ])->assertCreated()->assertJsonPath('message', 'Data pemesan berhasil disimpan.');
 
         $this->assertDatabaseHas('customers', ['email' => 'diana@example.com', 'name' => 'Diana Righan', 'total_orders' => 1]);
         $this->assertDatabaseHas('orders', ['catalog_id' => $catalog->id, 'event_type' => 'Pernikahan', 'total' => 179000]);

@@ -26,7 +26,7 @@ class CatalogRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:120'],
             'category' => ['required', 'string', 'max:80'],
-            'package' => ['required', Rule::in(['Essential', 'Signature', 'Bespoke'])],
+            'package' => ['required', 'string', Rule::exists('service_packages', 'name')],
             'color' => ['required', 'regex:/\A#[0-9A-Fa-f]{6}\z/'],
             'link' => ['nullable', 'url:http,https', 'max:2048'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
@@ -37,7 +37,7 @@ class CatalogRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'package.in' => 'Paket yang dipilih tidak valid.',
+            'package.exists' => 'Paket yang dipilih tidak tersedia pada menu Paket & Harga.',
             'color.regex' => 'Warna harus menggunakan format hex, misalnya #6b3520.',
             'image.max' => 'Ukuran gambar desain maksimal 5 MB.',
             'image.mimes' => 'Gambar desain harus berformat JPG, PNG, atau WebP.',

@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CatalogRequest;
 use App\Models\Catalog;
+use App\Models\OrderFormTemplate;
+use App\Models\ServicePackage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -50,7 +53,7 @@ class CatalogController extends Controller
      */
     public function create(): View
     {
-        return view('admin.catalog.create');
+        return view('admin.catalog.create', $this->formOptions());
     }
 
     /**
@@ -74,7 +77,10 @@ class CatalogController extends Controller
      */
     public function edit(Catalog $catalog): View
     {
-        return view('admin.catalog.edit', compact('catalog'));
+        return view('admin.catalog.edit', [
+            'catalog' => $catalog,
+            ...$this->formOptions($catalog),
+        ]);
     }
 
     /**
@@ -109,5 +115,30 @@ class CatalogController extends Controller
         $catalog->delete();
 
         return redirect()->route('admin.catalog.index')->with('success', 'Desain berhasil dihapus.');
+    }
+
+    /**
+     * @return array{categoryOptions: Collection<int, string>, packageOptions: Collection<int, string>}
+     */
+    private function formOptions(?Catalog $catalog = null): array
+    {
+        $categoryOptions = Catalog::query()
+            ->select('category')
+            ->distinct()
+            ->pluck('category')
+            ->merge(OrderFormTemplate::query()->select('category')->distinct()->pluck('category'))
+            ->when($catalog, fn ($categories) => $categories->push($catalog->category))
+            ->filter()
+            ->unique()
+            ->sort()
+            ->values();
+
+        $packageOptions = ServicePackage::query()
+            ->orderByDesc('is_active')
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->pluck('name');
+
+        return compact('categoryOptions', 'packageOptions');
     }
 }

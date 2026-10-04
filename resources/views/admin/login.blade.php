@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Login Admin Memoire">
         <title>Login Admin — Memoire</title>
+        @include('partials.favicon')
         @vite('resources/css/app.css')
     </head>
     <body class="min-h-screen bg-[#f4efe7] text-[#32170b] antialiased">

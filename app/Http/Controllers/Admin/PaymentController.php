@@ -21,7 +21,7 @@ class PaymentController extends Controller
         $filters = $this->validatedFilters($request);
         $payments = $this->filteredPayments($filters)->with(['order', 'paymentMethod'])->latest('paid_at')->latest()->paginate(10)->withQueryString();
         $now = now();
-        $successfulPayments = Payment::query()->where('status', 'success');
+        $successfulPayments = Payment::query()->whereIn('status', ['success', 'paid']);
         $refundedPayments = Payment::query()->where('status', 'refunded');
         $summary = [
             'month_revenue' => (clone $successfulPayments)->whereBetween('paid_at', [$now->copy()->startOfMonth(), $now->copy()->endOfMonth()])->sum('amount'),
@@ -30,7 +30,7 @@ class PaymentController extends Controller
             'pending' => Payment::query()->where('status', 'pending')->count(),
             'refunded' => (clone $refundedPayments)->whereBetween('paid_at', [$now->copy()->startOfMonth(), $now->copy()->endOfMonth()])->sum('amount'),
             'refund_transactions' => (clone $refundedPayments)->whereBetween('paid_at', [$now->copy()->startOfMonth(), $now->copy()->endOfMonth()])->count(),
-            'available_balance' => Payment::query()->where('status', 'success')->sum('amount') - Payment::query()->where('status', 'refunded')->sum('amount'),
+            'available_balance' => Payment::query()->whereIn('status', ['success', 'paid'])->sum('amount') - Payment::query()->where('status', 'refunded')->sum('amount'),
         ];
 
         return view('admin.payments.index', [
@@ -118,7 +118,7 @@ class PaymentController extends Controller
     {
         return $request->validate([
             'search' => ['nullable', 'string', 'max:100'],
-            'status' => ['nullable', 'string', 'in:pending,success,refunded'],
+            'status' => ['nullable', 'string', 'in:pending,success,paid,failed,expired,cancelled,refunded'],
             'payment_method_id' => ['nullable', 'integer', 'exists:payment_methods,id'],
             'period' => ['nullable', 'integer', 'in:6,12'],
         ]);
@@ -142,7 +142,7 @@ class PaymentController extends Controller
     private function revenueChart(int $period): Collection
     {
         $months = collect(range($period - 1, 0))->map(fn (int $monthsAgo) => now()->copy()->subMonths($monthsAgo)->startOfMonth());
-        $amounts = $months->map(fn ($month) => (float) Payment::query()->where('status', 'success')->whereBetween('paid_at', [$month->copy()->startOfMonth(), $month->copy()->endOfMonth()])->sum('amount'));
+        $amounts = $months->map(fn ($month) => (float) Payment::query()->whereIn('status', ['success', 'paid'])->whereBetween('paid_at', [$month->copy()->startOfMonth(), $month->copy()->endOfMonth()])->sum('amount'));
         $maximum = max(1, (float) $amounts->max());
 
         return $months->map(fn ($month, int $index) => [

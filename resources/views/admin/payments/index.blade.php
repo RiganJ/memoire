@@ -3,8 +3,8 @@
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Pembayaran Memoire"><title>Pembayaran — Memoire Admin</title>@vite('resources/css/app.css')</head>
 <body class="bg-[#f4efe7] text-[#32170b] antialiased">
 @php
-    $statusLabels = ['pending' => 'Menunggu', 'success' => 'Berhasil', 'refunded' => 'Dikembalikan'];
-    $statusClasses = ['pending' => 'bg-amber-50 text-amber-700', 'success' => 'bg-emerald-50 text-emerald-700', 'refunded' => 'bg-stone-100 text-stone-600'];
+    $statusLabels = ['pending' => 'Menunggu', 'success' => 'Berhasil', 'paid' => 'Lunas', 'failed' => 'Gagal', 'expired' => 'Kedaluwarsa', 'cancelled' => 'Dibatalkan', 'refunded' => 'Dikembalikan'];
+    $statusClasses = ['pending' => 'bg-amber-50 text-amber-700', 'success' => 'bg-emerald-50 text-emerald-700', 'paid' => 'bg-emerald-50 text-emerald-700', 'failed' => 'bg-red-50 text-red-700', 'expired' => 'bg-stone-100 text-stone-600', 'cancelled' => 'bg-stone-100 text-stone-600', 'refunded' => 'bg-stone-100 text-stone-600'];
     $methodIcons = ['bca' => 'fa-building-columns', 'dana' => 'fa-wallet', 'gopay' => 'fa-mobile-screen-button'];
 @endphp
 <div class="min-h-screen lg:grid lg:grid-cols-[17rem_1fr]">

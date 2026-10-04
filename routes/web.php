@@ -16,11 +16,14 @@ use App\Http\Controllers\Admin\TemplateController;
 use App\Http\Controllers\Customer\AuthController as CustomerAuthController;
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Customer\InvitationGuestController as CustomerInvitationGuestController;
+use App\Http\Controllers\DanaWebhookController;
 use App\Http\Controllers\GuestChatController;
 use App\Http\Controllers\PublicInvitationAssetController;
 use App\Http\Controllers\PublicInvitationController;
+use App\Http\Controllers\PublicInvoiceController;
 use App\Http\Controllers\PublicOrderController;
 use App\Http\Controllers\PublicPackageController;
+use App\Http\Controllers\PublicPaymentController;
 use App\Models\Invitation;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +41,14 @@ Route::prefix('live-chat')->name('guest.chat.')->group(function (): void {
 Route::get('/pemesanan/katalog', [PublicOrderController::class, 'catalogs'])->name('public.orders.catalogs');
 Route::get('/pemesanan/katalog/{catalog}/form', [PublicOrderController::class, 'form'])->name('public.orders.form');
 Route::post('/pemesanan', [PublicOrderController::class, 'store'])->middleware('throttle:8,1')->name('public.orders.store');
+Route::patch('/pemesanan/{order:uuid}', [PublicOrderController::class, 'update'])->middleware('throttle:8,1')->name('public.orders.update');
 Route::get('/paket-harga', [PublicPackageController::class, 'index'])->name('public.packages.index');
+
+Route::post('/payment/dana/generate', [PublicPaymentController::class, 'store'])->middleware('throttle:5,1')->name('public.payments.dana.store');
+Route::get('/payment/{payment:uuid}', [PublicPaymentController::class, 'show'])->name('public.payments.show');
+Route::get('/payment/{payment:uuid}/status', [PublicPaymentController::class, 'status'])->middleware('throttle:30,1')->name('public.payments.status');
+Route::get('/invoice/{invoice}', [PublicInvoiceController::class, 'show'])->name('public.invoices.show');
+Route::post('/v1.0/debit/notify', DanaWebhookController::class)->middleware('throttle:120,1')->name('dana.webhook');
 
 Route::prefix('customer')->name('customer.')->group(function (): void {
     Route::get('/login', [CustomerAuthController::class, 'create'])->name('login');

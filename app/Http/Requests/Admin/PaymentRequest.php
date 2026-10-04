@@ -34,8 +34,8 @@ class PaymentRequest extends FormRequest
                 Rule::unique('payments', 'transaction_number')->ignore($this->route('payment')),
             ],
             'amount' => ['required', 'numeric', 'min:0', 'max:9999999999.99'],
-            'status' => ['required', Rule::in(['pending', 'success', 'refunded'])],
-            'paid_at' => ['required_unless:status,pending', 'nullable', 'date'],
+            'status' => ['required', Rule::in(['pending', 'success', 'paid', 'failed', 'expired', 'cancelled', 'refunded'])],
+            'paid_at' => ['required_if:status,success,paid,refunded', 'nullable', 'date'],
             'notes' => ['nullable', 'string', 'max:2000'],
         ];
     }

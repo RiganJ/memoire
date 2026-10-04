@@ -13,8 +13,10 @@ class Order extends Model
 
     protected $fillable = [
         'order_number',
+        'uuid',
         'customer_id',
         'catalog_id',
+        'service_package_id',
         'customer_name',
         'email',
         'phone',
@@ -46,6 +48,11 @@ class Order extends Model
     public function catalog(): BelongsTo
     {
         return $this->belongsTo(Catalog::class);
+    }
+
+    public function servicePackage(): BelongsTo
+    {
+        return $this->belongsTo(ServicePackage::class);
     }
 
     public function payments(): HasMany

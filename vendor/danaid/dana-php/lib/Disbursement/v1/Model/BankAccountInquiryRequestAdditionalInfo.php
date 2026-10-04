@@ -1,0 +1,315 @@
+<?php
+
+namespace Dana\Disbursement\v1\Model;
+
+use Dana\ObjectSerializer;
+use Dana\Model\BaseModel;
+use Dana\Disbursement\v1\Enum;
+
+class BankAccountInquiryRequestAdditionalInfo extends BaseModel
+{
+    public const DISCRIMINATOR = null;
+
+    protected static $openAPIModelName = 'BankAccountInquiryRequestAdditionalInfo';
+
+    protected static $openAPITypes = [
+        'fundType' => 'string',
+        'externalDivisionId' => 'string',
+        'chargeTarget' => 'string',
+        'beneficiaryBankCode' => 'string',
+        'beneficiaryAccountName' => 'string',
+        'accountType' => 'string',
+        'accessToken' => 'string'
+    ];
+
+    protected static $openAPIFormats = [
+        
+    ];
+
+    protected static array $openAPINullables = [
+        
+    ];
+
+
+    public static function openAPITypes()
+    {
+        return self::$openAPITypes;
+    }
+
+    public static function openAPIFormats()
+    {
+        return self::$openAPIFormats;
+    }
+
+    protected static function openAPINullables(): array
+    {
+        return self::$openAPINullables;
+    }
+
+    public function getModelName()
+    {
+        return self::$openAPIModelName;
+    }
+
+    public const CHARGE_TARGET_DIVISION = 'DIVISION';
+    public const CHARGE_TARGET_MERCHANT = 'MERCHANT';
+    public const ACCOUNT_TYPE_MERCHANT_DEPOSIT_ACCOUNT = 'MERCHANT_DEPOSIT_ACCOUNT';
+    public const ACCOUNT_TYPE_SETTLEMENT_ACCOUNT = 'SETTLEMENT_ACCOUNT';
+    public const ACCOUNT_TYPE_DIVISION_DEPOSIT_ACCOUNT = 'DIVISION_DEPOSIT_ACCOUNT';
+
+    public function getChargeTargetAllowableValues()
+    {
+        return [
+            self::CHARGE_TARGET_DIVISION,
+            self::CHARGE_TARGET_MERCHANT,
+        ];
+    }
+
+    public function getAccountTypeAllowableValues()
+    {
+        return [
+            self::ACCOUNT_TYPE_MERCHANT_DEPOSIT_ACCOUNT,
+            self::ACCOUNT_TYPE_SETTLEMENT_ACCOUNT,
+            self::ACCOUNT_TYPE_DIVISION_DEPOSIT_ACCOUNT,
+        ];
+    }
+
+
+
+
+    public function __construct(?array $data = null)
+    {
+        $localData = [];
+        $defaultValues = [
+            
+        ];
+        
+        // Initialize all properties with defaults or values from input data
+        foreach (array_keys(static::$openAPITypes) as $property) {
+            $localData[$property] = isset($data) && array_key_exists($property, $data)
+                ? $data[$property]
+                : ($defaultValues[$property] ?? null);
+        }
+        
+        parent::__construct($localData);
+    }
+
+
+    public function listInvalidProperties()
+    {
+        $invalidProperties = parent::listInvalidProperties();
+
+        if ($this->container['fundType'] === null) {
+            $invalidProperties[] = "'fundType' can't be null";
+        }
+        if ((mb_strlen($this->container['fundType']) > 64)) {
+            $invalidProperties[] = "invalid value for 'fundType', the character length must be smaller than or equal to 64.";
+        }
+
+        if (!is_null($this->container['externalDivisionId']) && (mb_strlen($this->container['externalDivisionId']) > 64)) {
+            $invalidProperties[] = "invalid value for 'externalDivisionId', the character length must be smaller than or equal to 64.";
+        }
+
+        $allowedValues = $this->getChargeTargetAllowableValues();
+        if (!is_null($this->container['chargeTarget']) && !in_array($this->container['chargeTarget'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'chargeTarget', must be one of '%s'",
+                $this->container['chargeTarget'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if (!is_null($this->container['chargeTarget']) && (mb_strlen($this->container['chargeTarget']) > 64)) {
+            $invalidProperties[] = "invalid value for 'chargeTarget', the character length must be smaller than or equal to 64.";
+        }
+
+        if ($this->container['beneficiaryBankCode'] === null) {
+            $invalidProperties[] = "'beneficiaryBankCode' can't be null";
+        }
+        if ((mb_strlen($this->container['beneficiaryBankCode']) > 8)) {
+            $invalidProperties[] = "invalid value for 'beneficiaryBankCode', the character length must be smaller than or equal to 8.";
+        }
+
+        if (!is_null($this->container['beneficiaryAccountName']) && (mb_strlen($this->container['beneficiaryAccountName']) > 64)) {
+            $invalidProperties[] = "invalid value for 'beneficiaryAccountName', the character length must be smaller than or equal to 64.";
+        }
+
+        $allowedValues = $this->getAccountTypeAllowableValues();
+        if (!is_null($this->container['accountType']) && !in_array($this->container['accountType'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'accountType', must be one of '%s'",
+                $this->container['accountType'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if (!is_null($this->container['accountType']) && (mb_strlen($this->container['accountType']) > 64)) {
+            $invalidProperties[] = "invalid value for 'accountType', the character length must be smaller than or equal to 64.";
+        }
+
+        if (!is_null($this->container['accessToken']) && (mb_strlen($this->container['accessToken']) > 512)) {
+            $invalidProperties[] = "invalid value for 'accessToken', the character length must be smaller than or equal to 512.";
+        }
+
+        return $invalidProperties;
+    }
+
+
+
+    public function getFundType()
+    {
+        return $this->container['fundType'];
+    }
+
+    public function setFundType($fundType)
+    {
+        if (is_null($fundType)) {
+            throw new \InvalidArgumentException('non-nullable fundType cannot be null');
+        }
+        if ((mb_strlen($fundType) > 64)) {
+            throw new \InvalidArgumentException('invalid length for $fundType when calling BankAccountInquiryRequestAdditionalInfo., must be smaller than or equal to 64.');
+        }
+
+        $this->container['fundType'] = $fundType;
+
+        return $this;
+    }
+
+    public function getExternalDivisionId()
+    {
+        return $this->container['externalDivisionId'];
+    }
+
+    public function setExternalDivisionId($externalDivisionId)
+    {
+        if (is_null($externalDivisionId)) {
+            throw new \InvalidArgumentException('non-nullable externalDivisionId cannot be null');
+        }
+        if ((mb_strlen($externalDivisionId) > 64)) {
+            throw new \InvalidArgumentException('invalid length for $externalDivisionId when calling BankAccountInquiryRequestAdditionalInfo., must be smaller than or equal to 64.');
+        }
+
+        $this->container['externalDivisionId'] = $externalDivisionId;
+
+        return $this;
+    }
+
+    public function getChargeTarget()
+    {
+        return $this->container['chargeTarget'];
+    }
+
+    public function setChargeTarget($chargeTarget)
+    {
+        if (is_null($chargeTarget)) {
+            throw new \InvalidArgumentException('non-nullable chargeTarget cannot be null');
+        }
+        $allowedValues = $this->getChargeTargetAllowableValues();
+        if (!in_array($chargeTarget, $allowedValues, true) && !empty($chargeTarget)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'chargeTarget', must be one of '%s'",
+                    $chargeTarget,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        if ((mb_strlen($chargeTarget) > 64)) {
+            throw new \InvalidArgumentException('invalid length for $chargeTarget when calling BankAccountInquiryRequestAdditionalInfo., must be smaller than or equal to 64.');
+        }
+
+        $this->container['chargeTarget'] = $chargeTarget;
+
+        return $this;
+    }
+
+    public function getBeneficiaryBankCode()
+    {
+        return $this->container['beneficiaryBankCode'];
+    }
+
+    public function setBeneficiaryBankCode($beneficiaryBankCode)
+    {
+        if (is_null($beneficiaryBankCode)) {
+            throw new \InvalidArgumentException('non-nullable beneficiaryBankCode cannot be null');
+        }
+        if ((mb_strlen($beneficiaryBankCode) > 8)) {
+            throw new \InvalidArgumentException('invalid length for $beneficiaryBankCode when calling BankAccountInquiryRequestAdditionalInfo., must be smaller than or equal to 8.');
+        }
+
+        $this->container['beneficiaryBankCode'] = $beneficiaryBankCode;
+
+        return $this;
+    }
+
+    public function getBeneficiaryAccountName()
+    {
+        return $this->container['beneficiaryAccountName'];
+    }
+
+    public function setBeneficiaryAccountName($beneficiaryAccountName)
+    {
+        if (is_null($beneficiaryAccountName)) {
+            throw new \InvalidArgumentException('non-nullable beneficiaryAccountName cannot be null');
+        }
+        if ((mb_strlen($beneficiaryAccountName) > 64)) {
+            throw new \InvalidArgumentException('invalid length for $beneficiaryAccountName when calling BankAccountInquiryRequestAdditionalInfo., must be smaller than or equal to 64.');
+        }
+
+        $this->container['beneficiaryAccountName'] = $beneficiaryAccountName;
+
+        return $this;
+    }
+
+    public function getAccountType()
+    {
+        return $this->container['accountType'];
+    }
+
+    public function setAccountType($accountType)
+    {
+        if (is_null($accountType)) {
+            throw new \InvalidArgumentException('non-nullable accountType cannot be null');
+        }
+        $allowedValues = $this->getAccountTypeAllowableValues();
+        if (!in_array($accountType, $allowedValues, true) && !empty($accountType)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'accountType', must be one of '%s'",
+                    $accountType,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        if ((mb_strlen($accountType) > 64)) {
+            throw new \InvalidArgumentException('invalid length for $accountType when calling BankAccountInquiryRequestAdditionalInfo., must be smaller than or equal to 64.');
+        }
+
+        $this->container['accountType'] = $accountType;
+
+        return $this;
+    }
+
+    public function getAccessToken()
+    {
+        return $this->container['accessToken'];
+    }
+
+    public function setAccessToken($accessToken)
+    {
+        if (is_null($accessToken)) {
+            throw new \InvalidArgumentException('non-nullable accessToken cannot be null');
+        }
+        if ((mb_strlen($accessToken) > 512)) {
+            throw new \InvalidArgumentException('invalid length for $accessToken when calling BankAccountInquiryRequestAdditionalInfo., must be smaller than or equal to 512.');
+        }
+
+        $this->container['accessToken'] = $accessToken;
+
+        return $this;
+    }
+
+
+}
+
+
