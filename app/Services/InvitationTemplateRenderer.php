@@ -5,12 +5,15 @@ namespace App\Services;
 use App\Models\Invitation;
 use App\Models\InvitationGuest;
 use App\Models\Template;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use RuntimeException;
 
 class InvitationTemplateRenderer
 {
+    public function __construct(private Request $request) {}
+
     public function render(Invitation $invitation, ?InvitationGuest $guest = null): string
     {
         $invitation->loadMissing('template');
@@ -52,11 +55,17 @@ class InvitationTemplateRenderer
         $assetPath = '/invitation-assets/'.Str::of($template->folder_name)->trim('/')->toString();
         $html = strtr($html, [...$placeholders, '{{asset_path}}' => $assetPath]);
 
-        return $this->addLegacyAssetBase($html, $assetPath.'/');
+        return $this->addLegacyAssetBase($html, $assetPath.'/', $this->request->getPathInfo());
     }
 
-    private function addLegacyAssetBase(string $html, string $assetBase): string
+    private function addLegacyAssetBase(string $html, string $assetBase, string $pagePath): string
     {
+        $html = preg_replace_callback(
+            '/(\bhref\s*=\s*)(["\'])#([^"\']*)\2/i',
+            fn (array $matches): string => $matches[1].$matches[2].e($pagePath.'#'.$matches[3]).$matches[2],
+            $html,
+        ) ?? $html;
+
         if (preg_match('/<base\s/i', $html) === 1) {
             return $html;
         }

@@ -123,6 +123,7 @@ class PublicInvitationRenderingTest extends TestCase
             ->assertSee('&lt;script&gt;alert(&quot;guest&quot;)&lt;/script&gt;', false)
             ->assertDontSee('<script>alert("guest")</script>', false)
             ->assertSee('/invitation-assets/midnight-blossom/css/style.css', false)
+            ->assertSee('href="/rigan-salsa/unsafe#details"', false)
             ->assertSee('<base href="/invitation-assets/midnight-blossom/">', false);
     }
 
@@ -173,7 +174,7 @@ class PublicInvitationRenderingTest extends TestCase
             'status' => 'published',
         ]);
         Storage::disk('public')->put('invitations/midnight-blossom/index.html', <<<'HTML'
-<!doctype html><html><head><link rel="stylesheet" href="{{asset_path}}/css/style.css"><script src="js/script.js"></script></head><body><p>KEPADA YTH.</p><h1>{{guest_name}}</h1><p>{{invitation_name}}</p><span>{{groom_name}}</span><span>{{bride_name}}</span></body></html>
+<!doctype html><html><head><link rel="stylesheet" href="{{asset_path}}/css/style.css"><script src="js/script.js"></script></head><body><a href="#details">Detail</a><section id="details"></section><p>KEPADA YTH.</p><h1>{{guest_name}}</h1><p>{{invitation_name}}</p><span>{{groom_name}}</span><span>{{bride_name}}</span></body></html>
 HTML);
         Storage::disk('public')->put('invitations/midnight-blossom/css/style.css', 'body { color: black; }');
         Storage::disk('public')->put('invitations/midnight-blossom/js/script.js', 'window.ready = true;');
