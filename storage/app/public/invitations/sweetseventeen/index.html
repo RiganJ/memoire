@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#bb8654"><meta name="description" content="Aurelia's Sweet Seventeen — a little vintage scrapbook of beautiful memories.">
+  <title>Aurelia's Sweet Seventeen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/sweet-seventeen.css">
+</head>
+<body class="locked">
+  <div class="paper-noise"></div>
+  <section class="cover" id="cover">
+    <div class="cover-collage" aria-hidden="true"><span class="tape t1"></span><span class="flower">✿</span><span class="scribble">♡</span></div>
+    <article class="envelope" id="envelope">
+      <div class="envelope-back"></div><div class="letter">
+        <p class="type-label">YOU'RE INVITED TO</p><h1>Aurelia’s</h1><h2>Sweet Seventeen</h2>
+        <div class="date-stamp">12 · 12 · 2026</div><p class="dear">Dear, <strong data-guest>{{guest_name}}</strong></p>
+        <button id="openBtn">OPEN THE SCRAPBOOK <span>↗</span></button>
+      </div><div class="envelope-front"></div><div class="wax">17</div>
+    </article>
+    <p class="hint">tap to unfold a little story</p>
+  </section>
+
+  <main>
+    <nav><a href="#home" class="brand">A<span>17</span></a><div id="navLinks"><a href="#about">About</a><a href="#moments">Memories</a><a href="#party">Party</a><a href="#location">Location</a><a href="#rsvp">RSVP</a></div><div class="nav-actions"><button id="soundBtn" aria-label="Toggle ambience">♫</button><button id="menuBtn" aria-label="Buka menu" aria-expanded="false">☰</button></div></nav>
+    <header class="hero" id="home">
+      <div class="hero-paper"></div>
+      <div class="doodle d1">★</div><div class="doodle d2">good vibes!</div><div class="doodle d3">♡</div>
+      <div class="hero-copy reveal"><p class="label-cut">ISSUE NO. 17 · SPECIAL EDITION</p><p class="small-script">you’re invited to celebrate</p><h1>Aurelia’s</h1><h2>Sweet Seventeen</h2><p class="hero-date">SATURDAY — DECEMBER 12TH, 2026</p><a href="#about" class="stamp-button">OPEN STORY <span>↓</span></a></div>
+      <div class="polaroid hero-photo draggable" tabindex="0"><div class="photo portrait-art"><span>A</span></div><p>chapter seventeen ♡</p><i class="tape"></i></div>
+      <div class="scroll-note">keep scrolling <b>↓</b></div>
+    </header>
+
+    <section class="intro pad" id="about">
+      <div class="torn-title reveal"><span>DECEMBER 12, 2026</span><h2>Seventeen looks<br><em>good on me.</em></h2></div>
+      <div class="intro-grid">
+        <div class="stack reveal"><div class="polaroid p-back"><div class="photo photo-one"></div><p>little me, big dreams</p></div><div class="polaroid p-front"><div class="photo portrait-art alt"><span>A</span></div><p>almost seventeen!</p></div><span class="clip">⌇</span></div>
+        <article class="notebook reveal"><div class="holes"></div><p class="hand">Dear diary,</p><h3>A new chapter<br>is about to begin.</h3><p>Seventeen years filled with laughter, lessons, dreams, and people who make life extraordinary. I would love for you to be part of this special page in my story.</p><p class="signature">— Aurelia ♡</p><div class="coffee-mark"></div></article>
+      </div>
+    </section>
+
+    <section class="count-section pad">
+      <div class="newspaper reveal"><p>THE BIRTHDAY TIMES</p><h2>THE COUNTDOWN IS ON!</h2><div id="countdown"><div><b id="days">000</b><span>DAYS</span></div><div><b id="hours">00</b><span>HOURS</span></div><div><b id="minutes">00</b><span>MINUTES</span></div><div><b id="seconds">00</b><span>SECONDS</span></div></div><small>UNTIL THE BEST NIGHT EVER</small></div>
+      <div class="burst">17!</div>
+    </section>
+
+    <section class="memories pad" id="moments">
+      <div class="section-title reveal"><span class="label-cut">A FEW PAGES FROM MY STORY</span><h2>Memories that stay forever</h2><p>Some moments deserve to be taped into the pages forever.</p></div>
+      <div class="photo-wall">
+        <figure class="memory m1 reveal"><div class="photo photo-one"></div><figcaption>sunshine state of mind ☼</figcaption></figure>
+        <figure class="memory m2 reveal"><div class="photo photo-two"></div><figcaption>make today amazing</figcaption></figure>
+        <figure class="memory m3 reveal"><div class="photo photo-three"></div><figcaption>collecting little joys</figcaption></figure>
+        <figure class="memory m4 reveal"><div class="photo portrait-art alt"><span>A</span></div><figcaption>main character energy!</figcaption></figure>
+      </div>
+      <p class="hand-note">more laughter, more adventures, more memories →</p>
+    </section>
+
+    <section class="party pad" id="party">
+      <div class="event-card reveal"><div class="pin">●</div><p class="label-cut">SAVE THE DATE</p><h2>Let’s make<br>some memories!</h2><div class="event-details"><div><span>WHEN</span><b>Saturday<br>12 December 2026</b></div><div><span>TIME</span><b>18.00 WIB<br>until late</b></div><div><span>WHERE</span><b>The Garden House<br>South Jakarta</b></div></div><a href="https://maps.google.com/?q=South+Jakarta" target="_blank" rel="noreferrer">GET DIRECTIONS ↗</a><p class="dress">DRESS CODE: <b>EARTH TONE & DENIM</b></p></div>
+      <aside class="party-aside reveal"><div class="ticket"><small>ADMIT ONE</small><b>AURELIA 17</b><span>12 XII 26</span></div><p class="hand">eat cake,<br>dance all night,<br>make memories.</p><div class="daisy">✿</div></aside>
+    </section>
+
+    <section class="schedule pad" id="schedule">
+      <div class="section-title reveal"><span class="label-cut">WHAT'S ON THE PAGE?</span><h2>The birthday itinerary</h2><p>Datang tepat waktu, pulang membawa kenangan.</p></div>
+      <div class="schedule-line">
+        <article class="reveal"><time>17.30</time><span>01</span><h3>Guest Arrival</h3><p>Check-in, ambil foto, dan tinggalkan pesan kecil.</p></article>
+        <article class="reveal"><time>18.00</time><span>02</span><h3>Opening & Dinner</h3><p>Good food, warm talks, and a little celebration.</p></article>
+        <article class="reveal"><time>19.30</time><span>03</span><h3>Wish & Cake</h3><p>Make a wish, blow the candles, capture the moment.</p></article>
+        <article class="reveal"><time>20.00</time><span>04</span><h3>Dance & Games</h3><p>Put your favorite song on and enjoy the night.</p></article>
+      </div>
+    </section>
+
+    <section class="location pad" id="location">
+      <div class="map-board reveal"><div class="map-art" aria-hidden="true"><span class="road r1"></span><span class="road r2"></span><span class="road r3"></span><i>17</i><b>THE PARTY<br>IS HERE!</b></div><div class="place-note"><span class="label-cut">THE PLACE</span><h2>The Garden House</h2><p>Jl. Ampera Raya No. 5–6, Pejaten Barat,<br>Pasar Minggu, Jakarta Selatan</p><dl><div><dt>Doors Open</dt><dd>17.30 WIB</dd></div><div><dt>Parking</dt><dd>Available on venue</dd></div></dl><div class="location-actions"><a href="https://maps.google.com/?q=The+Garden+House+Jakarta" target="_blank" rel="noreferrer">OPEN GOOGLE MAPS ↗</a><button id="copyAddress" data-address="The Garden House, Jl. Ampera Raya No. 5–6, Pejaten Barat, Jakarta Selatan">COPY ADDRESS</button><button id="calendarBtn">ADD TO CALENDAR</button></div></div></div>
+      <div class="location-tips reveal"><span>✦</span><p><b>A little note:</b> gunakan earth tone atau denim favoritmu. Area acara semi-outdoor—please dress comfortably.</p><span>✦</span></div>
+    </section>
+
+    <section class="gift-section pad" id="gift">
+      <div class="gift-note reveal"><p class="hand">your presence is the best present!</p><h2>A little birthday gift</h2><p>Doa dan kehadiranmu sudah sangat berarti. Jika ingin mengirimkan tanda kasih, detailnya ada di sini.</p><button id="giftToggle" aria-expanded="false">OPEN GIFT NOTE ♡</button></div>
+      <div class="gift-card" id="giftCard" hidden><span>BANK CENTRAL ASIA</span><i></i><small>ACCOUNT NUMBER</small><strong>123 456 7890</strong><p>AURELIA PUTRI</p><button id="copyAccount" data-copy="1234567890">COPY NUMBER</button></div>
+    </section>
+
+    <section class="rsvp pad" id="rsvp">
+      <div class="rsvp-wrap reveal"><div class="rsvp-copy"><p class="label-cut">PLEASE REPLY</p><h2>Are you coming?</h2><p>My scrapbook won’t be complete without you on this page.</p><div class="mini-photo"><span>see you there!</span></div></div>
+      <form id="rsvpForm"><label>Your name<input name="name" id="guestName" required placeholder="write your name..."></label><fieldset><legend>Will you join the party?</legend><label><input type="radio" name="attendance" value="Yes, wouldn't miss it!" required><span>Yes, wouldn’t miss it!</span></label><label><input type="radio" name="attendance" value="Sorry, can't make it"><span>Sorry, can’t make it</span></label></fieldset><label>Leave a little note<textarea name="message" placeholder="birthday wishes..."></textarea></label><button>STICK MY RSVP <span>♡</span></button><p id="formStatus" role="status"></p></form></div>
+      <div class="wish-board"><h3>Notes from my favorite people</h3><div id="wishList"><article><p>“Happy sweet seventeen! Keep shining and chasing every dream.”</p><span>— Keisha</span></article><article><p>“Here’s to a beautiful new chapter and so many adventures!”</p><span>— Nadia</span></article></div></div>
+    </section>
+
+    <footer><div class="footer-card reveal"><p>thank you for being part of</p><h2>my chapter seventeen.</h2><span>with love, Aurelia ♡</span></div><p class="footer-tag">#AURELIATURNS17 · 12.12.2026</p></footer>
+  </main>
+  <dialog id="photoDialog"><button id="closeDialog" aria-label="Tutup foto">×</button><div id="dialogPhoto" class="photo"></div><p id="dialogCaption"></p></dialog>
+  <div class="toast" id="toast"></div><script src="js/sweet-seventeen.js"></script>
+</body></html>

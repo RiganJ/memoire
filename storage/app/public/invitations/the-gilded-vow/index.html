@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2A120A">
+  <meta name="description" content="The wedding of Mr & Mrs — 18 January 2027">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Mr & Mrs — Wedding Invitation</title>
+</head>
+<body class="locked">
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader-mark">Mr <i>&</i> Mrs</div><span>Our story begins</span></div>
+  <div class="grain" aria-hidden="true"></div><div class="scroll-glow" aria-hidden="true"></div><div id="cursor" aria-hidden="true"></div>
+
+  <section class="opening" id="opening" aria-label="Open invitation">
+    <div class="opening-bg"></div><div class="opening-frame"></div>
+    <i class="fa-solid fa-star spark s1" aria-hidden="true"></i><i class="fa-solid fa-star spark s2" aria-hidden="true"></i><i class="fa-solid fa-star spark s3" aria-hidden="true"></i>
+    <div class="opening-content">
+      <div class="monogram">Mr<span>&</span>Mrs</div>
+      <p class="eyebrow">The Wedding Of</p><h1>Mr <em>&</em> Mrs</h1>
+      <div class="ornament-line"><i></i><b><i class="fa-solid fa-star" aria-hidden="true"></i></b><i></i></div>
+      <p class="opening-date">18 · 01 · 2027</p>
+      <div class="guest"><small>Dear,</small><strong id="guestName">{{guest_name}}</strong></div>
+      <button class="gold-button" id="openInvitation"><span>Open Invitation</span><b><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></b></button>
+    </div>
+  </section>
+
+  <main id="invitation">
+    <section class="section hero dark" id="home" data-nav="home">
+      <img class="hero-photo" src="assets/_ (14).jpeg" alt="Mr and Mrs" fetchpriority="high">
+      <div class="hero-shade"></div><div class="hero-border"></div>
+      <img class="hero-ornament parallax" src="assets/element4.png" alt="" aria-hidden="true">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">We Are Getting Married</p><h2><span>Mr</span><em>&</em><span>Mrs</span></h2>
+        <p>Monday · January 18 · 2027</p>
+      </div>
+      <a class="scroll-cue" href="#invitation-message" aria-label="Scroll to invitation"><span></span>Discover</a>
+    </section>
+
+    <section class="section welcome paper" id="invitation-message">
+      <img class="corner-leaf parallax" src="assets/element5.png" alt="" loading="lazy">
+      <div class="section-head reveal"><p class="kicker">A celebration of love</p><h2>Our Invitation</h2><p class="script">With love, we invite you.</p></div>
+      <div class="ornament-line reveal"><i></i><b><i class="fa-solid fa-star" aria-hidden="true"></i></b><i></i></div>
+      <blockquote class="reveal">“And He placed between you affection and mercy.”<cite>AR–RUM · 21</cite></blockquote>
+      <p class="welcome-note reveal">With gratitude and joy, we invite you to witness the beginning of our forever, surrounded by those whose presence has made our lives more beautiful.</p>
+    </section>
+
+    <section class="section couple-section" id="couple" data-nav="couple">
+      <div class="section-head reveal"><p class="kicker">The two of us</p><h2>Meet The Couple</h2><p class="script">Two hearts, one promise.</p></div>
+      <div class="couple-grid">
+        <article class="person reveal"><div class="portrait"><img src="assets/fotodiframegroom.png" alt="Mr Jevi Pangestu" loading="lazy"></div><p class="role">The Groom</p><h3>Mr Jevi<br>Pangestu</h3><p>A calm heart, a faithful companion, and the man who makes every ordinary day feel like home.</p><a href="#" aria-label="Instagram Mr">@Mrpangestu</a></article>
+        <div class="couple-amp reveal">&</div>
+        <article class="person reveal"><div class="portrait"><img src="assets/fotodifreamebraide.jpeg" alt="Mrs" loading="lazy"></div><p class="role">The Bride</p><h3>Mrs</h3><p>A gentle soul, a warm smile, and the woman who turns every little moment into something worth remembering.</p><a href="#" aria-label="Instagram Mrs">@Mrsa</a></article>
+      </div>
+    </section>
+
+    <section class="section story paper" id="story">
+      <div class="section-head reveal"><p class="kicker">Written in the stars</p><h2>Our Story</h2><p class="intro">Every love story is beautiful. This one is ours.</p></div>
+      <div class="story-timeline">
+        <article class="story-item reveal">
+          <div class="story-marker" aria-hidden="true"><i class="fa-solid fa-gem"></i></div>
+          <div class="story-media story-media-single" data-gallery="first-meet">
+            <button class="story-photo" type="button"><img src="assets/_ (15).jpeg" alt="Our first meeting" loading="lazy"><span>View Moment</span></button>
+          </div>
+          <div class="story-content"><span class="story-chapter">Chapter 01</span><time class="story-date">2022</time><h3>First Meet</h3><p class="story-summary">A simple hello became a conversation we never wanted to end.</p><div class="story-description"><div><p>Our story began on an ordinary afternoon, in a moment neither of us knew would become extraordinary. A brief introduction grew into hours of effortless conversation, shared laughter, and the quiet feeling that we had known each other far longer than we actually had.</p><p>Looking back, it was not a grand beginning. It was something gentler—and perhaps more beautiful: two lives quietly finding their way toward one another.</p></div></div><button class="story-toggle" type="button" aria-expanded="false">Read Our Story <span><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></span></button></div>
+        </article>
+        <article class="story-item reveal">
+          <div class="story-marker" aria-hidden="true"><i class="fa-solid fa-star"></i></div>
+          <div class="story-media story-media-collage" data-gallery="first-date">
+            <button class="story-photo story-photo-main" type="button"><img src="assets/_ (16).jpeg" alt="Our first date portrait" loading="lazy"><span>View Moment</span></button>
+            <button class="story-photo" type="button"><img src="assets/_ (14).jpeg" alt="A quiet moment together" loading="lazy"><span>View Moment</span></button>
+            <button class="story-photo" type="button"><img src="assets/_ (18).jpeg" alt="An evening to remember" loading="lazy"><span>View Moment</span></button>
+          </div>
+          <div class="story-content"><span class="story-chapter">Chapter 02</span><time class="story-date">2023</time><h3>First Date</h3><p class="story-summary">Coffee, laughter, and the quiet certainty that something special had begun.</p><div class="story-description"><div><p>There was no elaborate plan—just a warm café, two cups of coffee, and stories exchanged until the evening lights came on. Time seemed to move differently that day. Every small detail felt vivid, from the music in the room to the way we both kept finding reasons to stay a little longer.</p></div></div><button class="story-toggle" type="button" aria-expanded="false">Read Our Story <span><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></span></button></div>
+        </article>
+        <article class="story-item reveal">
+          <div class="story-marker" aria-hidden="true"><i class="fa-solid fa-gem"></i></div>
+          <div class="story-media story-media-duo story-media-portraits" data-gallery="proposal">
+            <button class="story-photo story-photo-framed" type="button"><span class="story-composite story-composite-groom"><img class="portrait-source" src="assets/_(19).png" alt="Mr — The Groom" loading="lazy"><img class="portrait-frame" src="assets/groom.png" alt="" aria-hidden="true" loading="lazy"></span><span class="story-view">View Moment</span></button>
+            <button class="story-photo story-photo-framed" type="button"><span class="story-composite story-composite-bride"><img class="portrait-source" src="assets/_ (18).jpeg" alt="Mrs — The Bride" loading="lazy"><img class="portrait-frame" src="assets/braide.png" alt="" aria-hidden="true" loading="lazy"></span><span class="story-view">View Moment</span></button>
+          </div>
+          <div class="story-content"><span class="story-chapter">Chapter 03</span><time class="story-date">18 · 01 · 2026</time><h3>The Proposal</h3><p class="story-summary">One question, one joyful yes, and a promise to choose each other always.</p><div class="story-description"><div><p>Surrounded by the warmth of a day we will always remember, a question was asked and answered with the happiest yes. It was intimate, sincere, and perfectly ours—the moment every road behind us became one shared path ahead.</p><p>That evening, we celebrated not only an engagement, but the life we were ready to build together.</p></div></div><button class="story-toggle" type="button" aria-expanded="false">Read Our Story <span><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></span></button></div>
+        </article>
+        <article class="story-item reveal">
+          <div class="story-marker" aria-hidden="true"><i class="fa-solid fa-star"></i></div>
+          <div class="story-media story-media-collage" data-gallery="wedding">
+            <button class="story-photo story-photo-main" type="button"><img src="assets/_ (14).jpeg" alt="Our wedding portrait" loading="lazy"><span>View Moment</span></button>
+            <button class="story-photo" type="button"><img src="assets/foto1.jpeg" alt="Mr and Mrs wedding portrait" loading="lazy"><span>View Moment</span></button>
+            <button class="story-photo story-photo-more" type="button" data-more="+3"><img src="assets/_ (27).jpeg" alt="Mr and Mrs wedding portrait" loading="lazy"><span>+3</span></button>
+            <button class="story-photo story-photo-extra" type="button"><img src="assets/_ (26).jpeg" alt="Wedding preparation" loading="lazy"><span>View Moment</span></button>
+            <button class="story-photo story-photo-extra" type="button"><img src="assets/foto1.jpeg" alt="Groom portrait" loading="lazy"><span>View Moment</span></button>
+            <button class="story-photo story-photo-extra" type="button"><img src="assets/whitory jaeminjeong.jpeg" alt="Mr and Mrs wedding portrait" loading="lazy"><span>View Moment</span></button>
+          </div>
+          <div class="story-content"><span class="story-chapter">Chapter 04</span><time class="story-date">18 · 01 · 2027</time><h3>The Wedding</h3><p class="story-summary">The first page of our forever, celebrated with the people we love.</p><div class="story-description"><div><p>On this day, before our families and dearest friends, we will make the promises that carry us into forever. Every smile, every embrace, and every joyful tear will become part of the story we tell for years to come.</p><p>More than a celebration, this is our way of saying thank you—to love, to time, and to everyone who helped guide us home to each other.</p></div></div><button class="story-toggle" type="button" aria-expanded="false">Read Our Story <span><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></span></button></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section save-date dark" id="date">
+      <div class="section-head reveal"><p class="kicker">Mark your calendar</p><h2>Save The Date</h2></div>
+      <div class="date-display reveal"><strong>18</strong><span>January</span><b>2027</b></div>
+      <div class="countdown reveal" aria-label="Wedding countdown"><div><strong id="days">000</strong><span>Days</span></div><i></i><div><strong id="hours">00</strong><span>Hours</span></div><i></i><div><strong id="minutes">00</strong><span>Minutes</span></div><i></i><div><strong id="seconds">00</strong><span>Seconds</span></div></div>
+    </section>
+
+    <section class="section celebration paper" id="event" data-nav="event">
+      <div class="section-head reveal"><p class="kicker">Together with our families</p><h2>The Celebration</h2><p class="intro">We joyfully request the pleasure of your company.</p></div>
+      <div class="event-grid">
+        <article class="event-card reveal"><span class="card-star"><i class="fa-solid fa-star" aria-hidden="true"></i></span><p class="number">01</p><h3>Akad Nikah</h3><div class="mini-divider"><i class="fa-solid fa-gem" aria-hidden="true"></i></div><p><b>Monday, 18 January 2027</b><br>08.00 — 10.00 WIB</p><p><b>The Grand Ballroom</b><br>Jl. Sudirman No. 18, Jakarta</p><a class="outline-button" href="https://maps.google.com" target="_blank" rel="noreferrer">View Location <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></article>
+        <article class="event-card reveal"><span class="card-star"><i class="fa-solid fa-star" aria-hidden="true"></i></span><p class="number">02</p><h3>Wedding Reception</h3><div class="mini-divider"><i class="fa-solid fa-gem" aria-hidden="true"></i></div><p><b>Monday, 18 January 2027</b><br>11.00 — 14.00 WIB</p><p><b>The Grand Ballroom</b><br>Jl. Sudirman No. 18, Jakarta</p><a class="outline-button" href="https://maps.google.com" target="_blank" rel="noreferrer">View Location <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></article>
+      </div>
+    </section>
+
+    <section class="section gallery-section" id="gallery" data-nav="gallery">
+      <div class="section-head reveal"><p class="kicker">Fragments of forever</p><h2>Captured Moments</h2><p class="script">Love, held still.</p></div>
+      <div class="gallery">
+        <button class="gallery-item reveal" data-index="0"><img src="assets/_ (14).jpeg" alt="Wedding portrait 1" loading="lazy"></button>
+        <button class="gallery-item reveal" data-index="1"><img src="assets/_ (15).jpeg" alt="Wedding portrait 2" loading="lazy"></button>
+        <button class="gallery-item reveal" data-index="2"><img src="assets/_ (16).jpeg" alt="Wedding portrait 3" loading="lazy"></button>
+        <button class="gallery-item reveal" data-index="3"><img src="assets/foto1.jpeg" alt="Mr and Mrs wedding portrait" loading="lazy"></button>
+        <button class="gallery-item reveal" data-index="4"><img src="assets/_ (27).jpeg" alt="Mr and Mrs wedding portrait" loading="lazy"></button>
+        <button class="gallery-item reveal" data-index="5"><img src="assets/_ (18).jpeg" alt="Wedding portrait 6" loading="lazy"></button>
+        <button class="gallery-item reveal" data-index="6"><img src="assets/whitory jaeminjeong.jpeg" alt="Mr and Mrs wedding portrait" loading="lazy"></button>
+        <button class="gallery-item reveal" data-index="7"><img src="assets/_ (26).jpeg" alt="Mr and Mrs together" loading="lazy"></button>
+      </div>
+    </section>
+
+    <section class="section film-section dark" id="film">
+      <div class="section-head reveal"><p class="kicker">A story in motion</p><h2>Our Film</h2></div>
+      <button class="film-poster reveal" id="playFilm" aria-label="Play our film"><img src="assets/_ (18).jpeg" alt="Our wedding film" loading="lazy"><span class="play"><i class="fa-solid fa-play" aria-hidden="true"></i></span><div><small>Mr & Mrs</small><b>A portrait of our love</b></div></button>
+    </section>
+
+    <section class="section wishes paper" id="wishes">
+      <div class="section-head reveal"><p class="kicker">Kind words</p><h2>Wedding Wishes</h2><p class="intro">Leave a little note for our new beginning.</p></div>
+      <form class="form-card reveal" id="wishForm"><label>Your Name<input id="wishName" type="text" required placeholder="Write your name"></label><label>Your Message<textarea id="wishMessage" required rows="4" placeholder="A wish from the heart"></textarea></label><button class="gold-button" type="submit"><span>Send Wishes</span><b><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></b></button></form>
+      <div class="wish-list" id="wishList"><article class="wish reveal"><div>A</div><p><strong>Andini</strong><span>May your home always be filled with warmth, laughter, and endless love.</span><small>With love · just now</small></p></article><article class="wish reveal"><div>D</div><p><strong>Dimas & Family</strong><span>Congratulations to the beautiful couple. Wishing you a lifetime of happiness.</span><small>Best wishes · 2 hours ago</small></p></article></div>
+    </section>
+
+    <section class="section rsvp-section" id="rsvp" data-nav="rsvp">
+      <div class="section-head reveal"><p class="kicker">Répondez s'il vous plaît</p><h2>Will You Join Us?</h2><p class="script">We hope to see you there.</p></div>
+      <form class="form-card rsvp-card reveal" id="rsvpForm" novalidate><label>Full Name<input name="name" type="text" required placeholder="Your full name"></label><label>Number of Guests<select name="guests" required><option value="">Select</option><option>1 Guest</option><option>2 Guests</option><option>3 Guests</option><option>4 Guests</option></select></label><fieldset><legend>Attendance</legend><label class="radio"><input type="radio" name="attendance" value="attend" required><span>Yes, I will attend</span></label><label class="radio"><input type="radio" name="attendance" value="decline"><span>Sorry, I cannot attend</span></label></fieldset><label>Message<textarea name="message" rows="3" placeholder="A note for the couple"></textarea></label><p class="form-status" id="rsvpStatus" role="status"></p><button class="gold-button" type="submit"><span>Confirm Attendance</span><b><i class="fa-solid fa-check" aria-hidden="true"></i></b></button></form>
+    </section>
+
+    <section class="section gift paper" id="gift">
+      <div class="section-head reveal"><p class="kicker">A gesture of love</p><h2>Wedding Gift</h2><p class="intro">Your presence is the greatest gift for us.</p></div>
+      <div class="gift-grid"><article class="bank-card reveal"><span class="gift-icon"><i class="fa-solid fa-building-columns" aria-hidden="true"></i></span><small>Bank Transfer</small><h3>Bank Central Asia</h3><p>Account Number</p><strong id="accountNumber">1234567890</strong><p>Mr Jevi Pangestu</p><button class="outline-button" id="copyAccount">Copy Account Number</button></article><article class="qr-card reveal"><div class="wax">R<span>&</span>S</div><div class="qr" aria-label="QR code placeholder"><span></span></div><p>Scan to send a gift</p><small>Thank you for your kindness</small></article></div>
+    </section>
+
+    <section class="section closing dark" id="closing">
+      <img class="closing-photo" src="assets/_ (14).jpeg" alt="Mr and Mrs" loading="lazy"><div class="closing-shade"></div><img class="closing-ornament parallax" src="assets/element6.png" alt="" loading="lazy">
+      <div class="closing-copy reveal"><div class="monogram">R<span>&</span>S</div><p class="script">Thank You</p><h2>We would be honored to celebrate this beautiful moment with you.</h2><div class="ornament-line"><i></i><b><i class="fa-solid fa-star" aria-hidden="true"></i></b><i></i></div><small>With Love,</small><h3>Mr & Mrs</h3></div>
+      <footer>Made with love <span>·</span> 18.01.2027</footer>
+    </section>
+  </main>
+
+  <nav class="mobile-nav" aria-label="Primary navigation"><a href="#home" class="active" data-target="home"><span><i class="fa-solid fa-house" aria-hidden="true"></i></span>Home</a><a href="#couple" data-target="couple"><span><i class="fa-solid fa-heart" aria-hidden="true"></i></span>Couple</a><a href="#event" data-target="event"><span><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span>Event</a><a href="#gallery" data-target="gallery"><span><i class="fa-solid fa-images" aria-hidden="true"></i></span>Gallery</a><a href="#rsvp" data-target="rsvp"><span><i class="fa-solid fa-envelope" aria-hidden="true"></i></span>RSVP</a></nav>
+  <nav class="side-nav" aria-label="Section navigation"></nav>
+  <button class="music-toggle" id="musicToggle" aria-label="Pause music"><span class="fa-solid fa-music" aria-hidden="true"></span><i></i></button>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Gallery preview"><button class="modal-close" data-close aria-label="Close gallery"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button><button class="lightbox-arrow prev" id="lightPrev" aria-label="Previous image"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button><img id="lightboxImage" alt="Gallery preview"><button class="lightbox-arrow next" id="lightNext" aria-label="Next image"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button><div id="lightboxCount"></div></div>
+  <div class="film-modal" id="filmModal" role="dialog" aria-modal="true" aria-label="Our film"><button class="modal-close" data-close aria-label="Close film"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button><div class="film-reel"><img src="assets/_ (14).jpeg" alt="Mr and Mrs"><img src="assets/_ (15).jpeg" alt="Mr and Mrs"><img src="assets/_ (16).jpeg" alt="Mr and Mrs"><div class="film-caption"><span>Mr & Mrs</span><small>A film about finding home in one another</small></div></div></div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="js/script.js"></script>
+</body>
+</html>

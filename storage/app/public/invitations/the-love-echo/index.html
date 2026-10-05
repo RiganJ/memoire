@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#17130f" />
+  <meta name="description" content="The wedding of Mr & Mrs — an intimate celebration of love." />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Mr & Mrs — The Wedding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Italiana&family=Parisienne&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=20260926-10" />
+</head>
+<body class="locked">
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <section class="gate" id="gate" aria-label="Opening invitation">
+    <div class="light-beam"></div><div class="mist mist-a"></div><div class="mist mist-b"></div>
+    <div class="petal p1">❧</div><div class="petal p2">❧</div><div class="petal p3">❧</div>
+    <div class="invite-stage" id="inviteStage">
+      <article class="invite-card" id="inviteCard">
+        <div class="card-face card-front">
+          <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+          <p class="eyebrow">The Wedding Of</p>
+          <div class="monogram">Mr <i>&</i> Mrs</div>
+          <h1>Mr <em>&</em> Mrs</h1>
+          <p class="date">18 · 01 · 2027</p>
+          <div class="gold-rule"><span>✦</span></div>
+          <p class="guest-intro">Kepada Yth.</p>
+          <p class="guest-name" data-guest>{{guest_name}}</p>
+          <button class="gold-button" id="openInvitation"><span>Buka Undangan</span><b>→</b></button>
+        </div>
+        <div class="card-face card-back"><span>Mr <i>&</i> Mrs</span></div>
+      </article>
+    </div>
+    <p class="sound-note">♫ Sebuah melodi untuk mengiringi kisah cinta kami</p>
+  </section>
+
+  <main id="mainContent">
+    <nav class="nav" aria-label="Navigasi utama">
+      <a class="nav-mark" href="#home">Mr <span>&</span> Mrs</a>
+      <div class="nav-links"><a href="#couple">Mempelai</a><a href="#event">Acara</a><a href="#story">Kisah</a><a href="#venue">Lokasi</a><a href="#rsvp">RSVP</a></div>
+      <button class="music-toggle" id="musicToggle" aria-label="Toggle ambient music">♫ <span>Ambience</span></button>
+    </nav>
+
+    <section class="hero" id="home">
+      <div class="hero-bg"></div><div class="hero-vignette"></div>
+      <div class="hero-copy reveal">
+        <p class="eyebrow">A Celebration of Love</p>
+        <h2>Mr <span>&</span> Mrs</h2>
+        <p class="hero-date">Senin, 18 Januari 2027 · Jakarta</p>
+        <p class="hero-quote">“Dua jiwa, satu perjalanan—dan sebuah janji untuk selamanya.”</p>
+      </div>
+      <div class="scroll-mark">SCROLL <span></span></div>
+    </section>
+
+    <section class="blessing section-pad" aria-label="Wedding blessing">
+      <div class="blessing-mark reveal">❦</div>
+      <blockquote class="reveal">“Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.”</blockquote>
+      <p class="reveal">QS. Ar-Rum · 21</p>
+    </section>
+
+    <section class="welcome section-pad" id="couple">
+      <div class="section-heading reveal"><span class="kicker">Our Beloved Story</span><h2>Dengan penuh cinta</h2><p>Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Anda untuk menjadi bagian dari hari bahagia kami.</p></div>
+      <div class="couple-grid">
+        <article class="person-card reveal tilt">
+          <div class="portrait groom"><div class="silhouette">R</div></div>
+          <p>The Groom</p><h3>Mr</h3><span>Putra pertama dari<br>Bapak & Ibu </span><a href="#">@Mr</a>
+        </article>
+        <div class="ampersand reveal">&</div>
+        <article class="person-card reveal tilt">
+          <div class="portrait bride"><div class="silhouette">S</div></div>
+          <p>The Bride</p><h3>Mrs </h3><span>Putri kedua dari<br>Bapak & Ibu</span><a href="#">@Mrs</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="date-section section-pad" id="event">
+      <div class="date-orbit" aria-hidden="true"><span></span><i>18</i></div>
+      <div class="section-heading light reveal"><span class="kicker">Save The Date</span><h2>A day to remember</h2><p>Senin · 18 Januari 2027</p></div>
+      <div class="countdown reveal" id="countdown"><div><strong id="days">000</strong><span>Hari</span></div><div><strong id="hours">00</strong><span>Jam</span></div><div><strong id="minutes">00</strong><span>Menit</span></div><div><strong id="seconds">00</strong><span>Detik</span></div></div>
+      <div class="events-grid">
+        <article class="event-card reveal"><div class="event-icon">☾</div><p>Prosesi</p><h3>Akad Nikah</h3><time>08.00 — 10.00 WIB</time><hr><span>Gedung Arsip Nasional<br>Jl. Gajah Mada No. 111, Jakarta</span><a class="outline-button" href="https://maps.google.com/?q=Gedung+Arsip+Nasional+Jakarta" target="_blank" rel="noreferrer"><i class="location-icon" aria-hidden="true">⌖</i> Lihat Lokasi</a></article>
+        <article class="event-card reveal"><div class="event-icon">✦</div><p>Perayaan</p><h3>Resepsi</h3><time>11.00 — 14.00 WIB</time><hr><span>Gedung Arsip Nasional<br>Jl. Gajah Mada No. 111, Jakarta</span><a class="outline-button" href="https://maps.google.com/?q=Gedung+Arsip+Nasional+Jakarta" target="_blank" rel="noreferrer"><i class="location-icon" aria-hidden="true">⌖</i> Lihat Lokasi</a></article>
+      </div>
+    </section>
+
+    <section class="venue section-pad" id="venue">
+      <div class="venue-photo reveal"><span>18 · 01 · 2027</span></div>
+      <div class="venue-card reveal">
+        <span class="kicker">Where We Say “I Do”</span>
+        <h2>Gedung Arsip Nasional</h2>
+        <p class="venue-address">Jl. Gajah Mada No. 111, Krukut,<br>Jakarta Barat, DKI Jakarta</p>
+        <dl><div><dt>Hari</dt><dd>Senin</dd></div><div><dt>Tanggal</dt><dd>18 Januari 2027</dd></div><div><dt>Mulai</dt><dd>08.00 WIB</dd></div></dl>
+        <div class="venue-actions"><a href="https://maps.google.com/?q=Gedung+Arsip+Nasional+Jakarta" target="_blank" rel="noreferrer"><i class="location-icon" aria-hidden="true">⌖</i> Buka Google Maps</a><button id="calendarBtn" type="button">Tambah ke Kalender</button></div>
+      </div>
+    </section>
+
+    <section class="rundown section-pad" id="rundown">
+      <div class="section-heading reveal"><span class="kicker">The Wedding Day</span><h2>Susunan acara</h2><p>Setiap momen telah kami persiapkan untuk dirayakan bersama orang-orang tersayang.</p></div>
+      <div class="rundown-list">
+        <article class="rundown-item reveal"><time>07.30</time><span>01</span><div><small>WELCOME</small><h3>Kedatangan Tamu</h3><p>Registrasi dan penyambutan keluarga serta para tamu undangan.</p></div></article>
+        <article class="rundown-item reveal"><time>08.00</time><span>02</span><div><small>SACRED MOMENT</small><h3>Akad Nikah</h3><p>Prosesi ijab kabul dan doa bersama untuk memulai perjalanan baru.</p></div></article>
+        <article class="rundown-item reveal"><time>10.00</time><span>03</span><div><small>CELEBRATION</small><h3>Resepsi & Ramah Tamah</h3><p>Perayaan, santap bersama, dan mengabadikan momen bahagia.</p></div></article>
+        <article class="rundown-item reveal"><time>14.00</time><span>04</span><div><small>FAREWELL</small><h3>Penutup</h3><p>Ucapan terima kasih dan salam hangat dari kedua mempelai.</p></div></article>
+      </div>
+    </section>
+
+    <section class="gallery section-pad" id="gallery">
+      <div class="section-heading reveal"><span class="kicker">Captured Moments</span><h2>Fragments of forever</h2></div>
+      <div class="gallery-grid">
+        <button class="photo ph1 reveal" aria-label="View garden moment"><span>01</span></button><button class="photo ph2 reveal" aria-label="View rings moment"><span>02</span></button><button class="photo ph3 reveal" aria-label="View flowers moment"><span>03</span></button><button class="photo ph4 reveal" aria-label="View candle moment"><span>04</span></button>
+      </div>
+    </section>
+
+    <section class="story section-pad" id="story">
+      <div class="section-heading light reveal"><span class="kicker">Written In The Stars</span><h2>Our love story</h2></div>
+      <div class="timeline">
+        <article class="story-item reveal"><div class="story-year">2021</div><div><span>01 · Pertemuan</span><h3>The beautiful beginning</h3><p>Sebuah pertemuan sederhana tumbuh menjadi percakapan yang tak pernah ingin kami akhiri.</p></div></article>
+        <article class="story-item reveal"><div class="story-year">2024</div><div><span>02 · Lamaran</span><h3>A promise was made</h3><p>Di bawah cahaya senja, kami memilih untuk melangkah bersama menuju selamanya.</p></div></article>
+        <article class="story-item reveal"><div class="story-year">2027</div><div><span>03 · Selamanya</span><h3>Our forever starts here</h3><p>Dengan restu keluarga dan orang-orang tersayang, kisah baru kami dimulai.</p></div></article>
+      </div>
+    </section>
+
+    <section class="guest-guide section-pad">
+      <div class="section-heading reveal"><span class="kicker">A Little Guide</span><h2>Untuk kenyamanan bersama</h2><p>Beberapa catatan kecil agar hari perayaan terasa lebih hangat dan berkesan.</p></div>
+      <div class="guide-grid">
+        <article class="guide-card reveal"><span>01</span><i>◇</i><h3>Dress Code</h3><p>Earth tone, champagne, sage, atau warna netral yang lembut.</p><div class="palette"><b></b><b></b><b></b><b></b></div></article>
+        <article class="guide-card reveal"><span>02</span><i>◷</i><h3>Datang Tepat Waktu</h3><p>Kami menyarankan hadir 30 menit sebelum acara dimulai.</p></article>
+        <article class="guide-card reveal"><span>03</span><i>♧</i><h3>Unplugged Moment</h3><p>Mohon menjaga ketenangan selama akad dan nikmati momen bersama kami.</p></article>
+        <article class="guide-card reveal"><span>04</span><i>♡</i><h3>Share The Love</h3><p>Bagikan momen pilihanmu dengan tagar <strong>#MrdMrsForever</strong>.</p></article>
+      </div>
+    </section>
+
+    <section class="rsvp section-pad" id="rsvp">
+      <div class="rsvp-panel reveal">
+        <div><span class="kicker">Kindly Respond</span><h2>Will you join us?</h2><p>Kehadiran dan doa Anda adalah hadiah terindah bagi kami.</p></div>
+        <form id="rsvpForm"><label>Nama lengkap<input name="name" id="rsvpName" required placeholder="Nama Anda"></label><label>Konfirmasi kehadiran<select name="attendance" required><option value="">Pilih jawaban</option><option>Ya, saya akan hadir</option><option>Maaf, saya tidak dapat hadir</option></select></label><label>Jumlah tamu<select name="guests"><option>1 orang</option><option>2 orang</option></select></label><label>Ucapan & doa<textarea name="message" required placeholder="Tuliskan pesan hangat Anda..."></textarea></label><button class="gold-button" type="submit"><span>Kirim Konfirmasi</span><b>→</b></button><p class="form-status" id="formStatus" role="status"></p></form>
+      </div>
+      <div class="wishes reveal"><div class="wishes-head"><h3>Warm Wishes</h3><span id="wishCount">2 ucapan</span></div><div id="wishList"><blockquote><p>“Selamat menempuh hidup baru. Semoga cinta kalian selalu tumbuh di setiap musim.”</p><footer>— Alya & Keluarga</footer></blockquote><blockquote><p>“Semoga menjadi keluarga yang penuh ketenangan, cinta, dan keberkahan.”</p><footer>— Dimas</footer></blockquote></div></div>
+    </section>
+
+    <section class="gift section-pad">
+      <div class="section-heading reveal"><span class="kicker">With Gratitude</span><h2>Tanda kasih</h2><p>Doa restu Anda sudah lebih dari cukup. Namun bila ingin berbagi tanda kasih, dapat melalui:</p></div>
+      <div class="gift-grid">
+        <article class="bank-card tilt reveal"><span class="bank">BANK CENTRAL ASIA</span><div class="chip"></div><p>Nomor Rekening</p><h3>123 456 7890</h3><span>Mr</span><button data-copy="1234567890">Salin nomor</button></article>
+        <article class="qr-card reveal"><div class="fake-qr" aria-label="QR check-in code"><i>Memoire</i></div><div><span class="kicker">Guest Access</span><h3>QR Check-in</h3><p>Tunjukkan kode ini kepada penerima tamu saat tiba di lokasi.</p><button class="text-button" id="saveQr">Simpan QR →</button></div></article>
+      </div>
+    </section>
+
+    <footer class="closing section-pad">
+      <div class="closing-flower">❦</div><p class="eyebrow">With Love</p><h2>Thank you for being<br>part of our story.</h2><p>Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.</p><div class="signature">Mr <span>&</span> Mrs</div><small>#MrdMrsForever · 18.01.2027</small>
+      <div class="creator-credit">
+        <span>Made by Memoire</span>
+        <a id="memoireInstagram" href="https://www.instagram.com/memoire.___/?utm_source=ig_web_button_share_sheet&amp;stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Buka Instagram Memoire">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4.25"></circle><circle class="ig-dot" cx="17.4" cy="6.7" r="1"></circle></svg>
+          <span>@memoire.___</span>
+        </a>
+      </div>
+    </footer>
+  </main>
+
+  <dialog id="lightbox"><button aria-label="Close gallery">×</button><div class="lightbox-image"></div></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="js/script.js?v=20260926-10"></script>
+</body>
+</html>

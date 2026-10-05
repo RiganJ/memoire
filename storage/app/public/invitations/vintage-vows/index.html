@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#bd4f2d">
+  <meta name="description" content="The wedding invitation of Mr and Mrs">
+  <title>Mr & Mrs — Our Forever</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600&family=Limelight&family=Shrikhand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=6">
+  <style>
+    .venue{overflow:hidden}
+    .venue-layout{display:grid;grid-template-columns:.82fr 1.18fr;gap:28px;max-width:1080px;margin:auto;align-items:stretch}
+    .venue-copy{display:flex;flex-direction:column;justify-content:center;min-width:0;padding:clamp(30px,5vw,64px);border:2px solid var(--brown);background:var(--mustard);box-shadow:8px 9px 0 var(--olive)}
+    .venue-copy>span,.gift-note>span{font:500 9px var(--mono);letter-spacing:.2em;color:var(--rust)}
+    .venue-copy h3{margin:24px 0;font:400 clamp(36px,5vw,58px)/1 var(--groovy);color:var(--brown)}
+    .venue-copy address{font:16px/1.8 var(--sans);font-style:normal}
+    .venue-copy .primary-link{margin:30px 0 0}
+    .venue-map{min-height:390px;border:2px solid var(--brown);background:var(--paper);box-shadow:8px 9px 0 var(--orange)}
+    .venue-map iframe{display:block;width:100%;height:100%;min-height:390px;border:0;filter:sepia(.16) saturate(.78)}
+    .gift{position:relative;overflow:hidden;padding:115px max(7vw,24px);background:var(--olive);color:var(--cream)}
+    .gift-inner{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center;max-width:1080px;margin:auto}
+    .gift .section-title{text-align:left;margin:0}
+    .gift .section-title h2{color:var(--cream);text-shadow:4px 5px 0 var(--brown)}
+    .gift .section-title p{max-width:390px;font:16px/1.7 var(--sans)}
+    .gift-floral{position:absolute;left:-18%;bottom:-35%;width:min(560px,65vw);opacity:.18;pointer-events:none}
+    .gift-note{position:relative;padding:clamp(28px,5vw,56px);border:2px solid var(--brown);background:var(--paper);color:var(--ink);box-shadow:9px 10px 0 var(--mustard);transform:rotate(1deg)}
+    .gift-note p{margin:22px 0;font:20px/1.6 var(--sans)}
+    .gift-note small{font:500 9px var(--mono);letter-spacing:.16em;color:var(--rust)}
+    .guestbook-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:42px;max-width:1000px;margin:auto;align-items:start}
+    .wish-form{padding:34px;border:2px solid var(--brown);background:#f7e9c6;box-shadow:8px 9px 0 var(--orange)}
+    .wish-form label{display:block;margin-bottom:20px;font:500 9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--rust)}
+    .wish-form input,.wish-form textarea{display:block;width:100%;margin-top:9px;padding:12px;border:1px solid var(--brown);border-radius:0;background:var(--cream);color:var(--ink);font:15px var(--sans)}
+    .wish-form textarea{min-height:125px;resize:vertical}
+    .wish-form button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:14px 18px;border:2px solid var(--brown);background:var(--orange);color:var(--cream);font:500 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;box-shadow:5px 6px 0 var(--mustard)}
+    .wish-form button span{font-size:18px}
+    .wish-note{margin:18px 0 0;font:11px/1.6 var(--mono);color:var(--olive)}
+    .wish-list h3{margin:0 0 20px;font:400 36px/1.1 var(--groovy);color:var(--orange)}
+    .wish-empty{padding:20px 0;border-top:1px solid #36251e55;border-bottom:1px solid #36251e55;font:14px/1.6 var(--sans);color:var(--olive)}
+    .wish-entry{padding:18px 0;border-top:1px solid #36251e55}
+    .wish-entry strong{font:500 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--rust)}
+    .wish-entry p{margin:8px 0 0;font:15px/1.65 var(--sans);overflow-wrap:anywhere}
+    @media (max-width: 720px) {
+      html, body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .gallery-grid .photo {
+        width: 100%;
+        min-width: 0;
+      }
+      .gallery-grid .photo img {
+        display: block;
+        min-width: 0;
+        max-width: 100%;
+      }
+      .venue-layout, .gift-inner, .guestbook-grid { grid-template-columns: 1fr; }
+      .venue-map, .venue-map iframe { min-height: 290px; }
+      .gift { padding: 90px 20px; }
+      .gift-inner { gap: 30px; }
+      .gift .section-title { text-align: center; }
+      .gift .section-title p { margin-left: auto; margin-right: auto; }
+      .gift-floral { left: -28%; bottom: -12%; width: 90vw; }
+      .guestbook-grid { gap: 32px; }
+      .wish-form { padding: 24px 20px; }
+    }
+    @media (max-width: 720px) and (orientation: portrait) {
+      .opening-floral {
+        display: none !important;
+      }
+      .opening-copy {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        animation: intro 1.4s var(--ease) both;
+        pointer-events: none;
+      }
+      .opening-copy .overline,
+      .opening-copy h1,
+      .opening-copy .opening-date,
+      .opening-copy .guest,
+      .opening-copy #openBtn,
+      .opening-copy .sound-hint {
+        position: absolute;
+        left: 50%;
+        margin: 0;
+        transform: translateX(-50%);
+        pointer-events: auto;
+      }
+      .opening-copy .overline { top: max(92px, 11svh); white-space: nowrap; }
+      .opening-copy h1 {
+        top: max(134px, 16svh);
+        width: 100%;
+        font-size: clamp(68px, 19vw, 88px);
+        line-height: .7;
+      }
+      .opening-copy .opening-date { top: max(265px, 31svh); white-space: nowrap; }
+      .opening-copy .guest {
+        right: 20px;
+        bottom: 18svh;
+        left: 20px;
+        transform: none;
+      }
+      .opening-copy #openBtn { bottom: 8.5svh; width: min(62vw, 280px); }
+      .opening-copy .sound-hint { bottom: 3.2svh; width: 90%; white-space: nowrap; }
+    }
+  </style>
+</head>
+<body class="locked">
+  <canvas id="petals" aria-hidden="true"></canvas>
+
+  <section class="opening" id="opening">
+    <div class="opening-photo" style="background-image: url('assets/_(29).jpeg')"></div><div class="opening-shade"></div>
+    <img class="opening-floral" src="assets/retro-wedding-collage.png" alt="" aria-hidden="true">
+    <div class="opening-copy">
+      <p class="overline">A VERY GROOVY WEDDING</p>
+      <h1>Mr <i>&</i><br>Mrs</h1>
+      <p class="opening-date">18 · 01 · 2027</p>
+      <div class="guest"><small>Kepada Yth.</small><strong data-guest>{{guest_name}}</strong></div>
+      <button id="openBtn"><span>Open Invitation</span><b>→</b></button>
+      <p class="sound-hint">♫ Turn up the love & let the good times roll</p>
+    </div>
+  </section>
+
+  <main id="content">
+    <header class="hero" id="home">
+      <div class="hero-image" style="background-image: url('assets/_ (28).jpeg')"></div><div class="hero-overlay"></div>
+      <div class="hero-ornament" aria-hidden="true"></div>
+      <div class="hero-copy reveal"><p>WE ARE GETTING MARRIED</p><h2>Mr <i>&</i> Mrs</h2><time>MONDAY · JANUARY 18 · 2027</time></div>
+    </header>
+
+    <section class="welcome paper" id="welcome">
+      <img class="floral-corner" src="assets/retro-wedding-collage.png" alt="" aria-hidden="true">
+      <div class="section-copy reveal"><span class="eyebrow">Our Invitation</span><h2>With love,<br>we invite you.</h2><p>Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Anda untuk hadir dan menjadi bagian dari awal perjalanan baru kami.</p></div>
+      <blockquote class="reveal">“And He placed between you affection and mercy.”<small>AR-RUM · 21</small></blockquote>
+    </section>
+
+    <section class="couple paper" id="couple">
+      <div class="section-title reveal"><span>MEET THE COUPLE</span><h2>Two hearts,<br>one promise.</h2></div>
+      <div class="couple-card groom-card reveal">
+        <div class="portrait"><img src="assets/groom.png" alt="Mr, the groom"></div>
+        <div><small>THE GROOM</small><h3>Mr</h3><p>Putra pertama dari<br>Bapak Ahmad & Ibu Ratna</p><a href="#">@Mrpratama</a></div>
+      </div>
+      <div class="and-mark reveal">&</div>
+      <div class="couple-card bride-card reveal">
+        <div class="portrait"><img src="assets/braide.png" alt="Mrs, the bride"></div>
+        <div><small>THE BRIDE</small><h3>Mrs</h3><p>Putri kedua dari<br>Bapak Hendra & Ibu Maya</p><a href="#">@Mrsmaharani</a></div>
+      </div>
+    </section>
+
+    <section class="date-panel" id="event">
+      <div class="date-bg"></div>
+      <div class="date-content reveal"><span>SAVE THE DATE</span><p>JANUARY</p><strong>18</strong><p>2027</p><h2>A day to remember</h2></div>
+      <div class="countdown reveal" id="countdown"><div><b id="days">000</b><span>Days</span></div><div><b id="hours">00</b><span>Hours</span></div><div><b id="minutes">00</b><span>Minutes</span></div><div><b id="seconds">00</b><span>Seconds</span></div></div>
+    </section>
+
+    <section class="events paper">
+      <div class="section-title reveal"><span>THE CELEBRATION</span><h2>Join our<br>special day.</h2></div>
+      <div class="event reveal"><i>01</i><small>08.00 — 10.00 WIB</small><h3>Akad Nikah</h3><p>Gedung Arsip Nasional<br>Jl. Gajah Mada No. 111, Jakarta</p></div>
+      <div class="event reveal"><i>02</i><small>11.00 — 14.00 WIB</small><h3>Resepsi</h3><p>Gedung Arsip Nasional<br>Jl. Gajah Mada No. 111, Jakarta</p></div>
+      <a class="primary-link reveal" href="https://maps.google.com/?q=Gedung+Arsip+Nasional+Jakarta" target="_blank" rel="noreferrer">Open Location <span>↗</span></a>
+    </section>
+
+    <section class="venue paper" id="venue">
+      <div class="section-title reveal"><span>THE VENUE</span><h2>Find us<br>in Jakarta.</h2></div>
+      <div class="venue-layout">
+        <div class="venue-copy reveal"><span>GEDUNG ARSIP NASIONAL</span><h3>Where our<br>forever begins.</h3><address>Jl. Gajah Mada No. 111<br>Jakarta, Indonesia</address><a class="primary-link" href="https://maps.google.com/?q=Gedung+Arsip+Nasional+Jakarta" target="_blank" rel="noreferrer">Open in Maps <span>↗</span></a></div>
+        <div class="venue-map reveal"><iframe title="Map to Gedung Arsip Nasional Jakarta" src="https://maps.google.com/maps?q=Gedung%20Arsip%20Nasional%20Jakarta&z=15&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      </div>
+    </section>
+
+    <section class="story" id="story">
+      <div class="story-photo"></div>
+      <div class="story-content"><div class="section-title light reveal"><span>WRITTEN IN THE STARS</span><h2>Our little<br>love story.</h2></div><ol><li class="reveal"><b>2021</b><div><small>THE FIRST HELLO</small><p>Pertemuan sederhana yang perlahan menjadi percakapan tanpa akhir.</p></div></li><li class="reveal"><b>2024</b><div><small>A PROMISE</small><p>Kami memilih untuk berjalan bersama menuju halaman yang baru.</p></div></li><li class="reveal"><b>2027</b><div><small>FOREVER BEGINS</small><p>Dengan restu keluarga, perjalanan selamanya dimulai di sini.</p></div></li></ol></div>
+    </section>
+
+    <section class="gallery paper" id="gallery">
+      <div class="section-title reveal"><span>OUR MEMORIES</span><h2>Moments we<br>hold dear.</h2></div>
+      <div class="gallery-grid"><button class="photo reveal" data-photo="assets/foto-1.jpeg"><img src="assets/foto-1.jpeg" alt="Couple portrait one"><span>01</span></button><button class="photo reveal" data-photo="assets/foto-2.jpeg"><img src="assets/foto-2.jpeg" alt="Couple portrait two"><span>02</span></button><button class="photo reveal" data-photo="assets/foto-3.jpeg"><img src="assets/foto-3.jpeg" alt="Couple portrait three"><span>03</span></button><button class="photo reveal" data-photo="assets/foto-4.jpeg"><img src="assets/foto-4.jpeg" alt="Couple portrait four"><span>04</span></button></div>
+    </section>
+
+    <section class="gift" id="gift">
+      <img class="gift-floral" src="assets/floral-editorial.png" alt="" aria-hidden="true">
+      <div class="gift-inner">
+        <div class="section-title light reveal"><span>WITH GRATITUDE</span><h2>Wedding<br>gift.</h2><p>Your presence and prayers are already the most meaningful gift to us.</p></div>
+        <div class="gift-note reveal"><span>A LITTLE NOTE</span><p>If you would like to send a gift, please ask our family on the wedding day. We will be happy to help.</p><small>WITH LOVE, MR &amp; MRS</small></div>
+      </div>
+    </section>
+
+    <section class="rsvp" id="rsvp">
+      <img src="assets/retro-wedding-collage.png" class="rsvp-floral" alt="" aria-hidden="true">
+      <div class="section-title light reveal"><span>KINDLY RESPOND</span><h2>Will you<br>join us?</h2><p>Kehadiran dan doa Anda adalah hadiah terindah.</p></div>
+      <form id="rsvpForm" class="reveal"><label>Your name<input name="name" required></label><label>Attendance<select name="attendance" required><option value="">Choose one</option><option>Yes, I will be there</option><option>Sorry, I cannot attend</option></select></label><label>Your wishes<textarea name="message" required></textarea></label><button>Send RSVP <span>→</span></button><p id="formStatus" role="status"></p></form>
+    </section>
+
+    <section class="guestbook paper" id="guestbook">
+      <div class="section-title reveal"><span>GUEST BOOK</span><h2>Leave a little<br>love note.</h2></div>
+      <div class="guestbook-grid">
+        <form id="wishesForm" class="wish-form reveal"><label>Your name<input name="name" autocomplete="name" maxlength="70" required></label><label>Your wishes<textarea name="message" maxlength="500" required></textarea></label><button type="submit">Leave a wish <span>→</span></button><p class="wish-note">Ucapan tersimpan di browser perangkat ini saja.</p><p id="wishesStatus" role="status"></p></form>
+        <div class="wish-list reveal" id="wishList" aria-live="polite"><h3>Words to keep</h3><p class="wish-empty">Your kind words will be read with love.</p></div>
+      </div>
+    </section>
+
+    <footer><p>WITH LOVE</p><h2>Thank you for being<br>part of our story.</h2><div class="signature">Mr <i>&</i> Mrs</div><small>#MrdMrsForever</small><a href="https://www.instagram.com/memoire.___/" target="_blank" rel="noopener noreferrer">Made by Memoire · @memoire.___</a></footer>
+  </main>
+
+  <button class="music" id="musicBtn" aria-label="Toggle ambience">♫</button>
+  <dialog id="lightbox"><button aria-label="Close">×</button><img alt="Wedding gallery preview"></dialog>
+  <div class="toast" id="toast"></div>
+  <script src="js/app.js?v=3"></script>
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mr & Mrs — Wedding Invitation</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- FONT AWESOME -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="css/style.css?v=invitation-layout-44"
+    >
+</head>
+
+<body class="locked">
+
+
+    <!-- =====================================
+         OPEN INVITATION
+    ====================================== -->
+
+    <section
+        class="opening"
+        id="opening"
+    >
+
+        <!-- Background -->
+        <picture class="opening-picture">
+            <source
+                media="(max-width: 768px)"
+                srcset="assets/images/openpotret.png"
+            >
+            <img
+                src="assets/images/openlanscape.png"
+                alt=""
+                class="opening-background"
+            >
+        </picture>
+
+        <!-- Soft overlay -->
+        <div class="opening-overlay"></div>
+
+
+        <!-- Decorative Content -->
+        <div class="opening-content">
+
+            <p class="opening-label">
+                THE WEDDING OF
+            </p>
+
+
+            <div class="mini-divider">
+                <span></span>
+
+                <i class="fa-solid fa-diamond"></i>
+
+                <span></span>
+            </div>
+
+
+            <h1 class="couple-name">
+
+                <span class="name">
+                    Mr
+                </span>
+
+                <span class="ampersand">
+                    &
+                </span>
+
+                <span class="name">
+                    Mrs
+                </span>
+
+            </h1>
+
+
+            <p class="opening-date">
+                MONDAY · JANUARY 18 · 2027
+            </p>
+
+
+            <div class="guest-wrapper">
+
+                <p class="guest-label">
+                    Dear,
+                </p>
+
+                <h2 id="guestName">
+                    {{guest_name}}
+                </h2>
+
+            </div>
+
+
+            <button
+                class="open-button"
+                id="openInvitation"
+                type="button"
+            >
+
+                <span>
+                    Open Invitation
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- Bottom Text -->
+        <p class="opening-footer">
+
+            We would be honored to celebrate
+            this special moment with you.
+
+        </p>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         WEBSITE CONTENT
+         sementara untuk testing
+    ====================================== -->
+
+    <main id="mainContent">
+
+
+
+        <!-- SECTION 2 - OPENING -->
+<section class="opening-section" id="welcome">
+
+    <video
+        class="opening-section-video opening-section-video-desktop"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+        tabindex="-1"
+    >
+        <source src="assets/video/landscape1.1.mp4" type="video/mp4">
+    </video>
+
+    <video
+        class="opening-section-video opening-section-video-mobile"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+        tabindex="-1"
+    >
+        <source src="assets/video/section1.1.mp4" type="video/mp4">
+    </video>
+
+    <div class="opening-container">
+
+        <div class="invitation-copy reveal reveal-left">
+
+        <p class="opening-section-label">
+            OUR INVITATION
+        </p>
+
+        <h2 class="opening-title">
+            With love,<br>
+            we invite you.
+        </h2>
+
+        <div class="opening-divider">
+            <span></span>
+            <i>✦</i>
+            <span></span>
+        </div>
+
+        <p class="opening-text">
+            Dengan memohon rahmat dan ridho Allah SWT,
+            kami mengundang Bapak/Ibu/Saudara/i untuk hadir
+            dan menjadi bagian dari awal perjalanan baru kami.
+        </p>
+
+        </div>
+
+        <div class="invitation-focus" aria-hidden="true"></div>
+
+        <div class="opening-quote reveal reveal-right">
+
+            <p>
+                “And He placed between you affection and mercy.”
+            </p>
+
+            <span>
+                AR-RUM · 21
+            </span>
+
+            <p class="quote-text">&ldquo;And He placed between you affection and mercy.&rdquo;</p>
+            <cite>AR-RUM &middot; 21</cite>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- SECTION 3 - MEET THE COUPLE -->
+<section class="couple-section" id="couple">
+    <picture class="couple-artwork" aria-hidden="true">
+        <img src="assets/images/section2landscape-.png" alt="">
+    </picture>
+
+    <p class="couple-kicker reveal">MEET THE COUPLE</p>
+
+    <figure class="couple-mobile-photo groom-photo reveal">
+        <img src="assets/images/groompotret-.png" alt="Mr. Groom">
+    </figure>
+
+    <article class="couple-card couple-groom reveal couple-reveal-right">
+        <p class="couple-role">THE GROOM</p>
+        <h2>Mr. Groom</h2>
+        <span class="couple-divider" aria-hidden="true"></span>
+        <p class="couple-parents">Putra dari Bapak <strong>[Nama Ayah Groom]</strong> &amp; Ibu <strong>[Nama Ibu Groom]</strong></p>
+        <p class="couple-description">With a grateful heart, he begins a new chapter of life with the woman he loves.</p>
+        <a class="couple-social" href="https://instagram.com/usernamegroom" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            <span>@usernamegroom</span>
+        </a>
+    </article>
+
+    <div class="couple-monogram reveal" aria-label="Wedding monogram">
+        <span>Mr</span><b>&amp;</b><span>Mrs</span>
+        <small>18 &middot; JAN &middot; 2027</small>
+        <em>Two hearts, <br>one promise.</br></em>
+    </div>
+
+    <figure class="couple-mobile-photo bride-photo reveal">
+        <img src="assets/images/braidepotret.png" alt="Mrs. Bride">
+    </figure>
+
+    <article class="couple-card couple-bride reveal couple-reveal-left">
+        <p class="couple-role">THE BRIDE</p>
+        <h2>Mrs. Bride</h2>
+        <span class="couple-divider" aria-hidden="true"></span>
+        <p class="couple-parents">Putri dari Bapak <strong>[Nama Ayah Bride]</strong> &amp; Ibu <strong>[Nama Ibu Bride]</strong></p>
+        <p class="couple-description">With love and joy, she steps into forever with the man she has chosen.</p>
+        <a class="couple-social" href="https://instagram.com/usernamebride" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            <span>@usernamebride</span>
+        </a>
+    </article>
+</section>
+
+<!-- SECTION 4 - SAVE THE DATE -->
+<section class="date-section" id="save-the-date">
+    <div class="date-scene" aria-hidden="true">
+        <img class="date-photo-background" src="assets/images/savethedate.jpg" alt="">
+        <div class="date-white-overlay"></div>
+        <picture class="date-floral-overlay">
+            <source media="(max-width: 768px)" srcset="assets/images/savethedate.png">
+            <img src="assets/images/savethedate-.png" alt="">
+        </picture>
+    </div>
+
+    <div class="date-content">
+        <div class="date-copy reveal date-reveal-left">
+            <p class="date-kicker">SAVE THE DATE</p>
+            <h2>Save our<br>special day.</h2>
+            <div class="date-divider" aria-hidden="true"><span></span><i>&#10022;</i><span></span></div>
+            <p class="date-message">A day of love, laughter, and the beginning of our happily ever after. We would be honored to have you with us.</p>
+            <p class="date-couple">Mr. Groom <em>&amp;</em> Mrs. Bride</p>
+        </div>
+
+        <div class="date-calendar reveal date-reveal-up">
+            <p class="date-weekday">MONDAY</p>
+            <div class="date-number-row">
+                <span class="date-month">JAN</span>
+                <time datetime="2027-01-18">18</time>
+                <span class="date-year">2027</span>
+            </div>
+            <p class="date-time">10.00 WIB &middot; Until End</p>
+            <span class="date-calendar-line" aria-hidden="true"></span>
+            <p class="date-venue">The Wedding Venue<br><strong>Jakarta, Indonesia</strong></p>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 5 - A LITTLE CHAPTER OF US -->
+<section class="story-section" id="our-story">
+    <img class="story-frame-top" src="assets/images/frameatas.png" alt="" aria-hidden="true">
+    <img class="story-generated-accent" src="assets/images/story-floral-accent.png" alt="" aria-hidden="true">
+
+    <div class="story-heading reveal story-reveal-up">
+        <p>OUR STORY</p>
+        <h2>A little chapter<br>of our story.</h2>
+        <span aria-hidden="true">&#10022;</span>
+    </div>
+
+    <p class="story-intro reveal story-reveal-up">Every love story is made of small moments that slowly become a lifetime. Here are a few chapters from ours.</p>
+
+    <div class="story-timeline story-long-form">
+        <article class="story-entry reveal story-reveal-left">
+            <figure class="story-photo"><img src="assets/images/prewed1.jpg" alt="A joyful beginning together"></figure>
+            <div class="story-entry-copy">
+                <p class="story-meta"><span>01</span> THE BEGINNING</p>
+                <h3>It started with a simple hello.</h3>
+                <p>What began as an ordinary conversation became a connection neither of us expected. Slowly, we learned that the smallest moments could feel extraordinary when shared together.</p>
+            </div>
+        </article>
+
+        <article class="story-entry story-entry-reverse reveal story-reveal-right">
+            <figure class="story-photo"><img src="assets/images/prewed2.jpg" alt="A cherished moment together"></figure>
+            <div class="story-entry-copy">
+                <p class="story-meta"><span>02</span> GROWING TOGETHER</p>
+                <h3>In every season, we chose each other.</h3>
+                <p>There were days filled with laughter, quiet conversations, and the kind of comfort that only grows with time. With every step, we found a home in one another and a reason to keep choosing love.</p>
+            </div>
+        </article>
+
+        <article class="story-entry reveal story-reveal-left">
+            <figure class="story-photo"><img src="assets/images/prewed3.jpg" alt="A journey towards forever"></figure>
+            <div class="story-entry-copy">
+                <p class="story-meta"><span>03</span> OUR FOREVER</p>
+                <h3>And now, our forever begins.</h3>
+                <p>With grateful hearts and a love that feels like home, we are ready to write the next chapter together. This is not the end of our story—it is the beautiful beginning of forever.</p>
+            </div>
+        </article>
+    </div>
+
+    <img class="story-frame-bottom" src="assets/images/framebawah.png" alt="" aria-hidden="true">
+</section>
+
+<!-- SECTION 6 - THE BIG DAY -->
+<section class="big-day-section" id="the-big-day">
+    <img class="big-day-floral big-day-floral-left" src="assets/images/story-floral-accent.png" alt="" aria-hidden="true">
+    <img class="big-day-floral big-day-floral-right" src="assets/images/story-floral-accent.png" alt="" aria-hidden="true">
+
+    <div class="big-day-inner">
+        <header class="big-day-heading reveal big-day-reveal-up">
+            <p>OUR SPECIAL DAY</p>
+            <h2>THE BIG DAY</h2>
+            <span class="big-day-divider" aria-hidden="true"><i></i>&#10022;<i></i></span>
+            <p class="big-day-subtitle">Save the date and celebrate this beautiful moment with us.</p>
+        </header>
+
+        <div class="big-day-events">
+            <article class="event-detail event-akad reveal big-day-reveal-left">
+                <p class="event-label">THE CEREMONY</p>
+                <h3>Akad Nikah</h3>
+                <span class="event-rule" aria-hidden="true"></span>
+                <dl>
+                    <div><dt><i class="fa-regular fa-calendar" aria-hidden="true"></i>Date</dt><dd>Monday, January 18, 2027</dd></div>
+                    <div><dt><i class="fa-regular fa-clock" aria-hidden="true"></i>Time</dt><dd>08.00 WIB &ndash; Selesai</dd></div>
+                    <div><dt><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Location</dt><dd><strong>Nama Venue / Masjid</strong><br>Jl. Contoh Alamat No. 123,<br>Bukittinggi, Sumatera Barat</dd></div>
+                </dl>
+                <a class="event-map" href="https://maps.google.com/?q=Bukittinggi,Sumatera+Barat" target="_blank" rel="noopener noreferrer">VIEW LOCATION <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            </article>
+
+            <div class="big-date reveal big-day-reveal-up" aria-label="Monday 18 January 2027">
+                <p>MONDAY</p>
+                <time datetime="2027-01-18">18</time>
+                <strong>JANUARY</strong>
+                <span>2027</span>
+                <div class="big-date-monogram">R <i>&amp;</i> S</div>
+            </div>
+
+            <article class="event-detail event-reception reveal big-day-reveal-right">
+                <p class="event-label">THE RECEPTION</p>
+                <h3>Wedding Reception</h3>
+                <span class="event-rule" aria-hidden="true"></span>
+                <dl>
+                    <div><dt><i class="fa-regular fa-calendar" aria-hidden="true"></i>Date</dt><dd>Monday, January 18, 2027</dd></div>
+                    <div><dt><i class="fa-regular fa-clock" aria-hidden="true"></i>Time</dt><dd>11.00 WIB &ndash; Selesai</dd></div>
+                    <div><dt><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Location</dt><dd><strong>Nama Gedung / Venue</strong><br>Jl. Contoh Alamat No. 123,<br>Bukittinggi, Sumatera Barat</dd></div>
+                </dl>
+                <a class="event-map" href="https://maps.google.com/?q=Bukittinggi,Sumatera+Barat" target="_blank" rel="noopener noreferrer">VIEW LOCATION <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            </article>
+        </div>
+
+        <div class="countdown reveal big-day-reveal-up" aria-live="polite">
+            <p>COUNTING DOWN TO OUR BIG DAY</p>
+            <div class="countdown-units">
+                <div><strong id="countdownDays">00</strong><span>DAYS</span></div>
+                <div><strong id="countdownHours">00</strong><span>HOURS</span></div>
+                <div><strong id="countdownMinutes">00</strong><span>MINUTES</span></div>
+                <div><strong id="countdownSeconds">00</strong><span>SECONDS</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 7 - WEDDING DAY TIMELINE -->
+<section class="wedding-timeline-section" id="wedding-day-timeline">
+    <!-- Optional PNG hooks: timeline-flower-left/right.png, timeline-butterfly.png,
+         timeline-ring.png, timeline-bouquet.png, timeline-camera.png, timeline-cake.png. -->
+    <img class="timeline-floral timeline-floral-top" src="assets/images/story-floral-accent.png" alt="" aria-hidden="true">
+    <img class="timeline-floral timeline-floral-bottom" src="assets/images/story-floral-accent.png" alt="" aria-hidden="true">
+    <i class="fa-solid fa-sparkles timeline-sparkle timeline-sparkle-one" aria-hidden="true"></i>
+    <i class="fa-solid fa-feather timeline-sparkle timeline-sparkle-two" aria-hidden="true"></i>
+
+    <div class="timeline-shell">
+        <header class="timeline-heading reveal timeline-reveal-up">
+            <p class="section-label">OUR WEDDING DAY</p>
+            <h2>A Day To Remember</h2>
+            <p class="timeline-subtitle">Every beautiful moment, from the first light of morning<br> until the final celebration.</p>
+            <div class="timeline-heading-divider" aria-hidden="true"><span></span><b>&#10022;</b><span></span></div>
+        </header>
+
+        <div class="timeline-events">
+            <div class="timeline-track" aria-hidden="true"><span class="timeline-progress"></span></div>
+            <div class="timeline-monogram" aria-hidden="true"><span>R</span><b>&amp;</b><span>S</span><small>OUR FOREVER<br>BEGINS HERE</small></div>
+
+            <article class="timeline-event timeline-event-left reveal">
+                <div class="timeline-event-content"><time datetime="2027-01-18T06:00">06:00</time><p class="timeline-event-label">GETTING READY</p><h3>Bride &amp; Groom Preparation</h3><p class="timeline-event-copy">&ldquo;The beginning of a beautiful day.&rdquo;</p></div>
+                <span class="timeline-marker"><i class="fa-solid fa-leaf" aria-hidden="true"></i></span><div class="timeline-event-ornament" aria-hidden="true"><i class="fa-solid fa-seedling"></i></div>
+            </article>
+            <article class="timeline-event timeline-event-right reveal">
+                <div class="timeline-event-content"><time datetime="2027-01-18T07:30">07:30</time><p class="timeline-event-label">FAMILY MOMENT</p><h3>Family Gathering &amp; Preparation</h3><p class="timeline-event-copy">&ldquo;A quiet moment shared with the people we love.&rdquo;</p></div>
+                <span class="timeline-marker"><i class="fa-solid fa-star" aria-hidden="true"></i></span><div class="timeline-event-ornament" aria-hidden="true"><i class="fa-solid fa-heart"></i></div>
+            </article>
+            <article class="timeline-event timeline-event-left reveal">
+                <div class="timeline-event-content"><time datetime="2027-01-18T08:00">08:00</time><p class="timeline-event-label">AKAD NIKAH</p><h3>Wedding Ceremony</h3><p class="timeline-event-copy">&ldquo;The moment we say yes to forever.&rdquo;</p></div>
+                <span class="timeline-marker"><i class="fa-regular fa-gem" aria-hidden="true"></i></span><div class="timeline-event-ornament" aria-hidden="true"><i class="fa-regular fa-gem"></i></div>
+            </article>
+            <article class="timeline-event timeline-event-right reveal">
+                <div class="timeline-event-content"><time datetime="2027-01-18T09:00">09:00</time><p class="timeline-event-label">PHOTO SESSION</p><h3>Family &amp; Couple Photo Session</h3><p class="timeline-event-copy">&ldquo;Capturing memories that will last forever.&rdquo;</p></div>
+                <span class="timeline-marker"><i class="fa-solid fa-camera" aria-hidden="true"></i></span><div class="timeline-event-ornament" aria-hidden="true"><i class="fa-solid fa-camera"></i></div>
+            </article>
+            <article class="timeline-event timeline-event-left reveal">
+                <div class="timeline-event-content"><time datetime="2027-01-18T10:30">10:30</time><p class="timeline-event-label">GUEST WELCOME</p><h3>Guests Arrival</h3><p class="timeline-event-copy">&ldquo;Welcoming our beloved family and friends.&rdquo;</p></div>
+                <span class="timeline-marker"><i class="fa-solid fa-door-open" aria-hidden="true"></i></span><div class="timeline-event-ornament" aria-hidden="true"><i class="fa-solid fa-dove"></i></div>
+            </article>
+
+            <aside class="timeline-quote reveal timeline-reveal-up"><i class="fa-solid fa-quote-left" aria-hidden="true"></i><p>Today,<br>we begin the most beautiful<br>chapter of our story.</p><span>R &amp; S &nbsp; &middot; &nbsp; 18 &middot; 01 &middot; 2027</span></aside>
+
+            <article class="timeline-event timeline-event-right reveal">
+                <div class="timeline-event-content"><time datetime="2027-01-18T11:00">11:00</time><p class="timeline-event-label">WEDDING RECEPTION</p><h3>Reception Begins</h3><p class="timeline-event-copy">&ldquo;Celebrating love, laughter, and togetherness.&rdquo;</p></div>
+                <span class="timeline-marker"><i class="fa-solid fa-champagne-glasses" aria-hidden="true"></i></span><div class="timeline-event-ornament" aria-hidden="true"><i class="fa-solid fa-champagne-glasses"></i></div>
+            </article>
+            <article class="timeline-event timeline-event-left reveal">
+                <div class="timeline-event-content"><time datetime="2027-01-18T12:00">12:00</time><p class="timeline-event-label">LUNCH &amp; CELEBRATION</p><h3>Wedding Lunch</h3><p class="timeline-event-copy">&ldquo;Sharing a beautiful meal with everyone we love.&rdquo;</p></div>
+                <span class="timeline-marker"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span><div class="timeline-event-ornament" aria-hidden="true"><i class="fa-solid fa-cake-candles"></i></div>
+            </article>
+            <article class="timeline-event timeline-event-right reveal">
+                <div class="timeline-event-content"><time datetime="2027-01-18T13:30">13:30</time><p class="timeline-event-label">SPECIAL MOMENT</p><h3>Couple Entrance</h3><p class="timeline-event-copy">&ldquo;A special moment to celebrate our new chapter.&rdquo;</p></div>
+                <span class="timeline-marker"><i class="fa-solid fa-ribbon" aria-hidden="true"></i></span><div class="timeline-event-ornament" aria-hidden="true"><i class="fa-solid fa-ribbon"></i></div>
+            </article>
+            <article class="timeline-event timeline-event-left reveal">
+                <div class="timeline-event-content"><time datetime="2027-01-18T14:30">14:30</time><p class="timeline-event-label">PHOTO WITH GUESTS</p><h3>Photo Session</h3><p class="timeline-event-copy">&ldquo;One beautiful memory at a time.&rdquo;</p></div>
+                <span class="timeline-marker"><i class="fa-solid fa-image" aria-hidden="true"></i></span><div class="timeline-event-ornament" aria-hidden="true"><i class="fa-regular fa-images"></i></div>
+            </article>
+            <article class="timeline-event timeline-event-right reveal">
+                <div class="timeline-event-content"><time datetime="2027-01-18T16:00">16:00</time><p class="timeline-event-label">CLOSING</p><h3>Thank You &amp; Farewell</h3><p class="timeline-event-copy">&ldquo;Until we meet again, thank you for being part of our beginning.&rdquo;</p></div>
+                <span class="timeline-marker"><i class="fa-regular fa-heart" aria-hidden="true"></i></span><div class="timeline-event-ornament" aria-hidden="true"><i class="fa-solid fa-sparkles"></i></div>
+            </article>
+        </div>
+
+        <p class="timeline-swipe-hint" aria-hidden="true">
+            <span>Swipe to explore the day</span>
+            <i class="fa-solid fa-arrow-right-long"></i>
+        </p>
+    </div>
+</section>
+
+<!-- SECTION 8 - US LATELY / MEMORY JOURNAL -->
+<section class="memory-journal-section" id="us-lately">
+    <!-- Optional decoration hooks: assets/images/memory-flower-left.png, memory-flower-right.png,
+         memory-butterfly.png, memory-petals.png, memory-tape.png, memory-ribbon.png. -->
+    <img class="memory-floral memory-floral-left" src="assets/images/story-floral-accent.png" alt="" aria-hidden="true">
+    <img class="memory-floral memory-floral-right" src="assets/images/story-floral-accent.png" alt="" aria-hidden="true">
+    <i class="fa-solid fa-sparkles memory-floating memory-floating-one" aria-hidden="true"></i>
+    <i class="fa-solid fa-feather memory-floating memory-floating-two" aria-hidden="true"></i>
+
+    <div class="memory-journal-inner">
+        <header class="memory-heading reveal memory-reveal-up">
+            <p>OUR MEMORIES</p>
+            <h2>Us Lately</h2>
+            <span class="memory-heading-divider" aria-hidden="true"><i></i>&#10022;<i></i></span>
+            <div>A collection of little moments, quiet laughs,<br>long conversations, and memories we never want to forget.</div>
+        </header>
+
+        <div class="memory-gallery">
+            <button class="memory-photo memory-photo-landscape memory-one reveal memory-reveal-left" type="button" data-caption="our first trip" data-date="12 · 08 · 2024"><img src="assets/images/prewed1.jpg" alt="A sweet moment together"><span class="memory-date">12 · 08 · 2024</span><em>our first trip</em></button>
+            <button class="memory-photo memory-photo-polar memory-two reveal memory-reveal-right" type="button" data-caption="coffee dates" data-date="03 · 11 · 2025"><img src="assets/images/prewed2.jpg" alt="Couple enjoying a coffee date"><span class="memory-tape" aria-hidden="true"></span><em>coffee dates</em></button>
+            <button class="memory-photo memory-photo-oval memory-three reveal memory-reveal-up" type="button" data-caption="you & me" data-date="18 · 05 · 2026"><img src="assets/images/prewed3.jpg" alt="A portrait of the couple"><em>you &amp; me</em></button>
+
+            <aside class="memory-editorial-quote reveal memory-reveal-up"><span>R &amp; S</span><p>“Somewhere between<br>all the ordinary days,<br>we found forever.”</p><i class="fa-solid fa-heart" aria-hidden="true"></i></aside>
+
+            <button class="memory-photo memory-photo-portrait memory-four reveal memory-reveal-right" type="button" data-caption="the day everything felt right" data-date="18 · 05 · 2026"><img src="assets/images/prewed4.jpg" alt="Couple sharing a romantic moment"><span class="memory-date">18 · 05 · 2026</span><em>the day everything felt right</em></button>
+            <button class="memory-photo memory-photo-torn memory-five reveal memory-reveal-left" type="button" data-caption="always you" data-date=""><img src="assets/images/prewed5.jpg" alt="A treasured photo of the couple"><em>always you</em></button>
+
+            <div class="memory-photo-strip reveal memory-reveal-up" aria-label="Little pieces of us">
+                <button class="memory-photo" type="button" data-caption="little pieces of us" data-date=""><img src="assets/images/prewed1.jpg" alt="Memory one"></button>
+                <button class="memory-photo" type="button" data-caption="little pieces of us" data-date=""><img src="assets/images/prewed2.jpg" alt="Memory two"></button>
+                <button class="memory-photo" type="button" data-caption="little pieces of us" data-date=""><img src="assets/images/prewed3.jpg" alt="Memory three"></button>
+                <small>little pieces of us</small>
+            </div>
+
+            <button class="memory-photo memory-photo-arch memory-six reveal memory-reveal-left" type="button" data-caption="somewhere between laughter and forever" data-date=""><img src="assets/images/prewed2.jpg" alt="Couple smiling together"><em>somewhere between laughter and forever</em></button>
+            <button class="memory-photo memory-photo-polaroid-two memory-seven reveal memory-reveal-right" type="button" data-caption="my favorite person" data-date=""><img src="assets/images/prewed4.jpg" alt="A memory of the bride and groom"><span class="memory-tape" aria-hidden="true"></span><em>my favorite person</em></button>
+            <button class="memory-photo memory-photo-small memory-eight reveal memory-reveal-up" type="button" data-caption="our favorite place" data-date=""><img src="assets/images/prewed5.jpg" alt="Couple at their favorite place"><em>our favorite place</em></button>
+
+            <aside class="memory-mini-quote reveal memory-reveal-up">“We didn't realize we were making memories.<br>We just knew we were happy.”</aside>
+        </div>
+
+        <footer class="memory-closing reveal memory-reveal-up"><span></span><p>and many more memories<br>still waiting to be made.</p><small>R &amp; S</small><span></span></footer>
+    </div>
+</section>
+
+<div class="memory-lightbox" id="memoryLightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Memory photo viewer">
+    <button class="memory-lightbox-close" type="button" aria-label="Close photo viewer"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    <button class="memory-lightbox-nav memory-lightbox-prev" type="button" aria-label="Previous photo"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+    <figure><img id="memoryLightboxImage" src="" alt=""><figcaption><span id="memoryLightboxCaption"></span><small id="memoryLightboxCounter"></small></figcaption></figure>
+    <button class="memory-lightbox-nav memory-lightbox-next" type="button" aria-label="Next photo"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+</div>
+
+<!-- SECTION 9 - WORDS OF LOVE -->
+<section class="gentle-note-section" id="words-of-love">
+    <!-- Optional asset hooks: assets/images/quote-flower-left.png, quote-flower-right.png,
+         quote-butterfly.png, quote-petals.png, quote-monogram.png. -->
+    <img class="gentle-note-floral gentle-note-floral-left" src="assets/images/quote-floral-accent.png" alt="" aria-hidden="true">
+    <img class="gentle-note-floral gentle-note-floral-right" src="assets/images/quote-floral-accent.png" alt="" aria-hidden="true">
+    <i class="fa-solid fa-feather gentle-note-float gentle-note-float-one" aria-hidden="true"></i>
+    <i class="fa-solid fa-sparkles gentle-note-float gentle-note-float-two" aria-hidden="true"></i>
+
+    <div class="gentle-note-inner">
+        <header class="gentle-note-heading reveal gentle-note-reveal-up">
+            <p>WITH LOVE</p>
+            <h2>A Word Of Love</h2>
+            <span class="gentle-note-divider" aria-hidden="true"><i></i>&#10022;<i></i></span>
+            <div>A sentiment we carry into forever.</div>
+        </header>
+
+        <div class="gentle-note-monogram" aria-hidden="true"><span>R</span><b>&amp;</b><span>S</span></div>
+        <figure class="gentle-note-quote reveal gentle-note-reveal-up">
+            <i class="fa-solid fa-quote-left gentle-note-quote-mark" aria-hidden="true"></i>
+            <blockquote>Love does not consist of gazing at each other,<br>but in looking outward together<br>in the same direction.</blockquote>
+            <figcaption>&mdash; ANTOINE DE SAINT-EXUP&Eacute;RY</figcaption>
+            <small>For the beginning of forever &nbsp;&middot;&nbsp; Rigan &amp; Salsa</small>
+        </figure>
+
+        <footer class="gentle-note-footer reveal gentle-note-reveal-up"><i></i><span>R &amp; S</span><i></i></footer>
+    </div>
+</section>
+
+<!-- SECTION 10 - KINDLY REPLY / RSVP -->
+<section class="rsvp-editorial-section" id="rsvp">
+    <img class="rsvp-floral rsvp-floral-top" src="assets/images/quote-floral-accent.png" alt="" aria-hidden="true">
+    <img class="rsvp-floral rsvp-floral-bottom" src="assets/images/story-floral-accent.png" alt="" aria-hidden="true">
+    <i class="fa-solid fa-feather rsvp-floating rsvp-floating-one" aria-hidden="true"></i>
+    <i class="fa-solid fa-sparkles rsvp-floating rsvp-floating-two" aria-hidden="true"></i>
+
+    <div class="rsvp-editorial-inner">
+        <div class="rsvp-layout">
+            <header class="rsvp-intro reveal rsvp-reveal-left">
+                <p class="rsvp-label">RSVP</p>
+                <h2>Kindly Reply</h2>
+                <h3>Are You Coming?</h3>
+                <span class="rsvp-divider" aria-hidden="true"><i></i>&#10022;<i></i></span>
+                <p>We would be honored to celebrate this special day with you. Kindly let us know whether you will be joining us.</p>
+                <div class="rsvp-monogram" aria-hidden="true">R <i>&amp;</i> S</div>
+                <small>18 &middot; 01 &middot; 2027</small>
+            </header>
+
+            <form class="rsvp-form reveal rsvp-reveal-up" id="rsvpForm" novalidate>
+                <div class="rsvp-form-heading"><span>WITH LOVE</span><h3>Your reply</h3></div>
+                <div class="rsvp-field"><label for="rsvpName">Your Name <b>*</b></label><input id="rsvpName" name="guest_name" type="text" placeholder="Enter your name" autocomplete="name" required><small class="rsvp-error" data-error="guest_name"></small></div>
+                <fieldset class="rsvp-field rsvp-attendance"><legend>Will you be joining us? <b>*</b></legend>
+                    <div class="rsvp-attendance-options">
+                        <label><input type="radio" name="attendance" value="attending"><span><i class="fa-solid fa-check" aria-hidden="true"></i>YES, I'LL BE THERE</span></label>
+                        <label><input type="radio" name="attendance" value="not_attending"><span><i class="fa-solid fa-heart-crack" aria-hidden="true"></i>NO, I CAN'T MAKE IT</span></label>
+                    </div><small class="rsvp-error" data-error="attendance"></small>
+                </fieldset>
+                <div class="rsvp-field rsvp-guest-count" id="rsvpGuestCount" aria-hidden="true"><label for="rsvpGuests">Number of Guests <b>*</b></label><select id="rsvpGuests" name="guest_count"><option value="">Select guests</option><option value="1">1 Person</option><option value="2">2 Persons</option><option value="3">3 Persons</option><option value="4">4 Persons</option></select><small class="rsvp-error" data-error="guest_count"></small></div>
+                <div class="rsvp-field"><label for="rsvpMessage">Leave a Message <em>optional</em></label><textarea id="rsvpMessage" name="message" rows="4" placeholder="Write your wishes for the couple..."></textarea></div>
+                <div class="rsvp-form-status" id="rsvpFormStatus" aria-live="polite"></div>
+                <button class="rsvp-submit" id="rsvpSubmit" type="submit"><span>SEND RSVP</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+            </form>
+        </div>
+
+        <section class="rsvp-responses reveal rsvp-reveal-up" aria-labelledby="guestResponseTitle">
+            <header><p>WITH LOVE, FROM OUR GUESTS</p><h3 id="guestResponseTitle">Our Lovely Guests</h3><span class="rsvp-divider" aria-hidden="true"><i></i>&#10022;<i></i></span></header>
+            <div class="rsvp-summary" aria-label="RSVP summary"><div><strong id="rsvpAttendingCount">0</strong><span>ATTENDING</span></div><div><strong id="rsvpUnableCount">0</strong><span>UNABLE TO ATTEND</span></div><div><strong id="rsvpTotalCount">0</strong><span>RESPONSES</span></div></div>
+            <div class="rsvp-response-list" id="rsvpResponseList"></div>
+            <p class="rsvp-empty-state" id="rsvpEmptyState">Be the first to leave your reply.</p>
+            <button class="rsvp-load-more" id="rsvpLoadMore" type="button" hidden>VIEW MORE WISHES</button>
+        </section>
+    </div>
+</section>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
