@@ -82,6 +82,14 @@ Route::get('/invitation-assets/{templateSlug}/{path}', [PublicInvitationAssetCon
         'path' => '.*',
     ])
     ->name('public.invitation-assets.show');
+Route::get('/invitation-rsvp.js', [PublicInvitationController::class, 'adapter'])->name('public.invitations.rsvp-adapter');
+Route::get('/{invitationSlug}/{guestSlug}/rsvp', [PublicInvitationController::class, 'responses'])
+    ->where(['invitationSlug' => '[a-z0-9]+(?:-[a-z0-9]+)*', 'guestSlug' => '[a-z0-9]+(?:-[a-z0-9]+)*'])
+    ->name('public.invitations.responses');
+Route::post('/{invitationSlug}/{guestSlug}/rsvp', [PublicInvitationController::class, 'respond'])
+    ->middleware('throttle:10,1')
+    ->where(['invitationSlug' => '[a-z0-9]+(?:-[a-z0-9]+)*', 'guestSlug' => '[a-z0-9]+(?:-[a-z0-9]+)*'])
+    ->name('public.invitations.respond');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'create'])->name('admin.login');

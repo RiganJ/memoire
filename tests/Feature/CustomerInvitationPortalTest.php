@@ -123,15 +123,22 @@ class CustomerInvitationPortalTest extends TestCase
         $session = ['customer_invitation_id' => $first->id];
 
         $this->withSession($session)->post(route('customer.guests.store'), [
-            'name' => 'Budi & Partner',
-            'phone' => '08123456789',
-            'rsvp_status' => InvitationGuest::RSVP_ATTENDING,
+            'guests' => [
+                ['name' => 'Budi & Partner', 'phone' => '08123456789'],
+                ['name' => 'Rina', 'phone' => ''],
+            ],
         ])->assertRedirect(route('customer.dashboard'));
 
-        $guest = $first->guests()->firstOrFail();
+        $guest = $first->guests()->where('name', 'Budi & Partner')->firstOrFail();
         $this->assertSame('budi-partner', $guest->slug);
         $this->assertNotNull($guest->token);
-        $this->assertNotNull($guest->rsvp_responded_at);
+        $this->assertSame(InvitationGuest::RSVP_PENDING, $guest->rsvp_status);
+        $this->assertDatabaseHas('invitation_guests', [
+            'invitation_id' => $first->id,
+            'name' => 'Rina',
+            'phone' => null,
+            'slug' => 'rina',
+        ]);
 
         $this->withSession($session)->put(route('customer.guests.update', $guest), [
             'name' => 'Budi & Keluarga',
@@ -146,6 +153,65 @@ class CustomerInvitationPortalTest extends TestCase
 
         $this->withSession($session)->delete(route('customer.guests.destroy', $guest))->assertRedirect(route('customer.dashboard'));
         $this->assertModelMissing($guest);
+    }
+
+    public function test_customer_can_prepare_multiple_guests_before_saving(): void
+    {
+        $invitation = $this->createInvitation('rigan-salsa', 'RIGAN2026CODE');
+        $session = ['customer_invitation_id' => $invitation->id];
+
+        $this->withSession($session)
+            ->get(route('customer.guests.create'))
+            ->assertOk()
+            ->assertSee('Tamu siap disimpan')
+            ->assertSee('Simpan semua tamu')
+            ->assertSee('data-add-draft', false);
+
+        $this->withSession($session)->post(route('customer.guests.store'), [
+            'guests' => [
+                ['name' => 'Nama Sama', 'phone' => '0811'],
+                ['name' => 'nama sama', 'phone' => '0822'],
+            ],
+        ])->assertSessionHasErrors('guests.1.name');
+
+        $this->assertDatabaseCount('invitation_guests', 0);
+    }
+
+    public function test_personal_guest_can_submit_rsvp_and_wish_visible_on_customer_dashboard(): void
+    {
+        $invitation = $this->createInvitation('rigan-salsa', 'RIGAN2026CODE');
+        $guest = $invitation->guests()->create([
+            'name' => 'Budi & Partner',
+            'slug' => 'budi-partner',
+            'phone' => '0812',
+        ]);
+
+        $this->postJson(route('public.invitations.respond', [
+            'invitationSlug' => $invitation->slug,
+            'guestSlug' => $guest->slug,
+        ]), [
+            'attendance' => 'attending',
+            'guest_count' => 2,
+            'message' => 'Semoga selalu bahagia dan penuh berkah.',
+        ])->assertOk()
+            ->assertJsonPath('rsvp.guest_name', 'Budi & Partner')
+            ->assertJsonPath('rsvp.attendance', 'attending')
+            ->assertJsonPath('rsvp.guest_count', 2);
+
+        $this->assertDatabaseHas('invitation_guests', [
+            'id' => $guest->id,
+            'rsvp_status' => InvitationGuest::RSVP_ATTENDING,
+            'party_size' => 2,
+            'wish_message' => 'Semoga selalu bahagia dan penuh berkah.',
+        ]);
+
+        $this->withSession(['customer_invitation_id' => $invitation->id])
+            ->get(route('customer.dashboard'))
+            ->assertOk()
+            ->assertSee('Tamu yang akan hadir')
+            ->assertSee('Semua ucapan tamu')
+            ->assertSee('Budi &amp; Partner', false)
+            ->assertSee('Semoga selalu bahagia dan penuh berkah.');
     }
 
     public function test_personal_invitation_visit_is_counted_as_opened(): void

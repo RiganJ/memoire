@@ -35,6 +35,7 @@ class DashboardController extends Controller
             'attending' => (clone $guestQuery)->where('rsvp_status', InvitationGuest::RSVP_ATTENDING)->count(),
             'declined' => (clone $guestQuery)->where('rsvp_status', InvitationGuest::RSVP_DECLINED)->count(),
             'pending' => (clone $guestQuery)->where('rsvp_status', InvitationGuest::RSVP_PENDING)->count(),
+            'wishes' => (clone $guestQuery)->whereNotNull('wish_message')->count(),
         ];
         $guests = $guestQuery
             ->when($filters['search'] ?? null, fn (Builder $query, string $term) => $query->where(function (Builder $query) use ($term): void {
@@ -44,7 +45,17 @@ class DashboardController extends Controller
             ->latest()
             ->paginate(20)
             ->withQueryString();
+        $attendees = $invitation->guests()
+            ->where('rsvp_status', InvitationGuest::RSVP_ATTENDING)
+            ->latest('rsvp_responded_at')
+            ->paginate(10, ['*'], 'attendees_page')
+            ->withQueryString();
+        $wishes = $invitation->guests()
+            ->whereNotNull('wish_message')
+            ->latest('wish_submitted_at')
+            ->paginate(10, ['*'], 'wishes_page')
+            ->withQueryString();
 
-        return view('customer.dashboard', compact('invitation', 'statistics', 'guests'));
+        return view('customer.dashboard', compact('invitation', 'statistics', 'guests', 'attendees', 'wishes'));
     }
 }

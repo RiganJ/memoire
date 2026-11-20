@@ -26,7 +26,7 @@ class InvitationGuestRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:180'],
-            'phone' => ['required', 'string', 'max:25', 'regex:/\A[0-9+() .-]+\z/'],
+            'phone' => ['nullable', 'string', 'max:25', 'regex:/\A[0-9+() .-]+\z/'],
             'rsvp_status' => ['required', Rule::in([
                 InvitationGuest::RSVP_PENDING,
                 InvitationGuest::RSVP_ATTENDING,
@@ -39,7 +39,7 @@ class InvitationGuestRequest extends FormRequest
     {
         $this->merge([
             'name' => $this->string('name')->trim()->toString(),
-            'phone' => $this->string('phone')->trim()->toString(),
+            'phone' => $this->string('phone')->trim()->toString() ?: null,
         ]);
     }
 }

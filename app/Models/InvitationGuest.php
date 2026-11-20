@@ -22,6 +22,9 @@ class InvitationGuest extends Model
         'open_count',
         'rsvp_status',
         'rsvp_responded_at',
+        'party_size',
+        'wish_message',
+        'wish_submitted_at',
     ];
 
     protected function casts(): array
@@ -30,6 +33,8 @@ class InvitationGuest extends Model
             'opened_at' => 'datetime',
             'open_count' => 'integer',
             'rsvp_responded_at' => 'datetime',
+            'party_size' => 'integer',
+            'wish_submitted_at' => 'datetime',
         ];
     }
 

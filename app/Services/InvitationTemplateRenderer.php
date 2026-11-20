@@ -18,12 +18,18 @@ class InvitationTemplateRenderer
     {
         $invitation->loadMissing('template');
 
-        return $this->renderHtml($invitation->template, [
+        $html = $this->renderHtml($invitation->template, [
             '{{guest_name}}' => $this->escape($guest?->name ?? 'Tamu Undangan'),
             '{{invitation_name}}' => $this->escape($invitation->name),
             '{{groom_name}}' => $this->escape($invitation->groom_name),
             '{{bride_name}}' => $this->escape($invitation->bride_name),
         ]);
+
+        if ($guest === null) {
+            return $html;
+        }
+
+        return $this->addResponseIntegration($html, $invitation, $guest);
     }
 
     public function renderPreview(Template $template): string
@@ -83,5 +89,23 @@ class InvitationTemplateRenderer
     private function escape(string $value): string
     {
         return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    }
+
+    private function addResponseIntegration(string $html, Invitation $invitation, InvitationGuest $guest): string
+    {
+        $endpoint = route('public.invitations.responses', [
+            'invitationSlug' => $invitation->slug,
+            'guestSlug' => $guest->slug,
+        ]);
+        $integration = '<meta name="csrf-token" content="'.e(csrf_token()).'">'
+            .'<meta name="rsvp-endpoint" content="'.e($endpoint).'">'
+            .'<meta name="invitation-guest-name" content="'.e($guest->name).'">'
+            .'<script src="'.e(route('public.invitations.rsvp-adapter')).'" defer></script>';
+
+        if (preg_match('/<\/head\s*>/i', $html) === 1) {
+            return preg_replace('/<\/head\s*>/i', $integration.'</head>', $html, 1) ?? $html;
+        }
+
+        return $integration.$html;
     }
 }

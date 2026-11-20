@@ -1,0 +1,37 @@
+.asset-copy {
+  width: min(76%, 290px);
+}
+
+.asset-recipient {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  margin: 15px auto 0;
+  color: #eee8f2;
+  text-align: center;
+  text-shadow: 0 2px 8px rgb(16 7 25 / 70%);
+}
+
+.asset-recipient small {
+  color: #c8bdcf;
+  font: 9px/1.4 Italiana, serif;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.asset-recipient strong {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font: 400 clamp(21px, 6cqw, 29px)/1.15 "Great Vibes", cursive;
+}
+
+@media (max-width: 380px) {
+  .asset-recipient {
+    margin-top: 10px;
+  }
+
+  .asset-recipient strong {
+    font-size: 21px;
+  }
+}

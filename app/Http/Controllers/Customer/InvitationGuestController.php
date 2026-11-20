@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\InvitationGuestRequest;
+use App\Http\Requests\Customer\StoreInvitationGuestsRequest;
 use App\Models\Invitation;
 use App\Models\InvitationGuest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -18,18 +20,23 @@ class InvitationGuestController extends Controller
         return view('customer.guests.create', ['invitation' => $this->invitation($request)]);
     }
 
-    public function store(InvitationGuestRequest $request): RedirectResponse
+    public function store(StoreInvitationGuestsRequest $request): RedirectResponse
     {
         $invitation = $this->invitation($request);
-        $validated = $request->validated();
-        $invitation->guests()->create([
-            ...$validated,
-            'slug' => $invitation->uniqueGuestSlug($validated['name']),
-            'token' => (string) Str::uuid(),
-            'rsvp_responded_at' => $validated['rsvp_status'] === InvitationGuest::RSVP_PENDING ? null : now(),
-        ]);
+        $guests = $request->validated('guests');
 
-        return redirect()->route('customer.dashboard')->with('success', 'Tamu berhasil ditambahkan.');
+        DB::transaction(function () use ($invitation, $guests): void {
+            foreach ($guests as $guest) {
+                $invitation->guests()->create([
+                    ...$guest,
+                    'slug' => $invitation->uniqueGuestSlug($guest['name']),
+                    'token' => (string) Str::uuid(),
+                    'rsvp_status' => InvitationGuest::RSVP_PENDING,
+                ]);
+            }
+        });
+
+        return redirect()->route('customer.dashboard')->with('success', count($guests).' tamu berhasil ditambahkan dan masing-masing telah memiliki link personal.');
     }
 
     public function edit(Request $request, InvitationGuest $guest): View
