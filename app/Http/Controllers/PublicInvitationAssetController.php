@@ -28,7 +28,7 @@ class PublicInvitationAssetController extends Controller
         $contentType = MimeTypes::getDefault()->getMimeTypes($extension)[0] ?? 'application/octet-stream';
 
         return response()->file($file, [
-            'Cache-Control' => 'public, max-age=86400',
+            'Cache-Control' => 'public, max-age=0, must-revalidate',
             'Content-Type' => $contentType,
             'X-Content-Type-Options' => 'nosniff',
         ]);
