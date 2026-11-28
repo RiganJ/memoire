@@ -42,6 +42,11 @@
   opacity: 0;
 }
 
+.love-bank-accounts {
+  display: grid;
+  gap: 12px;
+}
+
 .asset-recipient small {
   color: #c8bdcf;
   font: clamp(9px, 1.25cqw, 13px)/1.4 Italiana, serif;
