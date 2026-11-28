@@ -115,6 +115,34 @@ class CustomerInvitationPortalTest extends TestCase
             ->assertDontSee('Rahasia Customer Lain');
     }
 
+    public function test_customer_dashboard_can_prepare_personal_and_bulk_whatsapp_messages(): void
+    {
+        $invitation = $this->createInvitation('rigan-salsa', 'RIGAN2026CODE');
+        $guest = $invitation->guests()->create([
+            'name' => 'Budi & Partner',
+            'slug' => 'budi-partner',
+            'phone' => '0812-3456-7890',
+        ]);
+        $invitation->guests()->create([
+            'name' => 'Rina Tanpa Nomor',
+            'slug' => 'rina-tanpa-nomor',
+            'phone' => null,
+        ]);
+        $guestUrl = route('public.invitations.show', [
+            'invitationSlug' => $invitation->slug,
+            'guestSlug' => $guest->slug,
+        ]);
+        $message = "Kepada Yth.\n{$guest->name}\n\nDengan penuh kebahagiaan kami mengundang Anda untuk menghadiri pernikahan kami.\n\nSilakan membuka undangan personal melalui:\n{$guestUrl}";
+
+        $this->withSession(['customer_invitation_id' => $invitation->id])
+            ->get(route('customer.dashboard'))
+            ->assertOk()
+            ->assertSee('Kirim WhatsApp')
+            ->assertSee('id="select-all-guests"', false)
+            ->assertSee('https://wa.me/6281234567890?text='.rawurlencode($message), false)
+            ->assertSee('Rina Tanpa Nomor belum memiliki nomor WhatsApp');
+    }
+
     public function test_customer_can_create_update_and_delete_only_their_own_guests(): void
     {
         $first = $this->createInvitation('rigan-salsa', 'FIRSTCODE123');

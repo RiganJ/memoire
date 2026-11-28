@@ -25,3 +25,58 @@
 .hero-strip figure{isolation:isolate;overflow:hidden}
 .hero-strip figure:after{content:"";z-index:1;pointer-events:none;background:radial-gradient(ellipse at 18% 12%,#dccbed24,transparent 48%),radial-gradient(ellipse at 86% 88%,#3820472b,transparent 55%),linear-gradient(135deg,#26133714,#5b35651f 48%,#160d2417);mix-blend-mode:multiply;position:absolute;inset:0;box-shadow:inset 0 0 28px #2613371f}
 .hero-strip figure span{z-index:2}
+
+/* Anggun–Andi signature wordmark inspired by the supplied stacked calligraphy. */
+.couple-signature-wordmark{
+  --signature-size:clamp(42px,12cqw,76px);
+  color:#fff;
+  display:block!important;
+  font-size:0!important;
+  line-height:0!important;
+  letter-spacing:0!important;
+  text-align:center;
+  text-transform:none;
+  white-space:normal;
+}
+.couple-signature-original{display:none!important}
+.couple-signature-wordmark:before,.couple-signature-wordmark:after{content:none!important}
+.couple-signature-image{
+  display:block!important;
+  width:calc(var(--signature-size)*4.65);
+  max-width:100%;
+  height:auto;
+  margin-inline:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 2px 5px #12071970);
+}
+.cover-copy{top:38%}
+.cover-copy h1.couple-signature-wordmark{--signature-size:clamp(52px,15cqw,84px);margin:28px 0 18px;transform:translateY(10px)}
+.desktop-copy h1.couple-signature-wordmark{--signature-size:clamp(72px,7.6vw,120px);margin:30px 0 38px;text-align:left}
+.desktop-copy h1.couple-signature-wordmark .couple-signature-image{margin-left:0}
+.hero-strip>b.couple-signature-wordmark{--signature-size:clamp(29px,8cqw,43px);margin-top:18px;color:#382047}
+.hero-strip>b.couple-signature-wordmark .couple-signature-image{filter:drop-shadow(0 1px 2px #38204755)}
+.hero-strip>b.couple-signature-wordmark{display:none!important}
+.gallery-preview-card h2.couple-signature-wordmark{--signature-size:clamp(36px,10cqw,52px);margin:14px 0 22px}
+.reply-card footer.couple-signature-wordmark{--signature-size:38px;margin-top:20px}
+.closing p.couple-signature-wordmark{--signature-size:clamp(44px,12cqw,68px);margin:22px 0 26px}
+.story-photo-caption.couple-signature-wordmark{--signature-size:16px;right:10px;bottom:8px;max-width:82px}
+.ceremony-date small.couple-signature-wordmark{--signature-size:clamp(28px,7cqw,40px);display:block;margin-top:10px}
+.asset-cover .asset-copy{top:24%}
+.asset-cover .asset-copy h1{margin-top:2cqw}
+.scene:not(.asset-cover){content-visibility:auto;contain-intrinsic-size:100dvh}
+.scene{background-image:linear-gradient(#160d24d1,#160d24f2),url(../assets/wedding/midnight-amethyst/amethyst-paper.webp)}
+.scene:nth-of-type(3n){background-image:linear-gradient(#261337bd,#160d24f5),url(../assets/wedding/midnight-amethyst/amethyst-paper.webp)}
+.quote{background-image:linear-gradient(#160d2433,#160d24d9),url(../assets/wedding/midnight-amethyst/amethyst-paper.webp)}
+.cover .flap:before{background-image:url(../assets/wedding/midnight-amethyst/amethyst-paper.webp)}
+.asset-envelope{background-image:url(../assets/wedding/midnight-amethyst/amethyst-paper.webp)}
+.asset-flap{content:url(../assets/wedding/midnight-amethyst/reference-flap-v3.webp)}
+.envelope-reveal-photo:after{background-image:url(../assets/wedding/midnight-amethyst/portrait-botanical-frame.webp)}
+.scene-quote.love-letter{background-image:radial-gradient(at 50% 45%,#603a714d,#12071dcc 78%),url(../assets/wedding/midnight-amethyst/amethyst-paper.webp)}
+.sacred-promise-art:before{background-image:url(../assets/wedding/midnight-amethyst/sacred-promise-background.webp)}
+.scene-events.ceremony-scene{background-image:radial-gradient(at 50% 40%,#42274f66,#0000 65%),linear-gradient(#1a0e28cc,#160d24ed),url(../assets/wedding/midnight-amethyst/amethyst-paper.webp)}
+.wedding-program-art{background-image:url(../assets/wedding/midnight-amethyst/wedding-day-reference.webp)}
+.gallery-preview-card{background-image:linear-gradient(#261337cc,#160d24e8),url(../assets/wedding/midnight-amethyst/amethyst-paper.webp)}
+@media (width<=360px){
+  .couple-signature-wordmark{--signature-size:40px}
+  .cover-copy h1.couple-signature-wordmark{--signature-size:58px}
+}
